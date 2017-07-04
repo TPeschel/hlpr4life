@@ -1,6 +1,6 @@
 #' key.of.freq
 #'
-#' @description key.of.freq gives the piano key that plays the frequency frq when its first (most left) key plays tone "A0"
+#' @description key.of.freq returns the piano key that plays a tone of the frequency frq when its first (most left) key plays tone "A0"
 #' @param frq frequency of the key
 #'
 #' @return key of frq
@@ -14,7 +14,7 @@ key.of.freq <-
 
 #' freq.of.key
 #'
-#' @description freq.of.key gives the frequency that a piano key plays which first (most left) key plays tone "A0"
+#' @description freq.of.key returns the frequency that a piano key plays which first (most left) key plays tone "A0"
 #' @param key
 #' key for what the frequency is asked for,
 #' key number of a piano,
