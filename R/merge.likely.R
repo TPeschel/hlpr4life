@@ -115,13 +115,13 @@ make.sics <-
 d1 <-
 	data.frame(
 		sic  = sample( make.sics( 30 ), 300, T ),
-		edat = sample( clndr, 300 ),
+		edat = as.Date( sample( clndr, 300 ) ),
 		H    = round( rnorm( 300, 180, 10 ) ))
 
 d2 <-
 	data.frame(
 		sic = sample( make.sics( 30 ), 300, T ),
-		edat = sample( clndr, 300 ),
+		edat = as.Date( sample( clndr, 300 ) ),
 		height = round( rnorm( 300, 180, 10 ) ) )
 
 d <-
@@ -194,62 +194,105 @@ ggplot( rbind( d1.t, d2.t ), aes( Var1, Freq, fill = Group ) ) + geom_histogram(
 #
 #
 
-
 ml <-
 	function(
-		df1,
-		df2,
-		by=NULL,
-		by.x=by,
-		by.y=by,
-		by.lk=NULL,
-		by.x.lk=by.lk,
-		by.y.lk=by.lk,
-		min=NULL,
-		max=NULL){
+		d1,
+		d2,
+		by = NULL,
+		by.x = by,
+		by.y = by,
+		by.lk = NULL,
+		by.x.lk = by.lk,
+		by.y.lk = by.lk,
+		min = NULL,
+		max = NULL,
+		reorder.names = T,
+		trim = F ) {
+
+		by <- c( "sic" )
+		by.x <- by
+		by.y <- by
+		by <- c( "sic" )
+		by.x.lk <- c( "edat", "H" )
+		by.y.lk <- c( "edat", "height" )
+		min <- c( -100, -10 )
+		max <- c( +100, +10 )
+
+		by.lk.x <-
+			c(
+				paste0(
+					intersect(
+						by.x.lk,
+						by.y.lk ),
+					".x" ),
+				setdiff(
+					by.y.lk,
+					by.x.lk ) )
+
+		by.lk.y <-
+			c(
+				paste0(
+					intersect(
+						by.x.lk,
+						by.y.lk ),
+					".y" ),
+				setdiff(
+					by.x.lk,
+					by.y.lk ) )
+
 		d <-
 			merge(
-				df1,
-				df2,
-				by.x=by.x,
-				by.y=by.y)
+				d1,
+				d2,
+				by.x = by.x,
+				by.y = by.y )
 
-		if( any( class( d$by.lk ) == "POSIXct" ) ) {
-			dif <-
-				difftime( df1$)
+		by.lk.x
+		by.lk.y
+
+		for( i in c( 1 : length( nms.id.x ) ) ) {
+			if( is.Date( d1[ , nms.id.x[ i ] ] ) ) {
+				cat( "date " )
+				l <-  difftime( d1[ , nms.id.x[ i ] ], d2[ , nms.id.y[ i ] ], units = "day" )
+				l.min.max <- ( min[ i ] < l & l <= max[ i ] )
+				d <- d[ l.min.max, ]
+				} else {
+					if( is.numeric( d1[ 1, nms.id.x[ i ] ] ) == "numeric" ) {
+						cat( "num " )
+						l <- d1[ , nms.id.x[ i ] ] - d2[ , nms.id.y[ i ] ]
+						l.min.max <- ( min[ i ] < l & l <= max[ i ] )
+						d <- d[ l.min.max, ] } } }
+
+		c( by.lk.x, by.lk.y )
+
+		if( trim ) {
+			d[ , by.lk.y[ i ] ] <-
+				NULL
+			names( d )[ names( d ) == by.lk.x[ i ] ] <-
+				sub( "(\\w*).x", "\\1", by.lk.x[ i ], perl = T )
+		}
+
+		if( reorder.names && !trim ) {
+			d.n <-
+				unlist(
+					mapply( list,
+							by.lk.x,
+							by.lk.y ) )
+			d <-
+				d[ , c( setdiff( names( d ), d.n ), d.n ) ]
 		}
 		d }
 
-(
-	by.sic <-
-		ml(
-			d1,
-			d2,
-			by = c( "sic" ) ) )
+l <-
+	ml(
+		d1 = d1,
+		d2 = d2,
+		by = c( "sic" ),
+		by.x.lk = c( "edat", "H" ),
+		by.y.lk = c( "edat", "height" ),
+		min = c( -1, -1 ),
+		max = c( +1, +1 ),
+		reorder.names = T,
+		trim = T )
 
-(
-	by.sic.xy <-
-		ml(
-			d1,
-			d2,
-			by.x = c( "sic" ),
-			by.y = c( "sic" ) ) )
-
-(
-	by.sic.by.lk.edat <-
-		ml(
-			d1,
-			d2,
-			by = c( "sic" ),
-			by.x.lk = c( "edat", "H" ),
-			by.y.lk = c( "edat", "height" ),
-			min = c( -1, -10 ),
-			max = c( +1, +10 ) ) )
-
-names( by.sic.by.lk.edat )
-
-by.x.lk
-by.y.lk
-by.lk=intersect(by.x.lk,by.y.lk)
-by.lk.xy=setdiff(union(by.x.lk,by.y.lk),by.lk)
-sapply( by.lk, function( n ) d$n )
+l
