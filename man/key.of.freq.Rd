@@ -13,7 +13,7 @@ key.of.freq(frq = 110)
 key of frq
 }
 \description{
-key.of.freq gives the piano key that plays the frequency frq when its first (most left) key plays tone "A0"
+key.of.freq returns the piano key that plays a tone of the frequency frq when its first (most left) key plays tone "A0"
 }
 \examples{
 key.of.freq( 110 )

@@ -7,21 +7,17 @@
 ggsubplot(..., plotlist = NULL, cols = 1, layout = NULL)
 }
 \arguments{
-\item{...}{list of ggplots}
+\item{...}{end of list of ggplots}
 
-\item{plotlist}{last plots}
+\item{plotlist}{end of list of ggplots}
 
-\item{cols}{number of columns}
+\item{cols}{count of columns}
 
-\item{layout}{layout ist a matrix containing the index of a certain ggplot}
+\item{layout}{matrix for the layout with indices of the plots}
 }
 \value{
-a plotmatrix containing all ggplots
+subplots
 }
 \description{
-ggsubplot
-}
-\examples{
-library( ggplot2 )
-ggsubplot( ggplot(), ggplot(), cols = 1 )
+gives the opportunity for subplots
 }

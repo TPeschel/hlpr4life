@@ -1,21 +1,21 @@
-#' ggsubplot 
-#' @param ... list of ggplots
-#' @param plotlist last plots
-#' @param cols number of columns
-#' @param layout layout ist a matrix containing the index of a certain ggplot
-#' @return a plotmatrix containing all ggplots
-#' @export
+#' ggsubplot
 #'
-#' @examples
-#' library( ggplot2 )
-#' ggsubplot( ggplot(), ggplot(), cols = 1 )
-ggsubplot <- # aka multiplot known from the internet
+#' @name  ggsubplot
+#' @description gives the opportunity for subplots
+#' @param ... end of list of ggplots
+#' @param plotlist end of list of ggplots
+#' @param cols count of columns
+#' @param layout matrix for the layout with indices of the plots
+#'
+#' @return subplots
+#' @export ggsubplot()
+ggsubplot <-
     function(
-        ...,
-        plotlist = NULL,
-        cols = 1,
-        layout = NULL ) {
-        
+    	...,
+    	plotlist = NULL,
+    	cols = 1,
+    	layout = NULL ) {
+
         # Make a list from the ... arguments and plotlist
         plots <-
             c( list(...), plotlist )
@@ -60,7 +60,4 @@ ggsubplot <- # aka multiplot known from the internet
                       plots[[ i ]],
                       vp = grid::viewport(
                           layout.pos.row = matchidx$row,
-                          layout.pos.col = matchidx$col ) )
-              }
-        }
-    }
+                          layout.pos.col = matchidx$col ) ) } } }

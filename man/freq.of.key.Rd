@@ -15,7 +15,7 @@ most left is 1}
 frequency of the key
 }
 \description{
-freq.of.key gives the frequency that a piano key plays which first (most left) key plays tone "A0"
+freq.of.key returns the frequency that a piano key plays which first (most left) key plays tone "A0"
 }
 \examples{
 freq.of.key( 25 )
