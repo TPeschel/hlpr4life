@@ -51,16 +51,16 @@ merge.likely <-
 		by.y <-
 			c( by, by.y )
 
-		by.x.lk <-
+		by.lk.x <-
 			c( by.lk, by.x.lk )
 
-		by.y.lk <-
+		by.lk.y <-
 			c( by.lk, by.y.lk )
 
 		by.lk.xy.equal.names <-
 			intersect(
-				by.x.lk,
-				by.y.lk )
+				by.lk.x,
+				by.lk.y )
 
 		if( 0 < length( by.lk.xy.equal.names ) ) {
 
@@ -71,16 +71,17 @@ merge.likely <-
 			by.lk.y <-
 				paste0(
 					by.lk.xy.equal.names,
-					".y" ) }
-		by.lk.x <-
-			c(
-				by.lk.x,
-				setdiff( by.x.lk, by.y.lk )	)
+					".y" )
+			by.lk.x <-
+				c(
+					by.lk.x,
+					setdiff( by.x.lk, by.y.lk )	)
 
-		by.lk.y <-
-			c(
-				by.lk.y,
-				setdiff( by.y.lk, by.x.lk )	)
+			by.lk.y <-
+				c(
+					by.lk.y,
+					setdiff( by.y.lk, by.x.lk )	)
+		}
 
 		d <-
 			merge(
@@ -91,7 +92,7 @@ merge.likely <-
 
 		for( i in seq_along( by.lk.x ) ) {
 
-			if( is.Date( d[ 1, by.lk.x[ i ] ] ) ) {
+			if( lubridate::is.Date( d[ 1, by.lk.x[ i ] ] ) ) {
 
 				l.1.Ihk37Z._dlk__NDu2786cmn <-
 					difftime( d[ , by.lk.y[ i ] ], d[ , by.lk.x[ i ] ], units = "day" )
@@ -111,28 +112,26 @@ merge.likely <-
 				d <-
 					d[ l.min.max, ]
 
-				} else {
+			} else {
 
-					if( is.numeric( d[ 1, by.lk.x[ i ] ] ) ) {
+				if( is.numeric( d[ 1, by.lk.x[ i ] ] ) ) {
 
-						l.1.Ihk37Z._dlk__NDu2786cmn <-
-							d[ , by.lk.y[ i ] ] - d[ , by.lk.x[ i ] ]
+					l.1.Ihk37Z._dlk__NDu2786cmn <-
+						d[ , by.lk.y[ i ] ] - d[ , by.lk.x[ i ] ]
 
-						l.min.max <-
-							( min[ i ] < l.1.Ihk37Z._dlk__NDu2786cmn & l.1.Ihk37Z._dlk__NDu2786cmn <= max[ i ] )
+					l.min.max <-
+						( min[ i ] < l.1.Ihk37Z._dlk__NDu2786cmn & l.1.Ihk37Z._dlk__NDu2786cmn <= max[ i ] )
 
-						if( add.diffs ) {
-							d <-
-								cbind( d, l.1.Ihk37Z._dlk__NDu2786cmn )
-
-							names( d )[ names( d ) == "l.1.Ihk37Z._dlk__NDu2786cmn" ] <-
-								paste0( by.lk.y[ i ], "-" , by.lk.x[ i ] )
-						}
-
+					if( add.diffs ) {
 						d <-
-							d[ l.min.max, ]
+							cbind( d, l.1.Ihk37Z._dlk__NDu2786cmn )
 
-					} }
+						names( d )[ names( d ) == "l.1.Ihk37Z._dlk__NDu2786cmn" ] <-
+							paste0( by.lk.y[ i ], "-" , by.lk.x[ i ] )
+					}
+
+					d <-
+						d[ l.min.max, ] } } }
 
 			if( trim ) {
 
@@ -140,38 +139,38 @@ merge.likely <-
 					NULL
 
 				names( d )[ names( d ) == by.lk.x[ i ] ] <-
-					sub( "(\\w*).x", "\\1", by.lk.x[ i ], perl = T ) } }
+					sub( "(\\w*).x", "\\1", by.lk.x[ i ], perl = T ) }
 
-		if( reorder.names ) {
+			if( reorder.names ) {
 
-			if( !trim ) {
+				if( !trim ) {
 
-				if( add.diffs )
+					if( add.diffs )
 
-					d.n <-
-						sapply( t( cbind( cbind( by.lk.x, by.lk.y ), paste0( by.lk.y, "-", by.lk.x ) ) ), paste )
-				else
+						d.n <-
+							sapply( t( cbind( cbind( by.lk.x, by.lk.y ), paste0( by.lk.y, "-", by.lk.x ) ) ), paste )
+					else
 
-					d.n <-
-						t( cbind( by.lk.x, by.lk.y ) )
+						d.n <-
+							t( cbind( by.lk.x, by.lk.y ) )
 
-				d <-
-					d[ , c( setdiff( names( d ), d.n ), d.n ) ]
+					d <-
+						d[ , c( setdiff( names( d ), d.n ), d.n ) ]
 
-			} else {
+				} else {
 
-				if( add.diffs )
+					if( add.diffs )
 
-					d.n <-
-						sapply( t( cbind( sub( "(\\w*).x", "\\1", by.lk.x, perl = T ), paste0( by.lk.y, "-", by.lk.x ) ) ), paste )
-				else
+						d.n <-
+							sapply( t( cbind( sub( "(\\w*).x", "\\1", by.lk.x, perl = T ), paste0( by.lk.y, "-", by.lk.x ) ) ), paste )
+					else
 
-					d.n <-
-						sub( "(\\w*).x", "\\1", by.lk.x, perl = T )
+						d.n <-
+							sub( "(\\w*).x", "\\1", by.lk.x, perl = T )
 
-				d <-
-					d[ , c( setdiff( names( d ), d.n ), d.n ) ]
+					d <-
+						d[ , c( setdiff( names( d ), d.n ), d.n ) ]
+				}
 			}
-		}
 
-		na.omit( d ) }
+			na.omit( d ) }
