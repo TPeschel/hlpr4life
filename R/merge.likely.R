@@ -37,65 +37,81 @@ merge.likely <-
 		by.x = NULL,
 		by.y = NULL,
 		by.lk = NULL,
-		by.x.lk = NULL,
-		by.y.lk = NULL,
+		by.lk.x = NULL,
+		by.lk.y = NULL,
 		min = NULL,
 		max = NULL,
 		reorder.names = T,
 		trim = F,
 		add.diffs = F ) {
 
-		by.x <-
+		# d1 = d.1
+		# d2 = d.2
+		# by = c( "a", "b" )
+		# by.x = c( "d" )
+		# by.y = c( "c" )
+		# by.lk = c( "x" )
+		# by.lk.x = c( "y", "z" )
+		# by.lk.y = c( "Y", "Z" )
+		# min = c( -4, -4, -4 )
+		# max = c( +3, +3, +3 )
+
+		by.x.tot <-
 			c( by, by.x )
 
-		by.y <-
+		by.y.tot <-
 			c( by, by.y )
 
-		by.lk.x <-
-			c( by.lk, by.x.lk )
+		by.lk.x.tot <-
+			c( by.lk, by.lk.x )
 
-		by.lk.y <-
-			c( by.lk, by.y.lk )
+		by.lk.y.tot <-
+			c( by.lk, by.lk.y )
 
 		by.lk.xy.equal.names <-
 			intersect(
-				by.lk.x,
-				by.lk.y )
+				by.lk.x.tot,
+				by.lk.y.tot )
 
 		if( 0 < length( by.lk.xy.equal.names ) ) {
 
-			by.lk.x <-
+			by.lk.x.eql.nms <-
 				paste0(
 					by.lk.xy.equal.names,
 					".x" )
-			by.lk.y <-
+
+			by.lk.y.eql.nms <-
 				paste0(
 					by.lk.xy.equal.names,
 					".y" )
-			by.lk.x <-
-				c(
-					by.lk.x,
-					setdiff( by.x.lk, by.y.lk )	)
 
-			by.lk.y <-
+			by.lk.x.tot. <-
 				c(
-					by.lk.y,
-					setdiff( by.y.lk, by.x.lk )	)
-		}
+					by.lk.x.eql.nms,
+					setdiff( by.lk.x.tot, by.lk.y.tot )	)
+
+			by.lk.y.tot <-
+				c(
+					by.lk.y.eql.nms,
+					setdiff( by.lk.y.tot, by.lk.x.tot )	)
+
+			by.lk.x.tot <-
+				by.lk.x.tot. }
 
 		d <-
 			merge(
 				d1,
 				d2,
-				by.x = by.x,
-				by.y = by.y )
+				by,
+				by.x = by.x.tot,
+				by.y = by.y.tot )
 
-		for( i in seq_along( by.lk.x ) ) {
+		for( i in seq_along( by.lk.x.tot ) ) {
 
-			if( lubridate::is.Date( d[ 1, by.lk.x[ i ] ] ) ) {
+			if( lubridate::is.Date( d[ 1, by.lk.x.tot[ i ] ] ) ) {
 
 				l.1.Ihk37Z._dlk__NDu2786cmn <-
-					difftime( d[ , by.lk.y[ i ] ], d[ , by.lk.x[ i ] ], units = "day" )
+					difftime( d[ , by.lk.y.tot[ i ] ], d[ , by.lk.x.tot[ i ] ], units = "day" )
 
 				l.min.max <-
 					( min[ i ] < l.1.Ihk37Z._dlk__NDu2786cmn & l.1.Ihk37Z._dlk__NDu2786cmn <= max[ i ] )
@@ -106,18 +122,17 @@ merge.likely <-
 						cbind( d, l.1.Ihk37Z._dlk__NDu2786cmn )
 
 					names( d )[ names( d ) == "l.1.Ihk37Z._dlk__NDu2786cmn" ] <-
-						paste0( by.lk.y[ i ], "-" , by.lk.x[ i ] )
-				}
+						paste0( by.lk.y.tot[ i ], "-" , by.lk.x.tot[ i ] ) }
 
 				d <-
 					d[ l.min.max, ]
 
 			} else {
 
-				if( is.numeric( d[ 1, by.lk.x[ i ] ] ) ) {
+				if( is.numeric( d[ 1, by.lk.x.tot[ i ] ] ) ) {
 
 					l.1.Ihk37Z._dlk__NDu2786cmn <-
-						d[ , by.lk.y[ i ] ] - d[ , by.lk.x[ i ] ]
+						d[ , by.lk.y.tot[ i ] ] - d[ , by.lk.x.tot[ i ] ]
 
 					l.min.max <-
 						( min[ i ] < l.1.Ihk37Z._dlk__NDu2786cmn & l.1.Ihk37Z._dlk__NDu2786cmn <= max[ i ] )
@@ -127,50 +142,48 @@ merge.likely <-
 							cbind( d, l.1.Ihk37Z._dlk__NDu2786cmn )
 
 						names( d )[ names( d ) == "l.1.Ihk37Z._dlk__NDu2786cmn" ] <-
-							paste0( by.lk.y[ i ], "-" , by.lk.x[ i ] )
-					}
+							paste0( by.lk.y.tot[ i ], "-" , by.lk.x.tot[ i ] ) }
 
 					d <-
-						d[ l.min.max, ] } } }
+						d[ l.min.max, ] } }
 
 			if( trim ) {
 
-				d[ , by.lk.y[ i ] ] <-
+				d[ , by.lk.y.tot[ i ] ] <-
 					NULL
 
-				names( d )[ names( d ) == by.lk.x[ i ] ] <-
-					sub( "(\\w*).x", "\\1", by.lk.x[ i ], perl = T ) }
+				names( d )[ names( d ) == by.lk.x.tot[ i ] ] <-
+					sub( "(\\w*).x", "\\1", by.lk.x.tot[ i ], perl = T ) } }
 
-			if( reorder.names ) {
+		if( reorder.names ) {
 
-				if( !trim ) {
+			if( !trim ) {
 
-					if( add.diffs )
+				if( add.diffs ) {
 
-						d.n <-
-							sapply( t( cbind( cbind( by.lk.x, by.lk.y ), paste0( by.lk.y, "-", by.lk.x ) ) ), paste )
-					else
-
-						d.n <-
-							t( cbind( by.lk.x, by.lk.y ) )
-
-					d <-
-						d[ , c( setdiff( names( d ), d.n ), d.n ) ]
+					d.n <-
+						sapply( t( cbind( cbind( by.lk.x.tot, by.lk.y.tot ), paste0( by.lk.y.tot, "-", by.lk.x.tot ) ) ), paste )
 
 				} else {
 
-					if( add.diffs )
-
-						d.n <-
-							sapply( t( cbind( sub( "(\\w*).x", "\\1", by.lk.x, perl = T ), paste0( by.lk.y, "-", by.lk.x ) ) ), paste )
-					else
-
-						d.n <-
-							sub( "(\\w*).x", "\\1", by.lk.x, perl = T )
+					d.n <-
+						t( cbind( by.lk.x.tot, by.lk.y.tot ) )
 
 					d <-
-						d[ , c( setdiff( names( d ), d.n ), d.n ) ]
-				}
-			}
+						d[ , c( setdiff( names( d ), d.n ), d.n ) ] }
 
-			na.omit( d ) }
+			} else {
+
+				if( add.diffs ) {
+
+					d.n <-
+						sapply( t( cbind( sub( "(\\w*).x", "\\1", by.lk.x.tot, perl = T ), paste0( by.lk.y.tot, "-", by.lk.x.tot ) ) ), paste )
+				} else {
+
+					d.n <-
+						sub( "(\\w*).x", "\\1", by.lk.x.tot, perl = T )
+
+					d <-
+						d[ , c( setdiff( names( d ), d.n ), d.n ) ] } } }
+
+		na.omit( d ) }
