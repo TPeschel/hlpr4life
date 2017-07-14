@@ -8,8 +8,8 @@
 #' @param by.x vector of column names for the left hand side dataframe for exact merging via different column names
 #' @param by.y vector of column names for the right hand side dataframe for exact merging via different column names
 #' @param by.lk vector of column names for likely merging via equal column names
-#' @param by.x.lk vector of column names for the left hand side dataframe for likely merging via different column names
-#' @param by.y.lk vector of column names for the right hand side dataframe for likely merging via different column names
+#' @param by.lk.x vector of column names for the left hand side dataframe for likely merging via different column names
+#' @param by.lk.y vector of column names for the right hand side dataframe for likely merging via different column names
 #' @param min vector of minimum limits for likely merging
 #' @param max vector of maximum limits for likely merging
 #' @param reorder.names gives the opportunity to reorder columns that way the pairs participated on merging lay next to each other. Doen't use it with trim = T! It makes no sence.
@@ -21,14 +21,14 @@
 #' @examples
 #' d1<-data.frame(w=sample(1:10,20,T),x=sample(1:10,20,T),y=sample(1:10,20,T),z=sample(c(1:10),20,T),id=1)
 #' d2<-data.frame(w=sample(1:10,20,T),x=sample(1:10,20,T),Y=sample(1:10,20,T),C=sample(c(1:10),20,T),id=2)
-#' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.x.lk=c("y"),by.y.lk=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim = F,add.diffs=F)
-#' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.x.lk=c("y"),by.y.lk=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim = F,add.diffs=F)
-#' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.x.lk=c("y"),by.y.lk=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim = T,add.diffs=F)
-#' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.x.lk=c("y"),by.y.lk=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim = T,add.diffs=F)
-#' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.x.lk=c("y"),by.y.lk=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim = F,add.diffs=T)
-#' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.x.lk=c("y"),by.y.lk=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim = F,add.diffs=T)
-#' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.x.lk=c("y"),by.y.lk=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim = T,add.diffs=T)
-#' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.x.lk=c("y"),by.y.lk=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim = T,add.diffs=T)
+#' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim = F,add.diffs=F)
+#' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim = F,add.diffs=F)
+#' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim = T,add.diffs=F)
+#' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim = T,add.diffs=F)
+#' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim = F,add.diffs=T)
+#' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim = F,add.diffs=T)
+#' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim = T,add.diffs=T)
+#' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim = T,add.diffs=T)
 merge.likely <-
 	function(
 		d1,
