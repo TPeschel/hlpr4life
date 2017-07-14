@@ -12,8 +12,12 @@
 #' @param by.lk.y vector of column names for the right hand side dataframe for likely merging via different column names
 #' @param min vector of minimum limits for likely merging
 #' @param max vector of maximum limits for likely merging
-#' @param reorder.names gives the opportunity to reorder columns that way the pairs participated on merging lay next to each other. Doen't use it with trim = T! It makes no sence.
-#' @param trim if trim is TRUE it selects the left hand side column for final dataframe and deletes the right hand side columns
+#' @param all merge and add remaining columns from both dataframes, default is FALSE
+#' @param all.x merge and add remaining columns from left dataframes, default is FALSE
+#' @param all.y merge and add remaining columns from right dataframes, default is FALSE
+#' @param reorder.names gives the opportunity to reorder columns that way the pairs participated on merging lay next to each other. Doen't use it with trim = T! It makes no sence., default is TRUE
+#' @param trim if trim is TRUE it selects the left hand side column for final dataframe and deletes the right hand side columns, default is FALSE
+#' @param add.diffs if add.diffs is TRUE differences of likely merged columns are added to resulting dataframe, default is FALSE
 #'
 #' @return merged data frame
 #' @export merge.likely
@@ -21,14 +25,14 @@
 #' @examples
 #' d1<-data.frame(w=sample(1:10,20,T),x=sample(1:10,20,T),y=sample(1:10,20,T),z=sample(c(1:10),20,T),id=1)
 #' d2<-data.frame(w=sample(1:10,20,T),x=sample(1:10,20,T),Y=sample(1:10,20,T),C=sample(c(1:10),20,T),id=2)
-#' merge.likely(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim = F,add.diffs=F)
-#' merge.likely(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim = F,add.diffs=F)
-#' merge.likely(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim = T,add.diffs=F)
-#' merge.likely(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim = T,add.diffs=F)
-#' merge.likely(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim = F,add.diffs=T)
-#' merge.likely(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim = F,add.diffs=T)
-#' merge.likely(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim = T,add.diffs=T)
-#' merge.likely(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim = T,add.diffs=T)
+#' merge.likely(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim=F,add.diffs=F)
+#' merge.likely(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim=F,add.diffs=F)
+#' merge.likely(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim=T,add.diffs=F)
+#' merge.likely(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim=T,add.diffs=F)
+#' merge.likely(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim=F,add.diffs=T)
+#' merge.likely(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim=F,add.diffs=T)
+#' merge.likely(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim=T,add.diffs=T)
+#' merge.likely(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.lk.x=c("y"),by.lk.y=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim=T,add.diffs=T)
 merge.likely <-
 	function(
 		d1,
@@ -41,6 +45,9 @@ merge.likely <-
 		by.lk.y = NULL,
 		min = NULL,
 		max = NULL,
+		all = F,
+		all.x = F,
+		all.y = F,
 		reorder.names = T,
 		trim = F,
 		add.diffs = F ) {

@@ -22,8 +22,8 @@ calendar <-
 		d <-
 			data.frame(
 				date = dt,
-				week.days = lubridate::wday( dt ),
-				week.days.name = weekdays( dt, abbreviate = abbreviate ) )
+				week.day = lubridate::wday( dt ),
+				week.day.name = weekdays( dt, abbreviate = abbreviate ) )
 
 		d$date <-
 			as.character( d$date )
