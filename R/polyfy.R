@@ -1,5 +1,6 @@
 #' polyfy
 #'
+#' @description polyfy creates a data frame, with modified data, to plot it by geom_polygon
 #' @param x vector of numbers or factors
 #' @param y values of numbers
 #' @param g grouping values
