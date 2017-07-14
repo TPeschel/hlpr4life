@@ -1,11 +1,12 @@
 #' polyfy
 #'
-#' @param x vector of numbers or factors 
+#' @description polyfy creates a data frame, with modified data, to plot it by geom_polygon
+#' @param x vector of numbers or factors
 #' @param y values of numbers
 #' @param g grouping values
 #'
 #' @return data frame with rows X, Y, G
-#' @export
+#' @export polyfy
 #'
 #' @examples
 #' polyfy( c( 1 : 100 ), rnorm( 100 ), sample( c( "A", "B" ), 100, TRUE ) )

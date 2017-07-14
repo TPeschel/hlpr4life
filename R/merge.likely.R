@@ -29,7 +29,7 @@
 #' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.x.lk=c("y"),by.y.lk=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim = F,add.diffs=T)
 #' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.x.lk=c("y"),by.y.lk=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = F,trim = T,add.diffs=T)
 #' ml(d1=d1,d2=d2,by=c("x"),by.lk=c("w","id"),by.x.lk=c("y"),by.y.lk=c("Y"),min = c(-2,-2,-2),max=c(1,1,1),reorder.names = T,trim = T,add.diffs=T)
-ml <-
+merge.likely <-
 	function(
 		d1,
 		d2,
