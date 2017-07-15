@@ -30,29 +30,22 @@ calendar <-
 
 		d }
 
-#' make.sics
+#' some.sics
 #'
-#' @param n count of sics that shall be created
+#' @description some.sics creates a vector of coherently sics of same width.
+#' @param n.size count of sics that shall be created
+#' @param n.first first sic to be created
+#' @param n.last last sic to be created
 #'
-#' @return vector of characters of sics
+#' @return character vector of sics
 #' @export
 #'
 #' @examples
-#' make.sics( 90, 110 )
-make.sics <-
-	function( n.size = 100, n.first = 1, n.last = n.size ) {
+#' some.sics( n.first = 0, n.last = 110 )
+#' some.sics( n.size = 12 )
+#' some.sics( 10 )
+#'
+some.sics <-
+	function( n.size = 100, n.first = 1, n.last = n.size, digits = ceiling( log10( n.last ) ) ) {
 
-		sc <-
-			sapply(
-				as.character( c( n.first : n.last ) ),
-				function( s ) {
-					paste0(
-						paste(
-							rep(
-								"0",
-								times = floor( log10( n.last ) + 1 ) - nchar( s ) ),
-							collapse = "" ),
-						s ) } )
-		names( sc ) <-
-			NULL
-		sc }
+		paste0( "LI", str_pad( c( n.first : n.last ), digits, pad = "0" ) ) }
