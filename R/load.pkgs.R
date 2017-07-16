@@ -9,7 +9,7 @@
 #' @examples
 #' load.pkgs( c( "dplyr", "ggplot2", "ggthemes", "reshape2" ) )
 load.pkgs <-
-	function( pkgs ) {
+	function( pkgs =c( "dplyr", "ggplot2", "ggthemes", "reshape2" )) {
 
 		missing.pkgs <-
 			pkgs[ !pkgs %in% installed.packages( ) ]

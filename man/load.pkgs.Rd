@@ -4,7 +4,7 @@
 \alias{load.pkgs}
 \title{load.pkgs}
 \usage{
-load.pkgs(pkgs)
+load.pkgs(pkgs = c("dplyr", "ggplot2", "ggthemes", "reshape2"))
 }
 \arguments{
 \item{pkgs}{}

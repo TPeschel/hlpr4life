@@ -17,7 +17,7 @@ polyfy(x, y, g)
 data frame with rows X, Y, G
 }
 \description{
-polyfy
+polyfy creates a data frame, with modified data, to plot it by geom_polygon
 }
 \examples{
 polyfy( c( 1 : 100 ), rnorm( 100 ), sample( c( "A", "B" ), 100, TRUE ) )
