@@ -54,9 +54,9 @@ merge.likely <-
 
 		# d1 = d.1
 		# d2 = d.2
-		# by = c( "a", "b" )
-		# by.x = c( "d" )
-		# by.y = c( "c" )
+		# by = c( "x" )
+		# by.x = c( "y", "z" )
+		# by.y = c( "Y", "C" )
 		# by.lk = c( "x" )
 		# by.lk.x = c( "y", "z" )
 		# by.lk.y = c( "Y", "Z" )
@@ -173,8 +173,16 @@ merge.likely <-
 
 				} else {
 
-					d.n <-
-						t( cbind( by.lk.x.tot, by.lk.y.tot ) )
+					by.lk.tot <-
+						cbind( by.lk.x.tot, by.lk.y.tot )
+
+					if( !is.null( by.lk.tot ) ) {
+
+						d.n <-
+							t( by.lk.tot ) }
+					else {
+						d.n <-
+							"" }
 
 					d <-
 						d[ , c( setdiff( names( d ), d.n ), d.n ) ] }
