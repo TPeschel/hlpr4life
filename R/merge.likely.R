@@ -182,7 +182,7 @@ merge.likely <-
 							t( by.lk.tot ) }
 					else {
 						d.n <-
-							"" }
+							NULL }
 
 					d <-
 						d[ , c( setdiff( names( d ), d.n ), d.n ) ] }
