@@ -36,16 +36,18 @@ calendar <-
 #' @param n.size count of sics that shall be created
 #' @param n.first first sic to be created
 #' @param n.last last sic to be created
+#' @param prefix a string written in front of the sic
+#' @param postfix a string written behind the sic
 #'
 #' @return character vector of sics
 #' @export
 #'
 #' @examples
 #' some.sics( n.first = 0, n.last = 110 )
-#' some.sics( n.size = 12 )
-#' some.sics( 10 )
+#' some.sics( n.size = 9 )
+#' some.sics( 10, prefix = "LIFE" )
 #'
 some.sics <-
-	function( n.size = 100, n.first = 1, n.last = n.size, digits = ceiling( log10( n.last ) ) ) {
+	function( n.size = 100, n.first = 1, n.last = n.first + n.size - 1, digits = 1 + floor( log10( n.last ) ), prefix = "LI", postfix = "" ) {
 
-		paste0( "LI", str_pad( c( n.first : n.last ), digits, pad = "0" ) ) }
+		paste0( prefix, stringr::str_pad( c( n.first : n.last ), digits, pad = "0" ), postfix ) }
