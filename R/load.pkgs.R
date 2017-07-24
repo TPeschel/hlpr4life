@@ -11,13 +11,10 @@
 load.pkgs <-
 	function( pkgs =c( "dplyr", "ggplot2", "ggthemes", "reshape2" )) {
 
-		missing.pkgs <-
-			pkgs[ !pkgs %in% installed.packages( ) ]
+		exist <-
+			pkgs %in% rownames( installed.packages( ) )
 
-		for( p in missing.pkgs ) {
-
-			print( paste0( "install package ", p, "." ) )
-
-			install.packages( p ) }
+		if( any( !exist ) )
+			install.packages( pkgs[ !exist ] )
 
 		sapply( pkgs, library, character.only = TRUE ) }
