@@ -4,8 +4,8 @@
 \alias{some.sics}
 \title{some.sics}
 \usage{
-some.sics(n.size = 100, n.first = 1, n.last = n.size,
-  digits = ceiling(log10(n.last)))
+some.sics(n.size = 100, n.first = 1, n.last = n.first + n.size - 1,
+  digits = 1 + floor(log10(n.last)), prefix = "LI", postfix = "")
 }
 \arguments{
 \item{n.size}{count of sics that shall be created}
@@ -13,6 +13,10 @@ some.sics(n.size = 100, n.first = 1, n.last = n.size,
 \item{n.first}{first sic to be created}
 
 \item{n.last}{last sic to be created}
+
+\item{prefix}{a string written in front of the sic}
+
+\item{postfix}{a string written behind the sic}
 }
 \value{
 character vector of sics
@@ -22,7 +26,7 @@ some.sics creates a vector of coherently sics of same width.
 }
 \examples{
 some.sics( n.first = 0, n.last = 110 )
-some.sics( n.size = 12 )
-some.sics( 10 )
+some.sics( n.size = 9 )
+some.sics( 10, prefix = "LIFE" )
 
 }
