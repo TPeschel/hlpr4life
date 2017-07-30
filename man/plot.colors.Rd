@@ -10,7 +10,7 @@
 a plot of all colors returned by colors( )
 }
 \description{
-PLOT COLORS
+a plot of all colors returned by colors( )
 }
 \examples{
 plot.colors( )
