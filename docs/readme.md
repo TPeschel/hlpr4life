@@ -4,13 +4,13 @@ This is a little collection of some usefull R-stuff
 
 # CALENDAR
 
-`
-clndr <-
-	calendar(
-		start = "2017-01-01",
-		end   = "2017-12-31",
-	abbreviate = F,
-	tz = "Europe/Berlin" )
+```R
+clndr <- 
+	calendar( 
+		start = "2017-01-01", 
+		end = "2017-12-31", 
+		abbreviate = F, 
+		tz = "Europe/Berlin" )
 
 (
 	weekends.in.2017 <-
@@ -29,7 +29,7 @@ clndr <-
 		calendar(
 			start = "2017-06-21",
 			end   = "2017-09-21" ) )
-`
+```
 
 2.
 	`color.gradient( "red", "green", 16 )`
