@@ -28,9 +28,19 @@ clndr <-
 	summer.2017 <-
 		calendar(
 			start = "2017-06-21",
-			end   = "2017-09-21" ) )
+			end   = "2017-09-21" ) )
 ```
-
-2.
-	`color.gradient( "red", "green", 16 )`
-	
+# COLORS
+## PLOT COLORS
+```R
+plot.colors( )
+```
+## COLOR GRADIENT
+```R
+color.gradient( "red", "green", 16 )
+```
+## PLOT COLOR GRADIENT
+```R
+plot.color.gradient( "red", "green", 256, "horiz", F )
+plot.color.gradient( "blue", "yellow", 16, "vert", T )
+```
