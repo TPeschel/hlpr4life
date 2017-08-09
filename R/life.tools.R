@@ -14,10 +14,10 @@ Sys.setenv( TZ = "BMT" )
 #' @examples
 #' calendar( )
 calendar <-
-	function( start = "2000-01-01 00:00:00", end = "2017-06-19 00:00:00", abbreviate = T ) {
+	function( start = "2000-01-01", end = "2017-06-19", abbreviate = T, tz = "Europe/Berlin" ) {
 
 		dt <-
-			as.POSIXct( seq( lubridate::as_datetime( start ), lubridate::as_datetime( end ), by = 24 * 3600 ), tz = "BMT" )
+			seq( lubridate::as_date( start ), lubridate::as_date( end ), by = 1 )
 
 		d <-
 			data.frame(
