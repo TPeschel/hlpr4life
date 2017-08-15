@@ -123,9 +123,9 @@ ggplot( piano( 4, 4 + 2 * 12 ) ) +
 ```R
 load.pkgs( c( "ggplot2" ) )
 ggsubplot(
-	ggplot( )+
-	geom_point( aes( c( 1 : 100 ), rnorm( 100 ) ) ),
-	ggplot( )+
-	geom_point( aes( c( 1 : 100 ), rnorm( 100, 10 ) ) ),
-	cols = 2 ) )
+	ggplot( ) + theme_bw( ) + scale_color_discrete( guide = F ) +
+	geom_point( aes( c( 1 : 1000 ), rnorm( 1000, -10 ), col = sample( letters[ 1 : 10 ], 1000, T ) ) ),
+	ggplot( ) + theme_bw( ) + scale_color_discrete( guide = F ) +
+	geom_point( aes( c( 1 : 1000 ), rnorm( 1000, +10 ), col = sample( letters[ 1 : 10 ], 1000, T ) ) ),
+	cols = 2 )
 ```
