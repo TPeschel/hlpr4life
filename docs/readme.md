@@ -97,6 +97,7 @@ load.pkgs( c( "ggplot2", "ggthemes" ) )
 piano( 4, 4 + 2 * 12 )
 ggplot( piano( 4, 4 + 2 * 12 ) ) +
     geom_histogram( aes( note, -c( 1, .63 )[ match( color, c( "ivory", "ebony" ) ) ], fill = color ), stat = "identity" ) +
+    geom_histogram( aes( note, .01 * frequency ), col = "black", stat = "identity" ) +
     scale_fill_manual( values = c( "#000000", "#f0f3f4" ), guide = F ) +
     geom_text( aes( note, label = note, col = color ), y = -.2, angle = 90 ) +
     scale_color_manual( values = c( "#f0f3f4", "#000000" ), guide = F ) +
@@ -106,7 +107,7 @@ ggplot( piano( 4, 4 + 2 * 12 ) ) +
         axis.title.x = element_blank( ),
         axis.text.y = element_blank( ),
         axis.title.y = element_blank( ) ) +
-    ylim( -1, 0 )
+    ylim( -1, 1.5 )
 ```
 # RENAMER
 ## RENAME COLUMN
