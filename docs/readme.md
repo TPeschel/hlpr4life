@@ -122,10 +122,28 @@ ggplot( piano( 4, 4 + 2 * 12 ) ) +
 ## GGSUBPLOT
 ```R
 load.pkgs( c( "ggplot2" ) )
+d <-
+	data.frame( 
+		x = rnorm( 1000, +10 ), 
+		y = sample( letters[ 1 : 3 ], 1000, T ),
+		s = sample( c( "female", "male" ), 1000, T ) )
+m <- dplyr::summarise(dplyr::group_by(d,y,s),m=mean(x))
 ggsubplot(
-	ggplot( ) + theme_bw( ) + scale_color_discrete( guide = F ) +
-	geom_point( aes( c( 1 : 1000 ), rnorm( 1000, -10 ), col = sample( letters[ 1 : 10 ], 1000, T ) ) ),
-	ggplot( ) + theme_bw( ) + scale_color_discrete( guide = F ) +
-	geom_point( aes( c( 1 : 1000 ), rnorm( 1000, +10 ), col = sample( letters[ 1 : 10 ], 1000, T ) ) ),
-	cols = 2 )
+	ggplot( d ) + theme_bw( ) + scale_color_discrete( guide = F ) +
+	geom_point( aes( c( 1 : 1000 ), x, col = paste0( y, s ) ) ),
+	ggplot( d ) + 
+	theme_bw( ) + scale_fill_discrete( guide = F ) + scale_color_discrete( guide = F ) +
+	geom_histogram( aes( x, fill = paste0( y, s ) ), alpha = .5 ) +
+	geom_vline( aes( xintercept = m, col = paste0( y, s ) ), m ) +
+	facet_grid( s ~ y ),
+	ggplot( d ) + 
+	theme_bw( ) + scale_fill_discrete( guide = F ) + scale_color_discrete( guide = F ) +
+	geom_histogram( aes( x, fill = paste0( y, s ) ), alpha = .5 ) +
+	geom_vline( aes( xintercept = m, col = paste0( y, s ) ), m ),
+	layout = t(
+		matrix(
+			c( 
+				1, 2, 
+				3, 3 ),
+			ncol = 2 ) ) )
 ```
