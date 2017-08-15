@@ -1,6 +1,6 @@
 Sys.time( )
 Sys.timezone( )
-Sys.setenv( TZ = "BMT" )
+Sys.setenv( TZ = "Europe/Berlin" )
 
 #' calendar
 #'
@@ -22,8 +22,8 @@ calendar <-
 		d <-
 			data.frame(
 				date = dt,
-				week.day = lubridate::wday( dt ),
-				week.day.name = weekdays( dt, abbreviate = abbreviate ) )
+				day.of.week = lubridate::wday( dt ),
+				day_of_week = weekdays( dt, abbreviate = abbreviate ) )
 
 		d$date <-
 			as.character( d$date )
