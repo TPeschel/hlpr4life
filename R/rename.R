@@ -30,33 +30,18 @@ rename.column <-
 #' @export
 #'
 #' @examples
-#' (d<-rename.columns( data.frame(x=c(1:10),y=rnorm(10),z=c(10:1)),c("y","x"),c("x","y")))
+#' (d<-rename.columns(data.frame(x=c(1:10),y=rnorm(10),z=c(10:1)),c("y","x"),c("x","y")))
+#' (d<-rename.columns(d,c("y","x"),c("x","y")))
 rename.columns <-
 	function( d, old.column.names, new.column.names ) {
 
-		nms.both <-
-			intersect( old.column.names, new.column.names )
+		n <-
+			colnames( d )
 
-		if( 0 < length( nms.both ) ) {
+		m <-
+			n %in% old.column.names
 
-			nms <-
-				paste0( old.column.names, new.column.names, "X" )
+		colnames( d )[ m ] <-
+			new.column.names[ match( n[ m ], old.column.names ) ]
 
-			for( i in c( 1 : length( old.column.names ) ) ) {
-
-				d <-
-					rename.column( d, old.column.names[ i ], nms[ i ] ) }
-
-			for( i in c( 1 : length( old.column.names ) ) ) {
-
-				d <-
-					rename.column( d, nms[ i ], new.column.names[ i ] ) }
-
-			return( d )
-		}
-
-		for( i in c( 1 : length( old.column.names ) ) ) {
-
-			d <-
-				rename.column( d, old.column.names[ i ], new.column.names[ i ] ) }
 		d }
