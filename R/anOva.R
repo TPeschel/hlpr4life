@@ -305,6 +305,7 @@ anOva <-
 				Y = y,
 				GROUP = g,
 				TIME = seq_along( y ) )
+	
 		dscrptn <-
 			my.summary(
 				data.frame(
