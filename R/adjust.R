@@ -32,7 +32,7 @@ adjust <-
                 paste0( nm, ".", a )
 
         data[ , nm ] <-
-            ( lm( formula, data ) )$residuals + mean( data[ , a.v[ 1 ] ], na.rm = T )
+            ( lm( formula, data ) )$residuals + mean( unlist( data[ , a.v[ 1 ] ] ), na.rm = T )
 
         data }
 ########################################################################
