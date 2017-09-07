@@ -1,7 +1,7 @@
-#' rename column
-#' @description rename.column( d, "old", "new" ) changes the old column name "old" to the new one "new".
+#' RENAME COLUMN
+#' @description rename.column( data, "old", "new" ) changes the old column name "old" to the new one "new".
 #'
-#' @param d dataframe for which one name should be changed
+#' @param data dataframe for which one name should be changed
 #' @param old.column.name old column name
 #' @param new.column.name new column name
 #'
@@ -12,17 +12,17 @@
 #' (d<-rename.column(data.frame(x=c(1:10),y=rnorm(10)),"x","X"))
 #' (d<-rename.column(d,"y","Y"))
 rename.column <-
-	function( d, old.column.name, new.column.name ) {
+	function( data, old.column.name, new.column.name ) {
 
-		names( d )[ names( d ) == old.column.name ] <-
+		names( data )[ names( data ) == old.column.name ] <-
 			new.column.name
 
-		d }
+		data }
 
-#' rename columns
-#' @description rename.columns( d, c( "alter", "groesse" ), c( "age", "height" ) ) takes a data frame d containing the old column name "alter" and "groesse" and returns a new dataframe with the replaced names "age" and "size".
+#' RENAME COLUMNS
+#' @description rename.columns( data, c( "alter", "groesse" ), c( "age", "height" ) ) takes a data frame d containing the old column name "alter" and "groesse" and returns a new dataframe with the replaced names "age" and "size".
 #'
-#' @param d dataframe with new column names
+#' @param data dataframe with new column names
 #' @param old.column.names old column names
 #' @param new.column.names new column names
 #'
@@ -33,15 +33,41 @@ rename.column <-
 #' (d<-rename.columns(data.frame(x=c(1:10),y=rnorm(10),z=c(10:1)),c("y","x"),c("x","y")))
 #' (d<-rename.columns(d,c("y","x"),c("x","y")))
 rename.columns <-
-	function( d, old.column.names, new.column.names ) {
+	function( data, old.column.names, new.column.names ) {
 
 		n <-
-			colnames( d )
+			colnames( data )
 
 		m <-
 			n %in% old.column.names
 
-		colnames( d )[ m ] <-
+		colnames( data )[ m ] <-
 			new.column.names[ match( n[ m ], old.column.names ) ]
 
-		d }
+		data }
+
+#' RENAME LIST
+#' @description rename.columns( data, c( "alter", "groesse" ), c( "age", "height" ) ) takes a data frame d containing the old column name "alter" and "groesse" and returns a new dataframe with the replaced names "age" and "size".
+#'
+#' @param list named list
+#' @param old.names old names
+#' @param new.names new names
+#'
+#' @return dataframe with replaced column names
+#' @export
+#'
+#' @examples
+#' (l<-rename.list(list(x="x",y="y",z="z"),c("y","z","x"),c("Ypsilon","CED","U")))
+rename.list <-
+	function( list, old.names, new.names ) {
+
+		n <-
+			names( list )
+
+		m <-
+			n %in% old.names
+
+		names( list )[ m ] <-
+			new.names[ match( n[ m ], old.names ) ]
+
+		list }

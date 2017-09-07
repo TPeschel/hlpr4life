@@ -4,8 +4,8 @@
 \alias{calendar}
 \title{calendar}
 \usage{
-calendar(start = "2000-01-01 00:00:00", end = "2017-06-19 00:00:00",
-  abbreviate = T)
+calendar(start = "2000-01-01", end = "2017-06-19", abbreviate = T,
+  tz = "Europe/Berlin")
 }
 \arguments{
 \item{start}{first date}
