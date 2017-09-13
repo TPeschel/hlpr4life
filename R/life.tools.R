@@ -91,23 +91,14 @@ ifnot <-
 #' ( lst <- list.append( lst, "unnamed" ) )
 #' ( lst <- list.append( lst, c( "A", "B" ), c( "a", "b" ) ) )
 list.append <-
-	function( list, value, name = NA ) {
+	function( list, x, name = NA ) {
 
-		if( is.na( name ) && length( value ) != length( value ) ) {
+		list[[ length( list ) + 1 ]] <-
+				x
 
-			print( "Error! Value and name differ in their lengths." )
-
-				return( NA ) }
-
-		for( i in 1 : length( value ) ) {
-
-			list[[ length( list ) + 1 ]] <-
-				value[ i ]
-
-			if( !is.na( name[ i ] ) )
+			if( !is.na( name ) )
 
 				names( list )[ length( list ) ] <-
-					name[ i ]
-		}
+					name
 
 		list }
