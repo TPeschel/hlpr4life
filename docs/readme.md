@@ -119,6 +119,10 @@ ggplot( piano( 4, 4 + 2 * 12 ) ) +
 ```R
 (d<-rename.columns( data.frame(x=c(1:10),y=rnorm(10),z=c(10:1)),c("y","x"),c("x","y")))
 ```
+## RENAME LIST
+```R
+(l<-rename.list(list(x="x",y="y",z="z"),c("y","z","x"),c("Ypsilon","CED","U")))
+```
 # SUB PLOTS
 ## GGSUBPLOT
 ```R

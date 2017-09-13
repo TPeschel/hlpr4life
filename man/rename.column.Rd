@@ -2,12 +2,12 @@
 % Please edit documentation in R/rename.R
 \name{rename.column}
 \alias{rename.column}
-\title{rename column}
+\title{RENAME COLUMN}
 \usage{
-rename.column(d, old.column.name, new.column.name)
+rename.column(data, old.column.name, new.column.name)
 }
 \arguments{
-\item{d}{dataframe for which one name should be changed}
+\item{data}{dataframe for which one name should be changed}
 
 \item{old.column.name}{old column name}
 
@@ -17,7 +17,7 @@ rename.column(d, old.column.name, new.column.name)
 dataframe with new column name
 }
 \description{
-rename.column( d, "old", "new" ) changes the old column name "old" to the new one "new".
+rename.column( data, "old", "new" ) changes the old column name "old" to the new one "new".
 }
 \examples{
 (d<-rename.column(data.frame(x=c(1:10),y=rnorm(10)),"x","X"))
