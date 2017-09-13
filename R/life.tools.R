@@ -51,3 +51,61 @@ some.sics <-
 	function( n.size = 100, n.first = 1, n.last = n.first + n.size - 1, digits = 1 + floor( log10( n.last ) ), prefix = "LI", postfix = "" ) {
 
 		paste0( prefix, stringr::str_pad( c( n.first : n.last ), digits, pad = "0" ), postfix ) }
+
+#' IF NOT
+#'
+#' @param cond condition that hast to be false
+#' @param optTrue option running if condition is not TRUE
+#' @param optFalse option running if condition is not FALSE
+#'
+#' @return execution of code optTrue or optFalse
+#' @export
+#'
+#' @examples
+#' ifnot( 1 == 2, cat( "one is not equal to two" ), cat( "one is not not equal to two" ) )
+ifnot <-
+	function( cond, optTrue, optFalse = { } ) {
+
+		if( !cond ) {
+
+			optTrue
+
+		} else {
+
+			optFalse } }
+
+#' LIST APPEND
+#'
+#' @param lst list that should extended by the element x
+#' @param x element that should be append to list lst
+#'
+#' @return by x extended list
+#' @export
+#'
+#' @examples
+#' ( lst <- list( x = 9 ) )
+#' ( lst <- list.append( lst, value = Sys.time( ), name = "TIME" ) )
+#' ( lst <- list.append( lst, "y", "Ypsilon" ) )
+#' ( lst <- list.append( lst, "unnamed" ) )
+#' ( lst <- list.append( lst, c( "A", "B" ), c( "a", "b" ) ) )
+list.append <-
+	function( list, value, name = NA ) {
+
+		if( is.na( name ) && length( value ) != length( value ) ) {
+
+			print( "Error! Value and name differ in their lengths." )
+
+				return( NA ) }
+
+		for( i in 1 : length( value ) ) {
+
+			list[[ length( list ) + 1 ]] <-
+				value[ i ]
+
+			if( !is.na( name[ i ] ) )
+
+				names( list )[ length( list ) ] <-
+					name[ i ]
+		}
+
+		list }
