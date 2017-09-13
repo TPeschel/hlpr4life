@@ -54,6 +54,7 @@ some.sics <-
 
 #' IF NOT
 #'
+#' @description shorten for if( !... ) do something else do something different
 #' @param cond condition that hast to be false
 #' @param optTrue option running if condition is not TRUE
 #' @param optFalse option running if condition is not FALSE
@@ -76,6 +77,7 @@ ifnot <-
 
 #' LIST APPEND
 #'
+#' @description list.append gives the opportunity to append elements to a list and name it.
 #' @param lst list that should extended by the element x
 #' @param x element that should be append to list lst
 #'
