@@ -80,6 +80,7 @@ ifnot <-
 #' @description list.append gives the opportunity to append elements to a list and name it.
 #' @param lst list that should extended by the element x
 #' @param x element that should be append to list lst
+#' @param name optinal a name for list element
 #'
 #' @return by x extended list
 #' @export
