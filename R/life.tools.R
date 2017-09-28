@@ -116,7 +116,7 @@ list.append <-
 #' table.columns(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)))
 #' table.columns(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)),F)
 table.columns <-
-	function( data, show.missings = T ) {
+	function( data, show.missings = F ) {
 		if( show.missings )
 			return( sapply( data, function( d ) sum( is.na( d ) ) ) )
 		else
