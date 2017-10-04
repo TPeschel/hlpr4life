@@ -30,7 +30,7 @@ rename.column <-
 #' @export
 #'
 #' @examples
-#' (d<-rename.columns(data.frame(x=c(1:10),y=rnorm(10),z=c(10:1)),c("y","x"),c("x","y")))
+#' (d<-rename.columns(d<-data.frame(x=c(1:10),y=rnorm(10),z=c(10:1)),c("y","x"),c("x","y")))
 #' (d<-rename.columns(d,c("y","x"),c("x","y")))
 rename.columns <-
 	function( data, old.column.names, new.column.names ) {
