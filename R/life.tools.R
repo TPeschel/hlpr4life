@@ -104,63 +104,52 @@ list.append <-
 
 		list }
 
-#' TABLE DATA
+#' TABLE DATAFRAME
 #'
 #' @param data dataframe which columns should be summarised
 #'
-#' @return summary of data
+#' @return table of data containing sum of missing and available data their mins and maxs.
 #' @export
 #'
 #' @examples
-#' table.data(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)))
-#' table.data(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)))
-table.data <-
-	function( data ) {
-		
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)))
+table.df <-
+	function( data, as.dataframe = T ) {
+
+		MISSING <-
+			sapply( data, function( d ) sum( is.na( d ) ) )
+
+		AVAILABLE <-
+			sapply( data, function( d ) sum( !is.na( d ) ) )
+
+		MIN <-
+			sapply( data, function( d ) ifelse( is.factor( d ), min( as.character( d ), na.rm = T ), min( d, na.rm = T ) ) )
+
+		MAX <-
+			sapply( data, function( d ) ifelse( is.factor( d ), max( as.character( d ), na.rm = T ), max( d, na.rm = T ) ) )
+
+		MEAN <-
+			sapply( data, function( d ) ifelse( !is.numeric( d ), NA, mean( d, na.rm = T ) ) )
+
+		MEDIAN <-
+			sapply( data, function( d ) ifelse( is.factor( d ), NA, median( d, na.rm = T ) ) )
+
 		d <-
-			data[ , sapply( data, is.numeric ) ]
+			rbind(
+				AVAILABLE,
+				MISSING,
+				MIN,
+				MEDIAN,
+				MEAN,
+				MAX )
 
-		missing <-
-			sapply( d, function( d ) sum( is.na( d ) ) )
+		if( as.dataframe ) {
 
-		available <-
-			sapply( d, function( d ) sum( !is.na( d ) ) )
+			return( as.data.frame( d ) ) }
 
-		min <-
-			sapply( d, min, na.rm = T )
+		d
+	}
 
-		median <-
-			sapply( d, median, na.rm = T )
-
-		mean <-
-			sapply( d, mean, na.rm = T )
-
-		max <-
-			sapply( d, max, na.rm = T )
-
-		d.num <-
-			rbind( available, missing )
-
-		d.sum <-
-			rbind( min, mean, median, max )
-			
-		d.num.sum <-
-			rbind( d.num, d.sum )
-			
-		d <-
-			data[ , sapply( data, function( dd ) !is.numeric( dd ) ) ]
-			
-		missing <-
-			sapply( d, function( d ) sum( is.na( d ) ) )
-
-		available <-
-			sapply( d, function( d ) sum( !is.na( d ) ) )
-
-		d.fac <-
-			rbind( available, missing )
-			
-		list( FACTORS = d.fac, NUMBERS = d.num.sum )
-}
 
 #' REMOVE COLUMNS
 #'
