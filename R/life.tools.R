@@ -104,20 +104,76 @@ list.append <-
 
 		list }
 
-#' TABLE COLUMNS
+#' TABLE DATA
 #'
 #' @param data dataframe which columns should be summarised
-#' @param show.missings flag for summing missings or availables
 #'
-#' @return print of missings or availables, depending on show.missings
+#' @return summary of data
 #' @export
 #'
 #' @examples
-#' table.columns(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)))
-#' table.columns(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)),F)
-table.columns <-
-	function( data, show.missings = F ) {
-		if( show.missings )
-			return( sapply( data, function( d ) sum( is.na( d ) ) ) )
-		else
-			return( sapply( data, function( d ) sum( !is.na( d ) ) ) ) }
+#' table.data(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)))
+#' table.data(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)))
+table.data <-
+	function( data ) {
+		
+		d <-
+			data[ , sapply( data, is.numeric ) ]
+
+		missing <-
+			sapply( d, function( d ) sum( is.na( d ) ) )
+
+		available <-
+			sapply( d, function( d ) sum( !is.na( d ) ) )
+
+		min <-
+			sapply( d, min, na.rm = T )
+
+		median <-
+			sapply( d, median, na.rm = T )
+
+		mean <-
+			sapply( d, mean, na.rm = T )
+
+		max <-
+			sapply( d, max, na.rm = T )
+
+		d.num <-
+			rbind( available, missing )
+
+		d.sum <-
+			rbind( min, mean, median, max )
+			
+		d.num.sum <-
+			rbind( d.num, d.sum )
+			
+		d <-
+			data[ , sapply( data, function( dd ) !is.numeric( dd ) ) ]
+			
+		missing <-
+			sapply( d, function( d ) sum( is.na( d ) ) )
+
+		available <-
+			sapply( d, function( d ) sum( !is.na( d ) ) )
+
+		d.fac <-
+			rbind( available, missing )
+			
+		list( FACTORS = d.fac, NUMBERS = d.num.sum )
+}
+
+#' REMOVE COLUMNS
+#'
+#' @param data A dataframe that contains columns which should be removed.
+#' @param column.names Names of columns that should be removed.
+#'
+#' @return A dataframe without removed columns.
+#' @export
+#'
+#' @examples
+#' remove.columns(data.frame(x="X",y="Y",z="Z",w="W"),c("x","z"))
+remove.columns <-
+	function( data, column.names ) {
+
+		data[ , !names( data ) %in% column.names ]
+	}
