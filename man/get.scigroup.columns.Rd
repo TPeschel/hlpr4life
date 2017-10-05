@@ -5,12 +5,13 @@
 \title{GET SCI-GROUP COLUMNS}
 \usage{
 get.scigroup.columns(data,
-  pattern = "sci_group|sci-group|scigroup|sgroup|group|grp|gruppe")
+  pattern = "sci_group|sci-group|scigroup|sgroup|group|grp|gruppe",
+  perl = T)
 }
 \arguments{
 \item{data}{dataframe which has some sci-group columns}
 
-\item{pattern}{}
+\item{perl}{logical: use perl regex}
 }
 \value{
 names of sci-group columns

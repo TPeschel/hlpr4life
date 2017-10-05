@@ -10,6 +10,8 @@ get.sic.columns(data, pattern = "sic|pseudo", perl = T)
 \item{data}{dataframe which has some sic columns}
 
 \item{pattern}{search pattern for finding column names via grep}
+
+\item{perl}{logical: use perl regex}
 }
 \value{
 names of sic columns

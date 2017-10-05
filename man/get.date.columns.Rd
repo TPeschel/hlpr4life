@@ -10,6 +10,8 @@ get.date.columns(data, pattern = "edat|date|datum", perl = T)
 \item{data}{dataframe which has some date columns}
 
 \item{pattern}{search pattern for finding column names via grep}
+
+\item{perl}{logical: use perl regex}
 }
 \value{
 names of date columns

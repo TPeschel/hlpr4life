@@ -209,6 +209,7 @@ get.columns <-
 #' search string for a certain pattern.
 #' @param data dataframe which has some date columns
 #' @param pattern search pattern for finding column names via grep
+#' @param perl logical: use perl regex
 #'
 #' @return names of date columns
 #' @export
@@ -229,6 +230,7 @@ get.date.columns <-
 #'
 #' @param data dataframe which has some sic columns
 #' @param pattern search pattern for finding column names via grep
+#' @param perl logical: use perl regex
 #'
 #' @return names of sic columns
 #' @export
@@ -247,6 +249,7 @@ get.sic.columns <-
 #'
 #' @param data dataframe which has some sci-group columns
 #' @param pattern
+#' @param perl logical: use perl regex
 #'
 #' @return names of sci-group columns
 #' @export
@@ -255,7 +258,7 @@ get.sic.columns <-
 #' (d<-data.frame(SGROUP="A2_02",SCI_GROUP="B1_10",Gruppe="A1-SK_10",GRP="A3_09"))
 #' get.scigroup.columns(d)
 get.scigroup.columns <-
-	function( data, pattern = "sci_group|sci-group|scigroup|sgroup|group|grp|gruppe" ) {
+	function( data, pattern = "sci_group|sci-group|scigroup|sgroup|group|grp|gruppe", perl = T ) {
 		get.columns( data, pattern, perl ) }
 
 
