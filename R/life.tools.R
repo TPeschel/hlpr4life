@@ -107,6 +107,8 @@ list.append <-
 #' TABLE DATAFRAME
 #'
 #' @param data dataframe which columns should be summarised
+#' @param summary logical: if is true additionally min, median, mean and max will be tabled
+#' @param as.data.frame logical: result is shown as data frame
 #'
 #' @return table of data containing sum of missing and available data their mins and maxs.
 #' @export
@@ -114,36 +116,45 @@ list.append <-
 #' @examples
 #' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)))
 table.df <-
-	function( data, as.dataframe = T ) {
+	function( data, summary = F, as.dataframe = !summary ) {
 
 		options( warn = -1 )
 
 		MISSING <-
-			sapply( data, function( d ) sum( is.na( d ) ) )
+			sum.na( data )
 
 		AVAILABLE <-
-			sapply( data, function( d ) sum( !is.na( d ) ) )
+			sum.av( data )
 
-		MIN <-
-			sapply( data, function( d ) ifelse( is.factor( d ), min( as.character( d ), na.rm = T ), min( d, na.rm = T ) ) )
+		if( summary )
+			MIN <-
+				sapply( data, function( d ) ifelse( is.factor( d ), min( as.character( d ), na.rm = T ), min( d, na.rm = T ) ) )
 
-		MAX <-
-			sapply( data, function( d ) ifelse( is.factor( d ), max( as.character( d ), na.rm = T ), max( d, na.rm = T ) ) )
+		if( summary )
+			MAX <-
+				sapply( data, function( d ) ifelse( is.factor( d ), max( as.character( d ), na.rm = T ), max( d, na.rm = T ) ) )
 
-		MEAN <-
-			sapply( data, function( d ) ifelse( !is.numeric( d ), NA, mean( d, na.rm = T ) ) )
+		if( summary )
+			MEAN <-
+				sapply( data, function( d ) ifelse( !is.numeric( d ), NA, mean( d, na.rm = T ) ) )
 
-		MEDIAN <-
-			sapply( data, function( d ) ifelse( is.factor( d ), NA, median( d, na.rm = T ) ) )
+		if( summary )
+			MEDIAN <-
+				sapply( data, function( d ) ifelse( is.factor( d ), NA, median( d, na.rm = T ) ) )
 
 		d <-
 			rbind(
 				AVAILABLE,
-				MISSING,
-				MIN,
-				MEDIAN,
-				MEAN,
-				MAX )
+				MISSING )
+
+		if( summary ) {
+			d <-
+				rbind(
+					d,
+					MIN,
+					MEDIAN,
+					MEAN,
+					MAX ) }
 
 		if( as.dataframe ) {
 
@@ -319,20 +330,3 @@ sum.av <-
 		sapply( data, function( col ) sum( !is.na( col ) ) )
 	}
 
-#' GET INFO FOR DATAFRAME
-#'
-#' @param data dataframe which colums should be lightly summarised
-#'
-#' @return dataframe with the total number, the numbers of available and missing data for each column
-#' @export
-#'
-#' @examples
-#' (d<-data.frame(x=c(NA,"Hello",NA,"World",NA),y=c(1:5),z=rep(NA,5)))
-#' get.info( d )
-get.info <-
-	function( data ) {
-		rbind(
-			MISSINGS   = sum.na( data ),
-			AVAILABLES = sum.av( data ),
-			TOTAL      = nrow( data ) )
-	}

@@ -4,10 +4,14 @@
 \alias{table.df}
 \title{TABLE DATAFRAME}
 \usage{
-table.df(data, as.dataframe = T)
+table.df(data, summary = F, as.dataframe = !summary)
 }
 \arguments{
 \item{data}{dataframe which columns should be summarised}
+
+\item{summary}{logical: if is true additionally min, median, mean and max will be tabled}
+
+\item{as.data.frame}{logical: result is shown as data frame}
 }
 \value{
 table of data containing sum of missing and available data their mins and maxs.
