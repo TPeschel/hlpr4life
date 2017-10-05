@@ -4,7 +4,7 @@
 \alias{get.sic.columns}
 \title{GET SIC COLUMNS}
 \usage{
-get.sic.columns(data, pattern = "sic|pseudo")
+get.sic.columns(data, pattern = "sic|pseudo", perl = T)
 }
 \arguments{
 \item{data}{dataframe which has some sic columns}

@@ -4,7 +4,7 @@
 \alias{get.columns}
 \title{GET COLUMNS}
 \usage{
-get.columns(data, pattern = "DAT|SIC|GROUP")
+get.columns(data, pattern = "DAT|SIC|GROUP", perl = T)
 }
 \arguments{
 \item{data}{dataframe which has some date columns}
