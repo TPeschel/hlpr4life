@@ -199,8 +199,8 @@ remove.columns <-
 #' (d<-data.frame(SIC="LI01234",Y=1000.,x=10,SCI_GROUP="A2_12",DATE="2017-10-05",EDAT="2017-10-04"))
 #' get.columns(d)
 get.columns <-
-	function( data, pattern = "DAT|SIC|GROUP" ) {
-		names( data )[ grep( tolower( pattern ), tolower( names( data ) ) ) ] }
+	function( data, pattern = "DAT|SIC|GROUP", perl = T ) {
+		names( data )[ grep( tolower( pattern ), tolower( names( data ) ), perl = T ) ] }
 
 
 #' GET DATE COLUMNS
@@ -219,8 +219,8 @@ get.columns <-
 #' (d<-data.frame(DATE="2017-10-05",EDAT="2017-10-04",MUTAD="2017-10-03"))
 #' get.date.columns(d,"dat|muta")
 get.date.columns <-
-	function( data, pattern = "edat|date|datum" ) {
-		names( data )[ grep( tolower( pattern ), tolower( names( data ) ) ) ] }
+	function( data, pattern = "edat|date|datum", perl = T ) {
+		get.columns( data, pattern, perl ) }
 
 #' GET SIC COLUMNS
 #'
@@ -237,8 +237,8 @@ get.date.columns <-
 #' (d<-data.frame(SIC="LI12345678",sic="LI12345679",PSEUDO="LI1234567X",PSEUDONYM="LI12345670"))
 #' get.sic.columns(d)
 get.sic.columns <-
-	function( data, pattern = "sic|pseudo" ) {
-		names( data )[ grep( tolower( pattern ), tolower( names( data ) ) ) ] }
+	function( data, pattern = "sic|pseudo", perl = T ) {
+		get.columns( data, pattern, perl ) }
 
 #' GET SCI-GROUP COLUMNS
 #'
@@ -256,7 +256,8 @@ get.sic.columns <-
 #' get.scigroup.columns(d)
 get.scigroup.columns <-
 	function( data, pattern = "sci_group|sci-group|scigroup|sgroup|group|grp|gruppe" ) {
-		names( data )[ grep( tolower( pattern ), tolower( names( data ) ) ) ] }
+		get.columns( data, pattern, perl ) }
+
 
 #' PRINT MERGING INFOS
 #'
