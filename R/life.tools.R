@@ -1,5 +1,5 @@
-Sys.time( )
-Sys.timezone( )
+# Sys.time( )
+# Sys.timezone( )
 Sys.setenv( TZ = "Europe/Berlin" )
 
 #' calendar
@@ -167,6 +167,172 @@ table.df <-
 #' remove.columns(data.frame(x="X",y="Y",z="Z",w="W"),c("x","z"))
 remove.columns <-
 	function( data, column.names ) {
-
 		data[ , !names( data ) %in% column.names ]
+	}
+
+#' GET DATE COLUMNS
+#'
+#' @param data dataframe which has some date columns
+#' @param pattern search pattern for finding column names via grep
+#'
+#' @return names of date columns
+#' @export
+#'
+#' @examples
+#' (d<-data.frame(DATE="2017-10-05",EDAT="2017-10-04",dat="2017-10-03",DATA="2017-10-02"))
+#' get.date.columns(d)
+#' (d<-data.frame(DATE="2017-10-05",EDAT="2017-10-04",MUTAD="2017-10-03"))
+#' get.date.columns(d,"dat|muta")
+get.date.columns <-
+	function( data, pattern = "edat|date|datum" ) {
+		names( data )[ grep( tolower( pattern ), tolower( names( data ) ) ) ] }
+
+#' GET SIC COLUMNS
+#'
+#' @param data dataframe which has some sic columns
+#' @param pattern search pattern for finding column names via grep
+#'
+#' @return names of sic columns
+#' @export
+#'
+#' @examples
+#' (d<-data.frame(SIC="LI12345678",sic="LI12345679",PSEUDO="LI1234567X",PSEUDONYM="LI12345670"))
+#' get.sic.columns(d)
+get.sic.columns <-
+	function( data, pattern = "sic|pseudo" ) {
+		names( data )[ grep( tolower( pattern ), tolower( names( data ) ) ) ] }
+
+#' GET SCI-GROUP COLUMNS
+#'
+#' @param data dataframe which has some sci-group columns
+#' @param pattern
+#'
+#' @return names of sci-group columns
+#' @export
+#'
+#' @examples
+#' (d<-data.frame(SGROUP="A2_02",SCI_GROUP="B1_10",Gruppe="A1-SK_10",GRP="A3_09"))
+#' get.scigroup.columns(d)
+get.scigroup.columns <-
+	function( data, pattern = "sci_group|sci-group|scigroup|sgroup|group|grp|gruppe" ) {
+		names( data )[ grep( tolower( pattern ), tolower( names( data ) ) ) ] }
+
+#' PRINT MERGING INFOS
+#'
+#' @param table.names vector of table names
+#'
+#' @return prints a data frame with merging informations for all given tables
+#' @export
+#' @examples
+#' (a<-data.frame(SGROUP="A2_02",DATE="2002-10-05",Sic="LI12345678"))
+#' (b<-data.frame(GRUPPE="A3_02",DATUM="2002-10-05",PSEUDONYM="LI12345678"))
+#' (c<-data.frame(GRP=c("A2_02","A2_03"),DATE=c("2002-10-05","2001-10-05"),EDAT=c("2001-10-04","200-10-02"),PSEUDO=c("LI12345679","LI1234567X"),edat.new=c("2017.10-03","2017.10-01")))
+#' print.merging.infos(c("a","b","c"))
+print.merging.infos <-
+	function( table.names = ls( ) ) {
+
+		for( n in table.names ) {
+
+			tbl <-
+				as.data.frame( mget( n, .GlobalEnv )[[ 1 ]] )
+
+			cat( c( "NAME:      ", n, "\n" ) )
+			cat( c( "SIC:       ", get.sic.columns( tbl ), "\n" ) )
+			cat( c( "SCI_GROUP: ", get.scigroup.columns( tbl ), "\n" ) )
+			cat( c( "DATE:      ", get.date.columns( tbl ), "\n" ) )
+			cat( c( "VISITS:    ", nrow( tbl ), "\n" ) )
+			cat( c( "VISITORS:  ", length( unique( tbl[ , get.sic.columns( tbl ) ] ) ), "\n" ) )
+			cat( c( "COMPLETE:  ", sum( complete.cases( tbl ) ), "\n" ) )
+			cat( "_______________________________\n" )
+		}
+	}
+
+#' GET MERGING INFOS
+#'
+#' @param table.names
+#'
+#' @return data frame with merging informations for all given tables
+#' @export
+#'
+#' @examples
+#' (a<-data.frame(SGROUP="A2_02",DATE="200-10-05",Sic="LI12345678"))
+#' (b<-data.frame(GRUPPE="A3_02",DATUM="200-10-05",PSEUDONYM="LI12345678"))
+#' (c<-data.frame(GRP="A2_02",DATE="200-10-05",EDAT="200-10-04",PSEUDO="LI12345679",edat.new="2017.10-03"))
+#' (infos<-get.merging.infos(c("a","b","c")))
+#' infos$SIC
+#' infos$SCI_GROUP
+#' infos$DATE
+get.merging.infos <-
+	function( table.names = ls( ) ) {
+
+		l <-
+			list( )
+
+		for( n in table.names ) {
+
+			tbl <-
+				as.data.frame( mget( n, .GlobalEnv )[[ 1 ]] )
+
+			l[[ length( l ) + 1 ]] <-
+				list(
+					NAME      = n,
+					SIC       = list( get.sic.columns( tbl ) ),
+					SCI_GROUP = list( get.scigroup.columns( tbl ) ),
+					DATE      = list( get.date.columns( tbl ) ),
+					VISITS    = nrow( tbl ),
+					VISITORS  = length( unique( tbl[ , get.sic.columns( tbl ) ] ) ),
+					COMPLETE  = sum( complete.cases( tbl ) ) )
+		}
+
+		Reduce( dplyr::bind_rows, l )
+	}
+
+#' SUM MISSINGS
+#'
+#' @param data dataframe for which missings in columns should be summed up
+#'
+#' @return dataframe with the number of missing data for each column
+#' @export
+#'
+#' @examples
+#' (d<-data.frame(x=c(NA,"Hello",NA,"World",NA),y=c(1:5),z=rep(NA,5)))
+#' sum.na(d)
+sum.na <-
+	function( data ) {
+
+		sapply( data, function( col ) sum( is.na( col ) ) )
+	}
+
+#' SUM AVAILABLES
+#'
+#' @param data dataframe for which availables in columns should be summed up
+#'
+#' @return dataframe with the number of available data for each column
+#' @export
+#'
+#' @examples
+#' (d<-data.frame(x=c(NA,"Hello",NA,"World",NA),y=c(1:5),z=rep(NA,5)))
+#' sum.av(d)
+sum.av <-
+	function( data ) {
+
+		sapply( data, function( col ) sum( !is.na( col ) ) )
+	}
+
+#' GET INFO FOR DATAFRAME
+#'
+#' @param data dataframe which colums should be lightly summarised
+#'
+#' @return dataframe with the total number, the numbers of available and missing data for each column
+#' @export
+#'
+#' @examples
+#' (d<-data.frame(x=c(NA,"Hello",NA,"World",NA),y=c(1:5),z=rep(NA,5)))
+#' get.info( d )
+get.info <-
+	function( data ) {
+		rbind(
+			MISSINGS   = sum.na( d ),
+			AVAILABLES = sum.av( d ),
+			TOTAL      = nrow( d ) )
 	}
