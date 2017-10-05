@@ -1,14 +1,14 @@
-#' ggsubplot
+#' GGSUBPLOT
 #'
-#' @name  ggsubplot
 #' @description gives the opportunity for subplots
+#'
 #' @param ... end of list of ggplots
 #' @param plotlist end of list of ggplots
 #' @param cols count of columns
 #' @param layout matrix for the layout with indices of the plots
 #'
 #' @return subplots
-#' @export ggsubplot()
+#' @export
 ggsubplot <-
     function(
     	...,

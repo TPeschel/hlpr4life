@@ -2,7 +2,7 @@
 % Please edit documentation in R/piano.R
 \name{freq.of.key}
 \alias{freq.of.key}
-\title{freq.of.key}
+\title{FREQUENCY OF KEY}
 \usage{
 freq.of.key(key = 25)
 }

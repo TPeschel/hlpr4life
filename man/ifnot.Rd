@@ -17,7 +17,7 @@ ifnot(cond, optTrue, optFalse = { })
 execution of code optTrue or optFalse
 }
 \description{
-shorten for if( !... ) do something else do something different
+short for if( !... ) do something else do something different
 }
 \examples{
 ifnot( 1 == 2, cat( "one is not equal to two" ), cat( "one is not not equal to two" ) )

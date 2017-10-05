@@ -1,4 +1,4 @@
-#' key.of.freq
+#' KEY OF FREQUENCY
 #'
 #' @description key.of.freq returns the piano key that plays a tone of the frequency frq when its first (most left) key plays tone "A0"
 #' @param frq frequency of the key
@@ -12,7 +12,7 @@ key.of.freq <-
     function( frq = 110 ) {
         log2( frq / 440 ) * 12 + 49 }
 
-#' freq.of.key
+#' FREQUENCY OF KEY
 #'
 #' @description freq.of.key returns the frequency that a piano key plays which first (most left) key plays tone "A0"
 #' @param key
@@ -29,7 +29,7 @@ freq.of.key <-
     function( key = 25 ) {
         440 * 2 ** ( ( key - 49 ) / 12 ) }
 
-#' note.of.key
+#' NOTE OF KEY
 #'
 #' @description note.of.key gives the note for a certain piano key which first (most left) key plays tone "A0"
 #' @param key
@@ -53,7 +53,7 @@ note.of.key <-
                 "G", "G#" )[ 1 + ( ( key - 1 ) %% 12 ) ],
             ( key - 1 ) %/% 12 ) }
 
-#' key.of.note
+#' KEY OF NOTE
 #'
 #' @description key.of.note gives the note for a certain piano key which first (most left) key plays tone "A0"
 #' @param note
@@ -82,7 +82,7 @@ key.of.note <-
             as.numeric( stringr::str_extract( note, "[0-9]$") )
         a + b * 12 }
 
-#' note.of.freq
+#' NOTE OF FREQUENCY
 #'
 #' @description note.of.freq gives the note for a certain frequency
 #' @param frq
@@ -97,7 +97,7 @@ note.of.freq <-
     function( frq = 110 ) {
         note.of.key( key.of.freq( frq ) ) }
 
-#' freq.of.note
+#' FREQUENCY OF NOTE
 #'
 #' @description freq.of.note gives the frequency for a certain note
 #' @param note
@@ -112,7 +112,8 @@ freq.of.note <-
     function( note ) {
         freq.of.key( key.of.note( note ) ) }
 
-#' piano
+#' PIANO
+#'
 #' @description piano gives a data.frame of a piano which first (most left) key plays tone "A0".
 #' One can expand or shrink the keyboard by giving the piano's left.key, right.key.
 #' The returned dataframe then contains all keys between left.key and right.key, their colors, notes and played frequencies.
@@ -124,8 +125,7 @@ freq.of.note <-
 #' @export piano()
 #'
 #' @examples
-#' library( ggplot2 )
-#' library( ggthemes )
+#' load.pkgs( c( "ggplot2", "ggthemes" ) )
 #' piano( 4, 4 + 2 * 12 )
 #' ggplot( piano( 4, 4 + 2 * 12 ) ) +
 #'     geom_histogram( aes( note, -c( 1, .63 )[ match( color, c( "ivory", "ebony" ) ) ], fill = color ), stat = "identity" ) +
@@ -139,7 +139,6 @@ freq.of.note <-
 #'         axis.text.y = element_blank( ),
 #'         axis.title.y = element_blank( ) ) +
 #'     ylim( -1, 0 )
-
 piano <-
     function( left.key = 4, right.key = 88 ) {
         k <-

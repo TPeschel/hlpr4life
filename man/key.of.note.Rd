@@ -2,7 +2,7 @@
 % Please edit documentation in R/piano.R
 \name{key.of.note}
 \alias{key.of.note}
-\title{key.of.note}
+\title{KEY OF NOTE}
 \usage{
 key.of.note(note)
 }

@@ -13,7 +13,7 @@
 dataframe with the number of available data for each column
 }
 \description{
-SUM AVAILABLES
+gives the number of the available values of every column of a dataframe
 }
 \examples{
 (d<-data.frame(x=c(NA,"Hello",NA,"World",NA),y=c(1:5),z=rep(NA,5)))

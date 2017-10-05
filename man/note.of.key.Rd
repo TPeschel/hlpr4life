@@ -2,7 +2,7 @@
 % Please edit documentation in R/piano.R
 \name{note.of.key}
 \alias{note.of.key}
-\title{note.of.key}
+\title{NOTE OF KEY}
 \usage{
 note.of.key(key = c(4, 6, 8, 9, 11, 13, 15, 16))
 }

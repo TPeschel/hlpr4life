@@ -15,7 +15,7 @@ remove.columns(data, column.names)
 A dataframe without removed columns.
 }
 \description{
-REMOVE COLUMNS
+removes columns out of a dataframe
 }
 \examples{
 remove.columns(data.frame(x="X",y="Y",z="Z",w="W"),c("x","z"))

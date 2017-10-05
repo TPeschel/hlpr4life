@@ -2,7 +2,7 @@
 % Please edit documentation in R/life.tools.R
 \name{calendar}
 \alias{calendar}
-\title{calendar}
+\title{CALENDAR}
 \usage{
 calendar(start = "2000-01-01", end = "2017-06-19", abbreviate = T,
   tz = "Europe/Berlin")
@@ -18,7 +18,7 @@ calendar(start = "2000-01-01", end = "2017-06-19", abbreviate = T,
 a calendar from start date to end date
 }
 \description{
-calendar
+creates a simple calendar from first date to last date
 }
 \examples{
 calendar( )

@@ -2,8 +2,9 @@
 # Sys.timezone( )
 Sys.setenv( TZ = "Europe/Berlin" )
 
-#' calendar
+#' CALENDAR
 #'
+#' @description creates a simple calendar from first date to last date
 #' @param start first date
 #' @param end last date
 #' @param abbreviate if true the names of weekdays will be abbreviated
@@ -30,7 +31,7 @@ calendar <-
 
 		d }
 
-#' some.sics
+#' SOME SICS
 #'
 #' @description some.sics creates a vector of coherently sics of same width.
 #' @param n.size count of sics that shall be created
@@ -54,7 +55,7 @@ some.sics <-
 
 #' IF NOT
 #'
-#' @description shorten for if( !... ) do something else do something different
+#' @description short for if( !... ) do something else do something different
 #' @param cond condition that hast to be false
 #' @param optTrue option running if condition is not TRUE
 #' @param optFalse option running if condition is not FALSE
@@ -105,6 +106,9 @@ list.append <-
 		list }
 
 #' TABLE DATAFRAME
+#'
+#' @description table.df returns data about missings, availables of every column in a given
+#' dataframe. If  summary is TRUE, min, max, median and mean are shown additionally.
 #'
 #' @param data dataframe which columns should be summarised
 #' @param summary logical: if is true additionally min, median, mean and max will be tabled
@@ -168,6 +172,7 @@ table.df <-
 
 #' REMOVE COLUMNS
 #'
+#' @description removes columns out of a dataframe
 #' @param data A dataframe that contains columns which should be removed.
 #' @param column.names Names of columns that should be removed.
 #'
@@ -181,8 +186,27 @@ remove.columns <-
 		data[ , !names( data ) %in% column.names ]
 	}
 
+#' GET COLUMNS
+#'
+#' @description searches for column names that matches a given the pattern.
+#' @param data dataframe which has some date columns
+#' @param pattern search pattern for finding column names via grep
+#'
+#' @return names of searched columns
+#' @export
+#'
+#' @examples
+#' (d<-data.frame(SIC="LI01234",Y=1000.,x=10,SCI_GROUP="A2_12",DATE="2017-10-05",EDAT="2017-10-04"))
+#' get.columns(d)
+get.columns <-
+	function( data, pattern = "DAT|SIC|GROUP" ) {
+		names( data )[ grep( tolower( pattern ), tolower( names( data ) ) ) ] }
+
+
 #' GET DATE COLUMNS
 #'
+#' @description searches for some date like column names. one has the opportunity to give a
+#' search string for a certain pattern.
 #' @param data dataframe which has some date columns
 #' @param pattern search pattern for finding column names via grep
 #'
@@ -200,6 +224,9 @@ get.date.columns <-
 
 #' GET SIC COLUMNS
 #'
+#' @description searches for some sic like column names. one has the opportunity to give a
+#' search string for a certain pattern.
+#'
 #' @param data dataframe which has some sic columns
 #' @param pattern search pattern for finding column names via grep
 #'
@@ -215,6 +242,9 @@ get.sic.columns <-
 
 #' GET SCI-GROUP COLUMNS
 #'
+#' @description searches for some sci-group like column names. one has the opportunity to give a
+#' search string for a certain pattern.
+#'
 #' @param data dataframe which has some sci-group columns
 #' @param pattern
 #'
@@ -229,6 +259,9 @@ get.scigroup.columns <-
 		names( data )[ grep( tolower( pattern ), tolower( names( data ) ) ) ] }
 
 #' PRINT MERGING INFOS
+#'
+#' @description print merging infos print some usefull information of a set of tables.
+#' Could be usefull before a merging process.
 #'
 #' @param table.names vector of table names
 #'
@@ -260,7 +293,10 @@ print.merging.infos <-
 
 #' GET MERGING INFOS
 #'
-#' @param table.names
+# @description get merging infos returns some usefull information of a set of tables.
+#' Could be usefull before a merging process.
+#'
+#' @param table.names vector of table names
 #'
 #' @return data frame with merging informations for all given tables
 #' @export
@@ -300,6 +336,8 @@ get.merging.infos <-
 
 #' SUM MISSINGS
 #'
+#' @description gives the number of the missing values of every column of a dataframe
+#'
 #' @param data dataframe for which missings in columns should be summed up
 #'
 #' @return dataframe with the number of missing data for each column
@@ -316,6 +354,8 @@ sum.na <-
 
 #' SUM AVAILABLES
 #'
+#' @description gives the number of the available values of every column of a dataframe
+#'
 #' @param data dataframe for which availables in columns should be summed up
 #'
 #' @return dataframe with the number of available data for each column
@@ -330,3 +370,55 @@ sum.av <-
 		sapply( data, function( col ) sum( !is.na( col ) ) )
 	}
 
+#' RENAME COLUMNS
+#' @description rename.columns( data, c( "alter", "groesse" ), c( "age", "height" ) ) takes a data frame d containing the old column name "alter" and "groesse" and returns a new dataframe with the replaced names "age" and "size".
+#'
+#' @param data dataframe with new column names
+#' @param old.column.names old column names
+#' @param new.column.names new column names
+#'
+#' @return dataframe with replaced column names
+#' @export
+#'
+#' @examples
+#' (d<-rename.columns(d<-data.frame(x=c(1:10),y=rnorm(10),z=c(10:1)),c("y","x"),c("x","y")))
+#' (d<-rename.columns(d,c("y","x"),c("x","y")))
+rename.columns <-
+	function( data, old.column.names, new.column.names ) {
+
+		n <-
+			colnames( data )
+
+		m <-
+			n %in% old.column.names
+
+		colnames( data )[ m ] <-
+			new.column.names[ match( n[ m ], old.column.names ) ]
+
+		data }
+
+#' RENAME LIST
+#' @description rename.columns( data, c( "alter", "groesse" ), c( "age", "height" ) ) takes a data frame d containing the old column name "alter" and "groesse" and returns a new dataframe with the replaced names "age" and "size".
+#'
+#' @param list named list
+#' @param old.names old names
+#' @param new.names new names
+#'
+#' @return dataframe with replaced column names
+#' @export
+#'
+#' @examples
+#' (l<-rename.list(list(x="x",y="y",z="z"),c("y","z","x"),c("Ypsilon","CED","U")))
+rename.list <-
+	function( list, old.names, new.names ) {
+
+		n <-
+			names( list )
+
+		m <-
+			n %in% old.names
+
+		names( list )[ m ] <-
+			new.names[ match( n[ m ], old.names ) ]
+
+		list }

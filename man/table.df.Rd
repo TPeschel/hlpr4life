@@ -17,7 +17,8 @@ table.df(data, summary = F, as.dataframe = !summary)
 table of data containing sum of missing and available data their mins and maxs.
 }
 \description{
-TABLE DATAFRAME
+table.df returns data about missings, availables of every column in a given
+dataframe. If  summary is TRUE, min, max, median and mean are shown additionally.
 }
 \examples{
 table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)))

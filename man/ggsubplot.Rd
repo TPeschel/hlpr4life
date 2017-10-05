@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggsubplot.R
 \name{ggsubplot}
 \alias{ggsubplot}
-\title{ggsubplot}
+\title{GGSUBPLOT}
 \usage{
 ggsubplot(..., plotlist = NULL, cols = 1, layout = NULL)
 }

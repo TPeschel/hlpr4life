@@ -2,7 +2,7 @@
 % Please edit documentation in R/piano.R
 \name{freq.of.note}
 \alias{freq.of.note}
-\title{freq.of.note}
+\title{FREQUENCY OF NOTE}
 \usage{
 freq.of.note(note)
 }

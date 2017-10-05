@@ -13,7 +13,8 @@
 prints a data frame with merging informations for all given tables
 }
 \description{
-PRINT MERGING INFOS
+print merging infos print some usefull information of a set of tables.
+Could be usefull before a merging process.
 }
 \examples{
 (a<-data.frame(SGROUP="A2_02",DATE="2002-10-05",Sic="LI12345678"))

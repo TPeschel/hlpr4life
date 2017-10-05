@@ -2,7 +2,7 @@
 % Please edit documentation in R/life.tools.R
 \name{some.sics}
 \alias{some.sics}
-\title{some.sics}
+\title{SOME SICS}
 \usage{
 some.sics(n.size = 100, n.first = 1, n.last = n.first + n.size - 1,
   digits = 1 + floor(log10(n.last)), prefix = "LI", postfix = "")

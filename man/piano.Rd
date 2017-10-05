@@ -2,7 +2,7 @@
 % Please edit documentation in R/piano.R
 \name{piano}
 \alias{piano}
-\title{piano}
+\title{PIANO}
 \usage{
 piano(left.key = 4, right.key = 88)
 }
@@ -20,8 +20,7 @@ One can expand or shrink the keyboard by giving the piano's left.key, right.key.
 The returned dataframe then contains all keys between left.key and right.key, their colors, notes and played frequencies.
 }
 \examples{
-library( ggplot2 )
-library( ggthemes )
+load.pkgs( c( "ggplot2", "ggthemes" ) )
 piano( 4, 4 + 2 * 12 )
 ggplot( piano( 4, 4 + 2 * 12 ) ) +
     geom_histogram( aes( note, -c( 1, .63 )[ match( color, c( "ivory", "ebony" ) ) ], fill = color ), stat = "identity" ) +

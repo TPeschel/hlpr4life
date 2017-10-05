@@ -15,7 +15,8 @@ get.sic.columns(data, pattern = "sic|pseudo")
 names of sic columns
 }
 \description{
-GET SIC COLUMNS
+searches for some sic like column names. one has the opportunity to give a
+search string for a certain pattern.
 }
 \examples{
 (d<-data.frame(SIC="LI12345678",sic="LI12345679",PSEUDO="LI1234567X",PSEUDONYM="LI12345670"))

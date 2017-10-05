@@ -16,7 +16,8 @@ get.scigroup.columns(data,
 names of sci-group columns
 }
 \description{
-GET SCI-GROUP COLUMNS
+searches for some sci-group like column names. one has the opportunity to give a
+search string for a certain pattern.
 }
 \examples{
 (d<-data.frame(SGROUP="A2_02",SCI_GROUP="B1_10",Gruppe="A1-SK_10",GRP="A3_09"))

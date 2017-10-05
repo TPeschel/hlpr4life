@@ -15,7 +15,8 @@ get.date.columns(data, pattern = "edat|date|datum")
 names of date columns
 }
 \description{
-GET DATE COLUMNS
+searches for some date like column names. one has the opportunity to give a
+search string for a certain pattern.
 }
 \examples{
 (d<-data.frame(DATE="2017-10-05",EDAT="2017-10-04",dat="2017-10-03",DATA="2017-10-02"))

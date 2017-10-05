@@ -7,13 +7,13 @@
 get.merging.infos(table.names = ls())
 }
 \arguments{
-\item{table.names}{}
+\item{table.names}{vector of table names}
 }
 \value{
 data frame with merging informations for all given tables
 }
 \description{
-GET MERGING INFOS
+Could be usefull before a merging process.
 }
 \examples{
 (a<-data.frame(SGROUP="A2_02",DATE="200-10-05",Sic="LI12345678"))
