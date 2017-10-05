@@ -116,6 +116,8 @@ list.append <-
 table.df <-
 	function( data, as.dataframe = T ) {
 
+		options( warn = -1 )
+
 		MISSING <-
 			sapply( data, function( d ) sum( is.na( d ) ) )
 
@@ -146,6 +148,8 @@ table.df <-
 		if( as.dataframe ) {
 
 			return( as.data.frame( d ) ) }
+
+		options( warn = 0 )
 
 		d
 	}
