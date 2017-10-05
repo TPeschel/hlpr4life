@@ -332,7 +332,7 @@ sum.av <-
 get.info <-
 	function( data ) {
 		rbind(
-			MISSINGS   = sum.na( d ),
-			AVAILABLES = sum.av( d ),
-			TOTAL      = nrow( d ) )
+			MISSINGS   = sum.na( data ),
+			AVAILABLES = sum.av( data ),
+			TOTAL      = nrow( data ) )
 	}
