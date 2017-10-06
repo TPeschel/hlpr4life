@@ -31,6 +31,35 @@ calendar <-
 
 		d }
 
+#' TODAY
+#'
+#' @description the current date
+#'
+#' @return the current date
+#' @export
+#'
+#' @examples
+#' today()
+today <-
+	function( ) {
+		lubridate::date( Sys.time( ) )
+	}
+
+#' NOW
+#'
+#' @description the current time
+#'
+#' @return the current time
+#' @export
+#'
+#' @examples
+#' now()
+now <-
+	function( ) {
+		substr( Sys.time( ), 12, 21)
+	}
+
+
 #' SOME SICS
 #'
 #' @description some.sics creates a vector of coherently sics of same width.
