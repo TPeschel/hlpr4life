@@ -14,7 +14,7 @@ ifnot(cond, optTrue, optFalse = { })
 \item{optFalse}{option running if condition is not FALSE}
 }
 \value{
-execution of code optTrue or optFalse
+execution of code either for optTrue or optFalse
 }
 \description{
 short for if( !... ) do something else do something different

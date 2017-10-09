@@ -10,7 +10,7 @@ today()
 the current date
 }
 \description{
-the current date
+Gives the current date.
 }
 \examples{
 today()

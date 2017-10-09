@@ -1,4 +1,4 @@
-#' load.pkgs
+#' LOAD PACKAGES
 #' @name load.pkgs
 #'
 #' @description load packages tries to load a package into the environment. If it fails, it tries to install the package and loads it afterwards.

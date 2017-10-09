@@ -10,7 +10,7 @@ now()
 the current time
 }
 \description{
-the current time
+Gives current time
 }
 \examples{
 now()

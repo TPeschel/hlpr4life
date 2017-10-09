@@ -18,14 +18,27 @@ A dataframe containing a new column with the adjusted values.
 Adjust a dependent variable y linearly to several dependent variables x1, x2 ...
 }
 \examples{
-
-hlpr4life::load.pkgs(c("ggplot2","reshape2"))
-mtcrs<-mtcars
-mtcrs$am<-factor(mtcrs$am,labels=c("auto","manu"))
-mtcrs<-adjust.linearly(disp~mpg*am,mtcrs)
-mtcrs$id<-rownames(mtcrs)
-mtcrs.mlt<-melt(mtcrs[,c("mpg","cyl","disp","disp.adj.for.mpg.am","am","id")],c("mpg","cyl","am","id"))
-mtcrs.mlt<-hlpr4life::rename.columns(mtcrs.mlt,c("value","am"),c("displacement","gearbox"))
-ggplot(mtcrs.mlt,aes(mpg,displacement,col=gearbox,label=paste(id,c("orig","adj")[match(variable,c("disp","disp.adj.for.mpg.am"))]),group=id),mtcrs)+
-theme_bw()+geom_line()+geom_text(aes(col=paste(gearbox,variable)))+theme(legend.position="none")
+hlpr4life::load.pkgs( c( "hlpr4life", "ggplot2" ) )
+set.seed( 1 )
+num <- 100
+sexes <- c( "female", "male" )
+d <- data.frame( sex = sample( sexes, num, T, prob = c( .3, .7 )  ), age = round( runif( num, 0, 20 ), 1 ) )
+d$y <- c( 30, 35 )[ match( d$sex, sexes ) ] + c( 2, 3 )[ match( d$sex, sexes ) ] * d$age + rnorm( num, 0, 10 )
+d <- adjust.linearly( y ~ age, d )
+d <- adjust.linearly( y ~ sex, d )
+d <- adjust.linearly( y ~ age * sex, d )
+thm          <- list( theme_bw( ), geom_point( ), geom_smooth( method = "lm" ) )
+thm.brown    <- list( theme_bw( ), geom_point( col = "green3" ), geom_smooth( col = "green3", method = "lm" ) )
+thm.bicol    <- list.append( thm, scale_color_manual( values = c( "firebrick1", "steelblue3" ), guide = F ) )
+thm.bicolfac <- list.append( thm.bicol, facet_grid( sex ~ . ) )
+ggsubplot(
+  ggplot( d, aes( age, y ) ) + thm.brown,
+  ggplot( d, aes( age, y, col = sex ) ) + thm.bicol,
+  ggplot( d, aes( age, y.adj.for.age ) ) + thm.brown,
+  ggplot( d, aes( age, y.adj.for.age, col = sex ) ) + thm.bicol,
+  ggplot( d, aes( age, y.adj.for.sex ) ) + thm.brown,
+  ggplot( d, aes( age, y.adj.for.sex, col = sex ) ) + thm.bicol,
+  ggplot( d, aes( age, y.adj.for.age.sex, col = sex ) ) + thm.bicol,
+  ggplot( d, aes( age, y.adj.for.age.sex, col = sex ) ) + thm.bicolfac,
+  cols = 4 )
 }

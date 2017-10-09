@@ -1,18 +1,91 @@
 HELPER 4 LIFE
 
-This is a little collection of some usefull R-stuff
+This is a small collection of some usefull R-stuff
 
+
+# ADJUSTMENTS
+## ADJUST LINEARLY 
+Adjust a dependent variable y linearly to several dependent variables x1, x2 ...
+```R
+hlpr4life::load.pkgs( c( "hlpr4life", "ggplot2" ) )
+
+set.seed( 1 )
+
+num <- 100
+
+sexes <- c( "female", "male" )
+
+d <- data.frame( sex = sample( sexes, num, T, prob = c( .3, .7 )  ), age = round( runif( num, 0, 20 ), 1 ) )
+
+d$y <- c( 30, 35 )[ match( d$sex, sexes ) ] + c( 2, 3 )[ match( d$sex, sexes ) ] * d$age + rnorm( num, 0, 10 )
+
+d <- adjust.linearly( y ~ age, d )
+d <- adjust.linearly( y ~ sex, d )
+d <- adjust.linearly( y ~ age * sex, d )
+
+thm          <- list( theme_bw( ), geom_point( ), geom_smooth( method = "lm" ) )
+thm.brown    <- list( theme_bw( ), geom_point( col = "green3" ), geom_smooth( col = "green3", method = "lm" ) )
+thm.bicol    <- list.append( thm, scale_color_manual( values = c( "firebrick1", "steelblue3" ), guide = F ) )
+thm.bicolfac <- list.append( thm.bicol, facet_grid( sex ~ . ) )
+
+ggsubplot(
+	ggplot( d, aes( age, y ) ) + thm.brown,
+	ggplot( d, aes( age, y, col = sex ) ) + thm.bicol,
+	ggplot( d, aes( age, y.adj.for.age ) ) + thm.brown,
+	ggplot( d, aes( age, y.adj.for.age, col = sex ) ) + thm.bicol,
+	ggplot( d, aes( age, y.adj.for.sex ) ) + thm.brown,
+	ggplot( d, aes( age, y.adj.for.sex, col = sex ) ) + thm.bicol,
+	ggplot( d, aes( age, y.adj.for.age.sex, col = sex ) ) + thm.bicol,
+	ggplot( d, aes( age, y.adj.for.age.sex, col = sex ) ) + thm.bicolfac,
+	cols = 4 )
+```
+
+## ADJUST LINEARLY AND STANDARDIZE 
+Adjust and standardize afterwards a dependent variable y linearly to several dependent variables x1, x2 ...
+```R
+hlpr4life::load.pkgs( c( "hlpr4life", "ggplot2" ) )
+
+set.seed( 1 )
+
+num <- 100
+
+sexes <- c( "female", "male" )
+
+d <- data.frame( sex = sample( sexes, num, T, prob = c( .3, .7 )  ), age = round( runif( num, 0, 20 ), 1 ) )
+
+d$y <- c( 30, 35 )[ match( d$sex, sexes ) ] + c( 2, 3 )[ match( d$sex, sexes ) ] * d$age + rnorm( num, 0, 10 )
+
+d <- adjust.linearly.std( y ~ age, d )
+d <- adjust.linearly.std( y ~ sex, d )
+d <- adjust.linearly.std( y ~ age * sex, d )
+
+thm          <- list( theme_bw( ), geom_point( ), geom_smooth( method = "lm" ) )
+thm.brown    <- list( theme_bw( ), geom_point( col = "green3" ), geom_smooth( col = "green3", method = "lm" ) )
+thm.bicol    <- list.append( thm, scale_color_manual( values = c( "firebrick1", "steelblue3" ), guide = F ) )
+thm.bicolfac <- list.append( thm.bicol, facet_grid( sex ~ . ) )
+
+ggsubplot(
+	ggplot( d, aes( age, y ) ) + thm.brown,
+	ggplot( d, aes( age, y, col = sex ) ) + thm.bicol,
+	ggplot( d, aes( age, y.std.for.age ) ) + thm.brown,
+	ggplot( d, aes( age, y.std.for.age, col = sex ) ) + thm.bicol,
+	ggplot( d, aes( age, y.std.for.sex ) ) + thm.brown,
+	ggplot( d, aes( age, y.std.for.sex, col = sex ) ) + thm.bicol,
+	ggplot( d, aes( age, y.std.for.age.sex, col = sex ) ) + thm.bicol,
+	ggplot( d, aes( age, y.std.for.age.sex, col = sex ) ) + thm.bicolfac,
+	cols = 4 )
+```
 
 # PACKAGE LOADER
 ## LOAD PACKAGES 
-load a package as library or require do.
-if there are not installed, then install them,
-or some of them.
+Load packages as library() or require() do!
+If some are not installed then install them.
 ```R
 load.pkgs( c( "dplyr", "ggplot2", "ggthemes", "reshape2" ) )
 ```
+
 # CALENDAR
-build a dataframe with calendar data
+Build a dataframe with calendar data!
 ```R
 clndr <- 
 	calendar( 
@@ -39,19 +112,24 @@ clndr <-
 			start = "2017-06-21",
 			end   = "2017-09-21" ) )
 ```
+
 # COLORS
 ## PLOT COLORS
-plot all in R defined colors
+Plot all in R defined colors!
 ```R
 plot.colors( )
 ```
+
 ## COLOR GRADIENT
-build a dataframe with a color gradient between two distinct colors with a certain step wide
+Build a dataframe with a color gradient between two distinct colors
+partitioned by steps!
 ```R
 color.gradient( "red", "green", 16 )
 ```
+
 ## PLOT COLOR GRADIENT
-plot a color gradient between two distinct colors with a certain step wide
+Plot a color gradient between two distinct colors
+partitioned by steps!
 ```R
 plot.color.gradient( "red", "green", 256, "horiz", F )
 plot.color.gradient( "blue", "yellow", 16, "vert", T )
@@ -59,35 +137,39 @@ plot.color.gradient( "blue", "yellow", 16, "vert", T )
 
 # THE PIANO
 ## FREQUENCY OF A PIANO KEY'S SOUND
-what's the frequency heard by playing key 25 of a piano?
+What's the frequency heard by playing key 25 of a piano?
 ```R
 freq.of.key( 25 )
 ```
 ## FREQUENCY OF A NOTE
-what's the frequency of a certain note
+What's the frequency of a certain note?
 ```R
 freq.of.note( "A2" )
 ```
 ## KEY OF FREQUENCY
-which key has to be pressed for a certain frequency?
+Which key has to be pressed for a certain frequency?
 ```R
 key.of.freq( 110 )
 ```
+
 ## KEY OF NOTE
-which key plays a certain note?
+Which key plays a certain note?
 ```R
 key.of.note( c( "C0", "D0", "E0", "F0", "G0", "A1", "B1", "C1" ) )
 ```
+
 ## NOTE OF FREQUENCY
-which frequency is represented by a certain note?
+Which frequency is represented by a certain note?
 ```R
 note.of.freq( 110 )
 ```
+
 ## NOTE OF KEY
-which note has a certain piano key?
+Which note has a certain piano key?
 ```R
 note.of.key(key = c(4, 6, 8, 9, 11, 13, 15, 16))
 ```
+
 ## PIANO
 ```R
 piano(left.key = 4, right.key = 88)
@@ -109,12 +191,8 @@ ggplot( piano( 4, 4 + 2 * 12 ) ) +
         axis.title.y = element_blank( ) ) +
     ylim( -1, 1.5 )
 ```
+
 # RENAMER
-## RENAME COLUMN
-```R
-(d<-rename.column(data.frame(x=c(1:10),y=rnorm(10)),"x","X"))
-(d<-rename.column(d,"y","Y"))
-```
 ## RENAME COLUMNS
 ```R
 (d<-rename.columns( data.frame(x=c(1:10),y=rnorm(10),z=c(10:1)),c("y","x"),c("x","y")))
@@ -123,10 +201,11 @@ ggplot( piano( 4, 4 + 2 * 12 ) ) +
 ```R
 (l<-rename.list(list(x="x",y="y",z="z"),c("y","z","x"),c("Ypsilon","CED","U")))
 ```
+
 # SUB PLOTS
 ## GGSUBPLOT
 ```R
-load.pkgs( c( "ggplot2" ) )
+hlper4life::load.pkgs( c( "hlper4life", "ggplot2" ) )
 d <-
 	data.frame( 
 		x = rnorm( 1000, +10 ), 

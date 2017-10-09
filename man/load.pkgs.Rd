@@ -2,7 +2,7 @@
 % Please edit documentation in R/load.pkgs.R
 \name{load.pkgs}
 \alias{load.pkgs}
-\title{load.pkgs}
+\title{LOAD PACKAGES}
 \usage{
 load.pkgs(pkgs = c("dplyr", "ggplot2", "ggthemes", "reshape2"))
 }

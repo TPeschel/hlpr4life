@@ -33,7 +33,7 @@ calendar <-
 
 #' TODAY
 #'
-#' @description the current date
+#' @description Gives the current date.
 #'
 #' @return the current date
 #' @export
@@ -47,7 +47,7 @@ today <-
 
 #' NOW
 #'
-#' @description the current time
+#' @description Gives current time
 #'
 #' @return the current time
 #' @export
@@ -89,7 +89,7 @@ some.sics <-
 #' @param optTrue option running if condition is not TRUE
 #' @param optFalse option running if condition is not FALSE
 #'
-#' @return execution of code optTrue or optFalse
+#' @return execution of code either for optTrue or optFalse
 #' @export
 #'
 #' @examples
@@ -197,7 +197,6 @@ table.df <-
 
 		d
 	}
-
 
 #' REMOVE COLUMNS
 #'
