@@ -231,7 +231,7 @@ now( )
 
 # SUB PLOTS
 ## GGSUBPLOT
-Ggsubplot gives the opportunity to create multiplot of ggplots.
+ggsubplot gives the opportunity to create multiplot of ggplots.
 ```R
 hlper4life::load.pkgs( c( "hlper4life", "ggplot2" ) )
 d <-
@@ -271,7 +271,7 @@ some.sics( 10, prefix = "LIFE" )
 
 ## KEY 
 # KEY
-Key creates a key out of several columns.
+key creates a key out of several columns.
 ```R
 key(data.frame(x=letters[ runif(10,1,10)],y=LETTERS[runif(10,1,10)],z=rnorm(10)),c("x","y"),"~")
 ```
@@ -319,5 +319,34 @@ Table availables, missings and if required min, median, mean and max of every co
 table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)))
 ```
 
+# COLUMNS
+## GET COLUMNS
+get.columns searches for column names that matches a given the pattern.
+```R
+(d<-data.frame(SIC="LI01234",Y=1000.,x=10,SCI_GROUP="A2_12",DATE="2017-10-05",EDAT="2017-10-04"))
+get.columns(d)
+get.columns(d,"S")
+```
 
+## GET DATE COLUMNS
+get.date.columns is actually a wrapper for get.columns with a given date pattern "edat|date|datum".
+```R
+(d<-data.frame(DATE="2017-10-05",EDAT="2017-10-04",dat="2017-10-03",DATA="2017-10-02"))
+get.date.columns(d)
+(d<-data.frame(DATE="2017-10-05",EDAT="2017-10-04",MUTAD="2017-10-03"))
+get.date.columns(d,"dat|muta")
+```
 
+## GET SIC COLUMNS
+get.sic.columns is actually a wrapper for get.columns with a given date pattern "sic|pseudo".
+```R
+(d<-data.frame(SIC="LI12345678",sic="LI12345679",PSEUDO="LI1234567X",PSEUDONYM="LI12345670"))
+get.sic.columns(d)
+```
+
+## GET SCI GROUP COLUMNS
+get.scigroup.columns is actually a wrapper for get.columns with a given date pattern "sci_group|sci-group|scigroup|sgroup|group|grp|gruppe".
+```R
+(d<-data.frame(SGROUP="A2_02",SCI_GROUP="B1_10",Gruppe="A1-SK_10",GRP="A3_09"))
+get.scigroup.columns(d)
+```
