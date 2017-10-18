@@ -453,3 +453,27 @@ rename.list <-
 			new.names[ match( n[ m ], old.names ) ]
 
 		list }
+
+#' KEY
+#'
+#' @description key creates a key out of several columns
+#' @param data a dataframe
+#' @param column.names column names that should be used for creating a unique key
+#' @param sep a separator for binding column contents
+#'
+#' @return a key combined out of given columns
+#' @export
+#'
+#' @examples
+#' key(data.frame(x=letters[ runif(10,1,10)],y=LETTERS[runif(10,1,10)],z=rnorm(10)),c("x","y"),"~")
+key <-
+	function( data, column.names, sep = "~" ) {
+		cl <-
+			data[[ column.names[ 1 ] ]]
+
+		for( i in 2 : length( column.names ) ) {
+			cl <-
+				paste0( cl, sep, data[[ column.names[ i ] ]] ) }
+
+		cl
+	}

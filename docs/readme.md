@@ -269,6 +269,13 @@ some.sics( n.size = 9 )
 some.sics( 10, prefix = "LIFE" )
 ```
 
+## KEY 
+# KEY
+Key creates a key out of several columns.
+```R
+key(data.frame(x=letters[ runif(10,1,10)],y=LETTERS[runif(10,1,10)],z=rnorm(10)),c("x","y"),"~")
+```
+
 # INFOS
 ## MERGING
 ### Get merging infos
@@ -311,3 +318,6 @@ Table availables, missings and if required min, median, mean and max of every co
 ```R
 table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)))
 ```
+
+
+
