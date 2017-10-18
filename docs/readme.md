@@ -287,7 +287,7 @@ Could be usefull before a merging process.
 ```R
 (a<-data.frame(SGROUP="A2_02",DATE="2002-10-05",Sic="LI12345678"))
 (b<-data.frame(GRUPPE="A3_02",DATUM="2002-10-05",PSEUDONYM="LI12345678"))
-(c<-data.frame(GRP=c("A2_02","A2_03"),DATE=c("2002-10-05","2001-10-05"),EDAT=c("2001-10-04","200-10-02"),PSEUDO=c("LI12345679","LI1234567X"),edat.new=c("2017-10-03","2017-10-11")))
+(c<-data.frame(GRP=c("A2_02","A2_03"),DATE=c("2002-10-05","2001-10-05"),EDAT=c("2001-10-04","2001-10-02"),PSEUDO=c("LI12345679","LI1234567X"),edat.new=c("2017-10-03","2017-10-11")))
 print.merging.infos(c("a","b","c"))
 ```
 
