@@ -12,13 +12,26 @@
 load.pkgs <-
 	function( pkgs =c( "dplyr", "ggplot2", "ggthemes", "reshape2" )) {
 
+		if( "hlpr4life" %in% pkgs ) {
+
+			if( !"devtools" %in% rownames( installed.packages( ) ) ) {
+
+				install.packages( "devtools" )
+			}
+
+			devtools::install_github( "TPeschel/hlpr4life" )
+
+			library( "hlpr4life" )
+		}
+
 		exist <-
 			pkgs %in% rownames( installed.packages( ) )
 
 		if( any( !exist ) )
 			install.packages( pkgs[ !exist ] )
 
-		sapply( pkgs, library, character.only = TRUE ) }
+		sapply( pkgs, library, character.only = TRUE )
+	}
 
 #' ADJUST LINEARLY
 #'

@@ -1,6 +1,6 @@
-HELPER 4 LIFE
+HELPER FOR LIFE
 
-This is a small collection of some usefull R-stuff
+This is a small collection of some R-stuff for every day use.
 
 # ADJUSTMENTS
 ## ADJUST LINEARLY 
@@ -93,23 +93,19 @@ clndr <-
 		abbreviate = F, 
 		tz = "Europe/Berlin" )
 
-(
-	weekends.in.2017 <-
-		clndr[ clndr$day_of_week %in% c( "Samstag", "Sonntag" ), ] )
+( weekends.in.2017 <-
+	clndr[ clndr$day_of_week %in% c( "Samstag", "Sonntag" ), ] )
 
-(
-	working.days.in.2017 <-
-		clndr[ clndr$day.of.week %in% c( 2 : 6 ), ] )
+( working.days.in.2017 <-
+	clndr[ clndr$day.of.week %in% c( 2 : 6 ), ] )
 
-(
-	my.birthday <-
-		clndr[ clndr$date == "2017-11-28", -2 ] )
+( my.birthday <-
+	clndr[ clndr$date == "2017-11-28", -2 ] )
 
-(
-	summer.2017 <-
-		calendar(
-			start = "2017-06-21",
-			end   = "2017-09-21" ) )
+( summer.2017 <-
+	calendar(
+		start = "2017-06-21",
+		end   = "2017-09-21" ) )
 ```
 
 # COLORS
@@ -232,29 +228,26 @@ now( )
 ## GGSUBPLOT
 ggsubplot gives the opportunity to create multiplot of ggplots.
 ```R
-hlper4life::load.pkgs( c( "hlper4life", "ggplot2" ) )
-d <-
-	data.frame( 
-		x = rnorm( 1000, +10 ), 
-		y = sample( letters[ 1 : 3 ], 1000, T ),
-		s = sample( c( "female", "male" ), 1000, T ) )
-m <- dplyr::summarise(dplyr::group_by(d,y,s),m=mean(x))
+hlpr4life::load.pkgs( c( "hlpr4life", "ggplot2" ) )
+(d<-data.frame(x=rnorm(1000,10),y=sample(letters[1:3],1000,T),s=sample(c("female","male"),1000,T))
+m<-dplyr::summarise(dplyr::group_by(d,y,s),m=mean(x))
 ggsubplot(
-	ggplot( d ) + theme_bw( ) + scale_color_discrete( guide = F ) +
-	geom_point( aes( c( 1 : 1000 ), x, col = paste0( y, s ) ) ),
-	ggplot( d ) + 
-	theme_bw( ) + scale_fill_discrete( guide = F ) + scale_color_discrete( guide = F ) +
-	geom_histogram( aes( x, fill = paste0( y, s ) ), alpha = .5 ) +
-	geom_vline( aes( xintercept = m, col = paste0( y, s ) ), m ) +
-	facet_grid( s ~ y ),
-	ggplot( d ) + 
-	theme_bw( ) + scale_fill_discrete( guide = F ) + scale_color_discrete( guide = F ) +
-	geom_histogram( aes( x, fill = paste0( y, s ) ), alpha = .5 ) +
-	geom_vline( aes( xintercept = m, col = paste0( y, s ) ), m ),
+	ggplot( d ) +
+		theme_bw( ) + scale_color_discrete( guide = F ) +
+		geom_point( aes( c( 1 : 1000 ), x, col = paste0( y, s ) ) ),
+	ggplot( d ) +
+		theme_bw( ) + scale_fill_discrete( guide = F ) + scale_color_discrete( guide = F ) +
+		geom_histogram( aes( x, fill = paste0( y, s ) ), alpha = .5 ) +
+		geom_vline( aes( xintercept = m, col = paste0( y, s ) ), m ) +
+		facet_grid( s ~ y ),
+	ggplot( d ) +
+		theme_bw( ) + scale_fill_discrete( guide = F ) + scale_color_discrete( guide = F ) +
+		geom_histogram( aes( x, fill = paste0( y, s ) ), alpha = .5 ) +
+		geom_vline( aes( xintercept = m, col = paste0( y, s ) ), m ),
 	layout = t(
 		matrix(
-			c( 
-				1, 2, 
+			c(
+				1, 2,
 				3, 3 ),
 			ncol = 2 ) ) )
 ```
