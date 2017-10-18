@@ -19,7 +19,7 @@ Could be usefull before a merging process.
 \examples{
 (a<-data.frame(SGROUP="A2_02",DATE="200-10-05",Sic="LI12345678"))
 (b<-data.frame(GRUPPE="A3_02",DATUM="200-10-05",PSEUDONYM="LI12345678"))
-(c<-data.frame(GRP="A2_02",DATE="200-10-05",EDAT="200-10-04",PSEUDO="LI12345679",edat.new="2017.10-03"))
+(c<-data.frame(GRP="A2_02",DATE="2001-10-05",EDAT="2001-10-04",PSEUDO="LI12345679",edat.new="2017-10-03"))
 (infos<-get.merging.infos(c("a","b","c")))
 infos$SIC
 infos$SCI_GROUP

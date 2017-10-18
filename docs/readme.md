@@ -228,9 +228,12 @@ now( )
 ## GGSUBPLOT
 ggsubplot gives the opportunity to create multiplot of ggplots.
 ```R
-hlpr4life::load.pkgs( c( "hlpr4life", "ggplot2" ) )
-(d<-data.frame(x=rnorm(1000,10),y=sample(letters[1:3],1000,T),s=sample(c("female","male"),1000,T))
-m<-dplyr::summarise(dplyr::group_by(d,y,s),m=mean(x))
+hlpr4life::load.pkgs(c(
+"hlpr4life",
+"ggplot2",
+"dplyr" ) )
+(d<-data.frame(x=rnorm(1000,10),y=sample(letters[1:3],1000,T),s=sample(c("female","male"),1000,T)))
+m<-summarise(group_by(d,y,s),m=mean(x))
 ggsubplot(
 	ggplot( d ) +
 		theme_bw( ) + scale_color_discrete( guide = F ) +

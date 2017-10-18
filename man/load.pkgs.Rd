@@ -14,5 +14,5 @@ load.pkgs tries to load a package into the environment.
 If this fails, it tries to install the package from CRAN-mirror and loads it afterwards.
 }
 \examples{
-load.pkgs( c( "dplyr", "ggplot2", "ggthemes", "reshape2" ) )
+hlpr4life::load.pkgs(c("hlpr4life","dplyr","ggplot2","ggthemes","reshape2"))
 }

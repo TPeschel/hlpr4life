@@ -8,18 +8,20 @@
 #' @export
 #'
 #' @examples
-#' load.pkgs( c( "dplyr", "ggplot2", "ggthemes", "reshape2" ) )
+#' hlpr4life::load.pkgs(c("hlpr4life","dplyr","ggplot2","ggthemes","reshape2"))
 load.pkgs <-
 	function( pkgs =c( "dplyr", "ggplot2", "ggthemes", "reshape2" )) {
 
 		if( "hlpr4life" %in% pkgs ) {
 
-			if( !"devtools" %in% rownames( installed.packages( ) ) ) {
+			if( !"hlpr4life" %in% rownames( installed.packages( ) ) ) {
 
-				install.packages( "devtools" )
-			}
+				if( !"devtools" %in% rownames( installed.packages( ) ) ) {
 
-			devtools::install_github( "TPeschel/hlpr4life" )
+					install.packages( "devtools" )
+				}
+
+				devtools::install_github( "TPeschel/hlpr4life" ) }
 
 			library( "hlpr4life" )
 		}
@@ -427,12 +429,11 @@ get.sic.columns <-
 #' GET SCI-GROUP COLUMNS
 #' @name get.scigroup.columns
 #'
-#' @description get.scigroup searches for some sci-group like column names.
-#' One has the opportunity to give a search string for a certain pattern.
+#' @description get.scigroup searches for some sci-group like column names. One has the opportunity to give a search string for a certain pattern.
 #'
 #' @param data dataframe which has some sci-group columns
-#' @param pattern
-#' @param perl logical: Use perl regex. Default is T
+#' @param pattern search pattern for finding column names via grep
+#' @param perl logical: Use perl regex. Default is T.
 #'
 #' @return names of sci-group columns
 #' @export
