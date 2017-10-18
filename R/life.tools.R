@@ -1,11 +1,8 @@
-# Sys.time( )
-# Sys.timezone( )
-Sys.setenv( TZ = "Europe/Berlin" )
-
 #' LOAD PACKAGES
 #' @name load.pkgs
 #'
-#' @description load packages tries to load a package into the environment. If it fails, it tries to install the package and loads it afterwards.
+#' @description load.pkgs tries to load a package into the environment.
+#' If this fails, it tries to install the package from CRAN-mirror and loads it afterwards.
 #' @param pkgs
 #'
 #' @export
@@ -264,6 +261,7 @@ list.append <-
 		list }
 
 #' TABLE DATAFRAME
+#' @name table.df
 #'
 #' @description table.df returns data about missings, availables of every column in a given
 #' dataframe. If  summary is TRUE, min, max, median and mean are shown additionally.
@@ -272,6 +270,7 @@ list.append <-
 #' @param horizontal logical: The result is shown in horizontal or vertical style. Default is TRUE.
 #' @param summary logical: If summary is TRUE additionally min, median, mean and max are tabled.
 #' Default is FALSE.
+#' @param na.rm logical: If na.rm is TRUE missings are ignored. Default is FALSE.
 #'
 #' @return A dataframe containing sum of missing and available data and if summary is TRUE mins
 #' and maxs, means and medians of every column of a given datframe.
@@ -279,12 +278,16 @@ list.append <-
 #'
 #' @examples
 #' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")))
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F,F)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T,F)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F,F)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,F)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F,T)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T,T)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F,T)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,T)
 table.df <-
-	function( data, horizontal = T, summary = F ) {
+	function( data, horizontal = T, summary = F, na.rm = F ) {
 
 		options( warn = -1 )
 
@@ -296,19 +299,19 @@ table.df <-
 
 		if( summary )
 			MIN <-
-				sapply( data, function( d ) ifelse( is.factor( d ), min( as.character( d ), na.rm = T ), min( d, na.rm = T ) ) )
+				sapply( data, function( d ) ifelse( is.factor( d ), min( as.character( d ), na.rm = T ), min( d, na.rm = na.rm ) ) )
 
 		if( summary )
 			MAX <-
-				sapply( data, function( d ) ifelse( is.factor( d ), max( as.character( d ), na.rm = T ), max( d, na.rm = T ) ) )
+				sapply( data, function( d ) ifelse( is.factor( d ), max( as.character( d ), na.rm = T ), max( d, na.rm = na.rm ) ) )
 
 		if( summary )
 			MEAN <-
-				sapply( data, function( d ) ifelse( !is.numeric( d ), NA, mean( d, na.rm = T ) ) )
+				sapply( data, function( d ) ifelse( !is.numeric( d ), NA, mean( d, na.rm = na.rm ) ) )
 
 		if( summary )
 			MEDIAN <-
-				sapply( data, function( d ) ifelse( is.factor( d ), NA, median( d, na.rm = T ) ) )
+				sapply( data, function( d ) ifelse( is.factor( d ), NA, median( d, na.rm = na.rm ) ) )
 
 		d <-
 			rbind(
@@ -350,8 +353,9 @@ remove.columns <-
 	}
 
 #' GET COLUMNS
+#' @name get.columns
 #'
-#' @description searches for column names that matches a given the pattern.
+#' @description get.columns searches for column names that matches a given the pattern.
 #' @param data dataframe which has some date columns
 #' @param pattern search pattern for finding column names via grep
 #'
@@ -367,12 +371,13 @@ get.columns <-
 
 
 #' GET DATE COLUMNS
+#' @name get.date.columns
 #'
 #' @description searches for some date like column names. one has the opportunity to give a
 #' search string for a certain pattern.
 #' @param data dataframe which has some date columns
 #' @param pattern search pattern for finding column names via grep
-#' @param perl logical: use perl regex
+#' @param perl logical: Use perl regex. Default is T.
 #'
 #' @return names of date columns
 #' @export
@@ -387,13 +392,14 @@ get.date.columns <-
 		get.columns( data, pattern, perl ) }
 
 #' GET SIC COLUMNS
+#' @name get.sic.columns
 #'
 #' @description searches for some sic like column names. one has the opportunity to give a
 #' search string for a certain pattern.
 #'
 #' @param data dataframe which has some sic columns
 #' @param pattern search pattern for finding column names via grep
-#' @param perl logical: use perl regex
+#' @param perl logical: Use perl regex. Default is T.
 #'
 #' @return names of sic columns
 #' @export
@@ -406,13 +412,14 @@ get.sic.columns <-
 		get.columns( data, pattern, perl ) }
 
 #' GET SCI-GROUP COLUMNS
+#' @name get.scigroup.columns
 #'
-#' @description searches for some sci-group like column names. one has the opportunity to give a
-#' search string for a certain pattern.
+#' @description get.scigroup searches for some sci-group like column names.
+#' One has the opportunity to give a search string for a certain pattern.
 #'
 #' @param data dataframe which has some sci-group columns
 #' @param pattern
-#' @param perl logical: use perl regex
+#' @param perl logical: Use perl regex. Default is T
 #'
 #' @return names of sci-group columns
 #' @export
@@ -426,6 +433,7 @@ get.scigroup.columns <-
 
 
 #' PRINT MERGING INFOS
+#' @name print.merging.infos
 #'
 #' @description print merging infos print some usefull information of a set of tables.
 #' Could be usefull before a merging process.
@@ -459,8 +467,9 @@ print.merging.infos <-
 	}
 
 #' GET MERGING INFOS
+#' @name get.merging.infos
 #'
-# @description get merging infos returns some usefull information of a set of tables.
+#' @description get merging infos returns some usefull information of a set of tables.
 #' Could be usefull before a merging process.
 #'
 #' @param table.names vector of table names
@@ -502,6 +511,7 @@ get.merging.infos <-
 	}
 
 #' SUM MISSINGS
+#' @name sum.na
 #'
 #' @description gives the number of the missing values of every column of a dataframe
 #'
@@ -521,6 +531,7 @@ sum.na <-
 
 #' SUM AVAILABLES
 #'
+#' @name sum.av
 #' @description gives the number of the available values of every column of a dataframe
 #'
 #' @param data dataframe for which availables in columns should be summed up
@@ -538,6 +549,8 @@ sum.av <-
 	}
 
 #' RENAME COLUMNS
+#' @name rename.columns
+#'
 #' @description rename.columns( data, c( "alter", "groesse" ), c( "age", "height" ) ) takes a data frame d containing the old column name "alter" and "groesse" and returns a new dataframe with the replaced names "age" and "size".
 #'
 #' @param data dataframe with new column names
@@ -565,6 +578,8 @@ rename.columns <-
 		data }
 
 #' RENAME LIST
+#' @name rename.list
+#'
 #' @description rename.columns( data, c( "alter", "groesse" ), c( "age", "height" ) ) takes a data frame d containing the old column name "alter" and "groesse" and returns a new dataframe with the replaced names "age" and "size".
 #'
 #' @param list named list
@@ -591,9 +606,10 @@ rename.list <-
 		list }
 
 #' KEY
+#' @name key
 #'
-#' @description key creates a key out of several columns
-#' @param data a dataframe
+#' @description key creates a key out of several columns.
+#' @param data a dataframe from which entries of choosen column a combined to create a key.
 #' @param column.names column names that should be used for creating a unique key
 #' @param sep a separator for binding column contents
 #'
