@@ -117,10 +117,9 @@ ifnot <-
 #'
 #' @examples
 #' ( lst <- list( x = 9 ) )
-#' ( lst <- list.append( lst, value = Sys.time( ), name = "TIME" ) )
+#' ( lst <- list.append( lst, x = Sys.time( ), name = "TIME" ) )
 #' ( lst <- list.append( lst, "y", "Ypsilon" ) )
 #' ( lst <- list.append( lst, "unnamed" ) )
-#' ( lst <- list.append( lst, c( "A", "B" ), c( "a", "b" ) ) )
 list.append <-
 	function( list, x, name = NA ) {
 

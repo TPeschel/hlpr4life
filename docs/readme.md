@@ -171,6 +171,7 @@ note.of.key(key = c(4, 6, 8, 9, 11, 13, 15, 16))
 ```
 
 ## PIANO
+Description of a piano
 ```R
 piano(left.key = 4, right.key = 88)
 ```
@@ -194,16 +195,43 @@ ggplot( piano( 4, 4 + 2 * 12 ) ) +
 
 # RENAMER
 ## RENAME COLUMNS
+Rename some columns of a dataframe.
 ```R
 (d<-rename.columns( data.frame(x=c(1:10),y=rnorm(10),z=c(10:1)),c("y","x"),c("x","y")))
 ```
+
+Rename some elements of a list.
 ## RENAME LIST
 ```R
 (l<-rename.list(list(x="x",y="y",z="z"),c("y","z","x"),c("Ypsilon","CED","U")))
 ```
 
+# LIST APPEND 
+## APPEND ELEMENT TO LIST
+Append named or unnamed one element to a list. 
+```R
+( lst <- list( x = 9 ) )
+( lst <- list.append( lst, x = now( ), name = "TIME" ) )
+( lst <- list.append( lst, "y", "Ypsilon" ) )
+( lst <- list.append( lst, "unnamed" ) )
+```
+
+# TIME
+## TODAY
+What date is today?
+```R
+today( )
+```
+
+## NOW
+What's the time now?
+```R
+now( )
+```
+
 # SUB PLOTS
 ## GGSUBPLOT
+Ggsubplot gives the opportunity to create multiplot of ggplots.
 ```R
 hlper4life::load.pkgs( c( "hlper4life", "ggplot2" ) )
 d <-
@@ -230,4 +258,56 @@ ggsubplot(
 				1, 2, 
 				3, 3 ),
 			ncol = 2 ) ) )
+```
+
+## SICS
+# SOME SICS
+Creates a list of sics.
+```R
+some.sics( n.first = 0, n.last = 110 )
+some.sics( n.size = 9 )
+some.sics( 10, prefix = "LIFE" )
+```
+
+# INFOS
+## MERGING
+### Get merging infos
+Could be usefull before a merging process.
+```R
+(a<-data.frame(SGROUP="A2_02",DATE="200-10-05",Sic="LI12345678"))
+(b<-data.frame(GRUPPE="A3_02",DATUM="200-10-05",PSEUDONYM="LI12345678"))
+(c<-data.frame(GRP="A2_02",DATE="200-10-05",EDAT="200-10-04",PSEUDO="LI12345679",edat.new="2017.10-03"))
+(infos<-get.merging.infos(c("a","b","c")))
+infos$SIC
+infos$SCI_GROUP
+infos$DATE
+```
+
+### Print merging infos
+Could be usefull before a merging process.
+```R
+(a<-data.frame(SGROUP="A2_02",DATE="2002-10-05",Sic="LI12345678"))
+(b<-data.frame(GRUPPE="A3_02",DATUM="2002-10-05",PSEUDONYM="LI12345678"))
+(c<-data.frame(GRP=c("A2_02","A2_03"),DATE=c("2002-10-05","2001-10-05"),EDAT=c("2001-10-04","200-10-02"),PSEUDO=c("LI12345679","LI1234567X"),edat.new=c("2017.10-03","2017.10-01")))
+print.merging.infos(c("a","b","c"))
+```
+
+### SUM AVAILABLES
+Count availables in every column of a dataframe!
+```R
+(d<-data.frame(x=c(NA,"Hello",NA,"World",NA),y=c(1:5),z=rep(NA,5)))
+sum.av(d)
+```
+
+### SUM MISSINGS
+Count missings in every column of a dataframe!
+```R
+(d<-data.frame(x=c(NA,"Hello",NA,"World",NA),y=c(1:5),z=rep(NA,5)))
+sum.na(d)
+```
+
+### TABLE DATAFRAME
+Table availables, missings and if required min, median, mean and max of every column in a dataframe!
+```R
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)))
 ```
