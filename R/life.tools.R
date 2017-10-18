@@ -270,8 +270,7 @@ list.append <-
 #'
 #' @param data dataframe which columns should be summarised
 #' @param summary logical: if is true additionally min, median, mean and max will be tabled
-#' @param as.data.frame logical: result is shown as data frame
-#' @param horizontal.of.plot logical: result is shown in horizontal or vertical style
+#' @param horizontal logical: result is shown in horizontal or vertical style
 #'
 #' @return table of data containing sum of missing and available data their mins and maxs.
 #' @export
@@ -286,7 +285,7 @@ list.append <-
 #' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)),F,T,T)
 #' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)),T,T,T)
 table.df <-
-	function( data, summary = F, as.dataframe = !summary, horizontal.of.plot = T ) {
+	function( data, summary = F, horizontal = T ) {
 
 		options( warn = -1 )
 
@@ -328,17 +327,11 @@ table.df <-
 
 		options( warn = 0 )
 
-		if( as.dataframe ) {
+		if( horizontal ) {
 
 			return( as.data.frame( d ) ) }
 
-		if( horizontal )
-			d
-
-		if( as.dataframe )
-			as.data.frame( t( d ) )
-
-		t( d )
+		return( as.data.frame( t( d ) ) )
 	}
 
 #' REMOVE COLUMNS
