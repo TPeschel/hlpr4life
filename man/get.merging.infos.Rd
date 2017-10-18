@@ -13,6 +13,7 @@ get.merging.infos(table.names = ls())
 data frame with merging informations for all given tables
 }
 \description{
+get merging infos returns some usefull information of a set of tables.
 Could be usefull before a merging process.
 }
 \examples{

@@ -7,7 +7,7 @@
 key(data, column.names, sep = "~")
 }
 \arguments{
-\item{data}{a dataframe}
+\item{data}{a dataframe from which entries of choosen column a combined to create a key.}
 
 \item{column.names}{column names that should be used for creating a unique key}
 
@@ -17,7 +17,7 @@ key(data, column.names, sep = "~")
 a key combined out of given columns
 }
 \description{
-key creates a key out of several columns
+key creates a key out of several columns.
 }
 \examples{
 key(data.frame(x=letters[ runif(10,1,10)],y=LETTERS[runif(10,1,10)],z=rnorm(10)),c("x","y"),"~")

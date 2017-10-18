@@ -11,7 +11,7 @@ get.sic.columns(data, pattern = "sic|pseudo", perl = T)
 
 \item{pattern}{search pattern for finding column names via grep}
 
-\item{perl}{logical: use perl regex}
+\item{perl}{logical: Use perl regex. Default is T.}
 }
 \value{
 names of sic columns

@@ -10,7 +10,8 @@ load.pkgs(pkgs = c("dplyr", "ggplot2", "ggthemes", "reshape2"))
 \item{pkgs}{}
 }
 \description{
-load packages tries to load a package into the environment. If it fails, it tries to install the package and loads it afterwards.
+load.pkgs tries to load a package into the environment.
+If this fails, it tries to install the package from CRAN-mirror and loads it afterwards.
 }
 \examples{
 load.pkgs( c( "dplyr", "ggplot2", "ggthemes", "reshape2" ) )

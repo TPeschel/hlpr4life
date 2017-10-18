@@ -268,24 +268,23 @@ list.append <-
 #' @description table.df returns data about missings, availables of every column in a given
 #' dataframe. If  summary is TRUE, min, max, median and mean are shown additionally.
 #'
-#' @param data dataframe which columns should be summarised
-#' @param summary logical: if is true additionally min, median, mean and max will be tabled
-#' @param horizontal logical: result is shown in horizontal or vertical style
+#' @param data A dataframe which columns should be summarised.
+#' @param horizontal logical: The result is shown in horizontal or vertical style. Default is TRUE.
+#' @param summary logical: If summary is TRUE additionally min, median, mean and max are tabled.
+#' Default is FALSE.
 #'
-#' @return table of data containing sum of missing and available data their mins and maxs.
+#' @return A dataframe containing sum of missing and available data and if summary is TRUE mins
+#' and maxs, means and medians of every column of a given datframe.
 #' @export
 #'
 #' @examples
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)),F,F,F)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)),T,F,F)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)),F,T,F)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)),T,T,F)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)),F,F,T)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)),T,F,T)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)),F,T,T)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)),T,T,T)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")))
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T)
 table.df <-
-	function( data, summary = F, horizontal = T ) {
+	function( data, horizontal = T, summary = F ) {
 
 		options( warn = -1 )
 
