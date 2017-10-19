@@ -457,6 +457,65 @@ remove.columns <-
 		data[ , !names( data ) %in% column.names ]
 	}
 
+#' RENAME COLUMNS
+#' @name rename.columns
+#'
+#' @description rename.columns takes a data frame d containing the old column names and returns a new dataframe with the replaced names.
+#'
+#' @param data dataframe with new column names
+#' @param old.column.names old column names
+#' @param new.column.names new column names
+#'
+#' @return dataframe with replaced column names
+#' @export
+#'
+#' @examples
+#' (d<-rename.columns(d<-data.frame(x=c(1:10),y=rnorm(10),z=c(10:1)),c("y","x"),c("x","y")))
+#' (d<-rename.columns(d,c("y","x"),c("x","y")))
+rename.columns <-
+	function( data, old.column.names, new.column.names ) {
+
+		n <-
+			colnames( data )
+
+		m <-
+			n %in% old.column.names
+
+		colnames( data )[ m ] <-
+			new.column.names[ match( n[ m ], old.column.names ) ]
+
+		data
+	}
+
+#' RENAME LIST ELEMENTS
+#' @name rename.list.elements
+#'
+#' @description rename.list.elements takes a list containing the old element names "alter" and "groesse" and returns a new list with the replaced names "age" and "size".
+#'
+#' @param list named list
+#' @param old.names old names
+#' @param new.names new names
+#'
+#' @return dataframe with replaced column names
+#' @export
+#'
+#' @examples
+#' (l<-rename.list.elements(list(x="x",y="y",z="z"),c("y","z","x"),c("Ypsilon","CED","U")))
+rename.list.elements <-
+	function( list, old.names, new.names ) {
+
+		n <-
+			names( list )
+
+		m <-
+			n %in% old.names
+
+		names( list )[ m ] <-
+			new.names[ match( n[ m ], old.names ) ]
+
+		list
+	}
+
 #' SOME SICS
 #'
 #' @description some.sics creates a vector of coherently sics of same width.
@@ -612,63 +671,4 @@ today <-
 	function( ) {
 
 		lubridate::date( Sys.time( ) )
-	}
-
-#' RENAME COLUMNS
-#' @name rename.columns
-#'
-#' @description rename.columns( data, c( "alter", "groesse" ), c( "age", "height" ) ) takes a data frame d containing the old column name "alter" and "groesse" and returns a new dataframe with the replaced names "age" and "size".
-#'
-#' @param data dataframe with new column names
-#' @param old.column.names old column names
-#' @param new.column.names new column names
-#'
-#' @return dataframe with replaced column names
-#' @export
-#'
-#' @examples
-#' (d<-rename.columns(d<-data.frame(x=c(1:10),y=rnorm(10),z=c(10:1)),c("y","x"),c("x","y")))
-#' (d<-rename.columns(d,c("y","x"),c("x","y")))
-rename.columns <-
-	function( data, old.column.names, new.column.names ) {
-
-		n <-
-			colnames( data )
-
-		m <-
-			n %in% old.column.names
-
-		colnames( data )[ m ] <-
-			new.column.names[ match( n[ m ], old.column.names ) ]
-
-		data
-	}
-
-#' RENAME LIST
-#' @name rename.list
-#'
-#' @description rename.columns( data, c( "alter", "groesse" ), c( "age", "height" ) ) takes a data frame d containing the old column name "alter" and "groesse" and returns a new dataframe with the replaced names "age" and "size".
-#'
-#' @param list named list
-#' @param old.names old names
-#' @param new.names new names
-#'
-#' @return dataframe with replaced column names
-#' @export
-#'
-#' @examples
-#' (l<-rename.list(list(x="x",y="y",z="z"),c("y","z","x"),c("Ypsilon","CED","U")))
-rename.list <-
-	function( list, old.names, new.names ) {
-
-		n <-
-			names( list )
-
-		m <-
-			n %in% old.names
-
-		names( list )[ m ] <-
-			new.names[ match( n[ m ], old.names ) ]
-
-		list
 	}

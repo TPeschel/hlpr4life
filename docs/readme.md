@@ -305,9 +305,9 @@ Rename some columns of a dataframe.
 ```
 
 Rename some elements of a list.
-## RENAME LIST
+## RENAME LIST ELEMENTS
 ```R
-(l<-rename.list(list(x="x",y="y",z="z"),c("y","z","x"),c("Ypsilon","CED","U")))
+(l<-rename.list.elements(list(x="x",y="y",z="z"),c("y","z","x"),c("Ypsilon","CED","U")))
 ```
 
 # LIST APPEND 
