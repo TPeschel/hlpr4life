@@ -28,7 +28,86 @@ hlpr4life::load.pkgs( c( "hlpr4life", ... ) )
 
 ## simple example
 ```R
-hlpr4life::load.pkgs( c( "hlpr4life", ... ) )
+hlpr4life::load.pkgs( 
+	c(
+		"hlpr4life",
+		"dplyr",
+		"magrittr",
+		"stringr",
+		"lubridate",
+		"ggplot2" ) )
+
+n <-
+	1000
+
+( clndr <-
+	calendar( 
+		"2017-01-01",
+		"2017-12-31" ) )
+
+( sexes <-
+	c( "female", "male" ) )
+	
+( d <-
+	data.frame(
+		sic  = s<-sample( some.sics( n.first = 100, n.last = 300 ), n, T ),
+		date = sample( clndr$date, n, T ) ) )
+
+( d$sex <-
+	sample( sexes, n, T )[ match( d$sic, unique( d$sic ) ) ] )
+
+( d$birth <-
+	sample( calendar( "2000-01-01", "2016-12-31" )$date, length( unique( d$sic ) ), T )[ match( d$sic, unique( d$sic ) ) ] )
+
+( d$age <-
+	round( as.numeric( difftime( as.Date( d$date ), as.Date( d$birth ), units = "day" ) ) / 325.25, 2 ) )
+
+( d$sci_group <-
+	paste0( "A8_", str_pad( floor( d$age ), 2, pad = "0" ) ) )
+
+( d$height <-
+	round(
+		rnorm( n, c( 30, 35 )[ match( d$sex, sexes ) ], 2 + 1 * d$age ) +
+		( exp( 20 ) - exp( 20 - ( d$age * c( 1.01, 1.03 )[ match( d$sex, sexes ) ] - 1 ) / 15 ) ) * 200 / exp( 20 ), 2 ) )
+		
+( d$weight <-
+	round(
+		rnorm( n, c( 4, 4.5 )[ match( d$sex, sexes ) ], 1 + c( .6, .7 )[ match( d$sex, sexes ) ] * d$age ) +
+		( exp( 20 ) - exp( 20 - ( d$age * c( 1.01, 1.02 )[ match( d$sex, sexes ) ] - 1 ) / 18 ) ) * 100 / exp( 20 ), 2 ) )
+		
+( d$bmi <-
+	round( 10000 * d$weight / d$height / d$height, 2 ) )
+
+( d <-
+	arrange(
+		d[ , c( "sic", "sci_group", "sex", "birth", "age", "date", "height", "weight", "bmi" ) ],
+		sic,
+		sci_group ) )
+
+d <-
+	adjust.linearly.std( weight ~ sex * age, d )
+
+d <-
+	adjust.linearly.std( height ~ sex * age, d )
+
+d <-
+	adjust.linearly.std( bmi ~ sex * age, d )
+
+thm <-
+	list( 
+	theme_bw( ), 
+	geom_point( alpha = .3 ), 
+	geom_smooth( method = "lm" ),
+	scale_color_manual( values = c( "red", "blue" ) ) )
+	
+ggsubplot(
+	ggplot( d, aes( age, height, col = sex ) ) + thm,
+	ggplot( d, aes( age, weight, col = sex ) ) + thm,
+	ggplot( d, aes( age, bmi, col = sex ) ) + thm,
+	ggplot( d, aes( age, height.std.for.sex.age, col = sex ) ) + thm,
+	ggplot( d, aes( age, weight.std.for.sex.age, col = sex ) ) + thm,
+	ggplot( d, aes( age, bmi.std.for.sex.age, col = sex ) ) + thm,
+	cols = 2 )
 ```
 
 
