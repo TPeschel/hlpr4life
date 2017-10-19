@@ -1,4 +1,4 @@
-HELPER FOR LIFE
+# HELPER FOR LIFE
 
 This is a small collection of some R-stuff for every day use.
 It is recommended to install this package first time via 
@@ -111,8 +111,8 @@ ggsubplot(
 ```
 
 
-# ADJUSTMENTS
-## ADJUST LINEARLY 
+## ADJUSTMENTS
+### ADJUST LINEARLY 
 Adjust a dependent variable y linearly to several independent variables x1, x2 ...
 ```R
 hlpr4life::load.pkgs( c( "hlpr4life", "ggplot2" ) )
@@ -148,7 +148,7 @@ ggsubplot(
 	cols = 4 )
 ```
 
-## ADJUST LINEARLY AND STANDARDIZE 
+### ADJUST LINEARLY AND STANDARDIZE 
 Adjust and standardize afterwards a dependent variable y linearly to several independent variables x1, x2 ...
 ```R
 hlpr4life::load.pkgs( c( "hlpr4life", "ggplot2" ) )
@@ -184,15 +184,16 @@ ggsubplot(
 	cols = 4 )
 ```
 
-# PACKAGE LOADER
-## LOAD PACKAGES 
+## PACKAGE LOADER
+### LOAD PACKAGES 
 Load packages as library() or require() do!
 If some are not installed then install them.
 ```R
 load.pkgs( c( "dplyr", "ggplot2", "ggthemes", "reshape2" ) )
 ```
 
-# CALENDAR
+## TIME AND DATE
+### CALENDAR
 Build a dataframe with calendar data!
 ```R
 clndr <- 
@@ -217,21 +218,21 @@ clndr <-
 		end   = "2017-09-21" ) )
 ```
 
-# COLORS
-## PLOT COLORS
+## COLORS
+### PLOT COLORS
 Plot all in R defined colors!
 ```R
 plot.colors( )
 ```
 
-## COLOR GRADIENT
+### COLOR GRADIENT
 Build a dataframe with a color gradient between two distinct colors
 partitioned by steps!
 ```R
 color.gradient( "red", "green", 16 )
 ```
 
-## PLOT COLOR GRADIENT
+### PLOT COLOR GRADIENT
 Plot a color gradient between two distinct colors
 partitioned by steps!
 ```R
@@ -239,42 +240,42 @@ plot.color.gradient( "red", "green", 256, "horiz", F )
 plot.color.gradient( "blue", "yellow", 16, "vert", T )
 ```
 
-# THE PIANO
-## FREQUENCY OF A PIANO KEY'S SOUND
+## THE PIANO
+### FREQUENCY OF A PIANO KEY'S SOUND
 What's the frequency heard by playing key 25 of a piano?
 ```R
 freq.of.key( 25 )
 ```
-## FREQUENCY OF A NOTE
+### FREQUENCY OF A NOTE
 What's the frequency of a certain note?
 ```R
 freq.of.note( "A2" )
 ```
-## KEY OF FREQUENCY
+### KEY OF FREQUENCY
 Which key has to be pressed for a certain frequency?
 ```R
 key.of.freq( 110 )
 ```
 
-## KEY OF NOTE
+### KEY OF NOTE
 Which key plays a certain note?
 ```R
 key.of.note( c( "C0", "D0", "E0", "F0", "G0", "A1", "B1", "C1" ) )
 ```
 
-## NOTE OF FREQUENCY
+### NOTE OF FREQUENCY
 Which frequency is represented by a certain note?
 ```R
 note.of.freq( 110 )
 ```
 
-## NOTE OF KEY
+### NOTE OF KEY
 Which note has a certain piano key?
 ```R
 note.of.key(key = c(4, 6, 8, 9, 11, 13, 15, 16))
 ```
 
-## PIANO
+### PIANO
 Description of a piano
 ```R
 piano(left.key = 4, right.key = 88)
@@ -300,21 +301,33 @@ ggplot( piano( ) ) +
 		legend.key = element_blank( ) )
 ```
 
-# RENAMER
-## RENAME COLUMNS
+## RENAMER
+### RENAME COLUMNS
 Rename some columns of a dataframe.
 ```R
 (d<-rename.columns( data.frame(x=c(1:10),y=rnorm(10),z=c(10:1)),c("y","x"),c("x","y")))
 ```
 
 Rename some elements of a list.
-## RENAME LIST ELEMENTS
+### RENAME LIST ELEMENTS
 ```R
 (l<-rename.list.elements(list(x="x",y="y",z="z"),c("y","z","x"),c("Ypsilon","CED","U")))
 ```
 
-# LIST APPEND 
-## APPEND ELEMENT TO LIST
+Remove columns of a list.
+### REMOVE LIST ELEMENTS
+```R
+remove.columns(data.frame(x="X",y="Y",z="Z",w="W"),c("x","z"))
+```
+
+Remove elements of a list.
+### REMOVE LIST ELEMENTS
+```R
+remove.list.elements(list(x="X",y="Y",z="Z",w="W"),c("x","z"))
+```
+
+## LIST APPEND 
+### APPEND ELEMENT TO LIST
 Append named or unnamed one element to a list. 
 ```R
 ( lst <- list( x = 9 ) )
@@ -323,21 +336,21 @@ Append named or unnamed one element to a list.
 ( lst <- list.append( lst, "unnamed" ) )
 ```
 
-# TIME
-## TODAY
-What date is today?
-```R
-today( )
-```
-
-## NOW
+## NOW AND TODAY
+### NOW
 What's the time now?
 ```R
 now( )
 ```
 
-# SUB PLOTS
-## GGSUBPLOT
+### TODAY
+What's the date today?
+```R
+today( )
+```
+
+## SUB PLOTS
+### GGSUBPLOT
 ggsubplot gives the opportunity to create multiplot of ggplots.
 ```R
 hlpr4life::load.pkgs(c(
@@ -368,7 +381,7 @@ ggsubplot(
 ```
 
 ## SICS
-# SOME SICS
+### SOME SICS
 Creates a list of sics.
 ```R
 some.sics( n.first = 0, n.last = 110 )
@@ -377,14 +390,13 @@ some.sics( 10, prefix = "LIFE" )
 ```
 
 ## KEY 
-# KEY
+### KEY
 key creates a key out of several columns.
 ```R
 key(data.frame(x=letters[ runif(10,1,10)],y=LETTERS[runif(10,1,10)],z=rnorm(10)),c("x","y"),"~")
 ```
 
-# INFOS
-## MERGING
+## INFOS FOR MERGING AND LITE DESCRIPTION
 ### Get merging infos
 Could be usefull before a merging process.
 ```R
@@ -434,8 +446,8 @@ table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","bl
 table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,T)
 ```
 
-# COLUMNS
-## GET COLUMNS
+## COLUMNS
+### GET COLUMNS
 get.columns searches for column names that matches a given the pattern.
 ```R
 (d<-data.frame(SIC="LI01234",Y=1000.,x=10,SCI_GROUP="A2_12",DATE="2017-10-05",EDAT="2017-10-04"))

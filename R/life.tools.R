@@ -457,6 +457,23 @@ remove.columns <-
 		data[ , !names( data ) %in% column.names ]
 	}
 
+#' REMOVE LIST ELEMENTS
+#'
+#' @description removes elements out of a list
+#' @param data A list that contains named elements which should be removed.
+#' @param names Names of elements that should be removed.
+#'
+#' @return A list without removed columns.
+#' @export
+#'
+#' @examples
+#' remove.list.elements(list(x="X",y="Y",z="Z",w="W"),c("x","z"))
+remove.list.elements <-
+	function( list, names ) {
+
+		list[ !names( list ) %in% names ]
+	}
+
 #' RENAME COLUMNS
 #' @name rename.columns
 #'
