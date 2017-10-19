@@ -4,7 +4,7 @@
 \alias{piano}
 \title{PIANO}
 \usage{
-piano(left.key = 4, right.key = 88)
+piano(left.key = 1, right.key = 97)
 }
 \arguments{
 \item{left.key}{left key of piano}
@@ -21,17 +21,21 @@ The returned dataframe then contains all keys between left.key and right.key, th
 }
 \examples{
 load.pkgs( c( "ggplot2", "ggthemes" ) )
-piano( 4, 4 + 2 * 12 )
-ggplot( piano( 4, 4 + 2 * 12 ) ) +
-    geom_histogram( aes( note, -c( 1, .63 )[ match( color, c( "ivory", "ebony" ) ) ], fill = color ), stat = "identity" ) +
-    scale_fill_manual( values = c( "#000000", "#f0f3f4" ), guide = F ) +
-    geom_text( aes( note, label = note, col = color ), y = -.2, angle = 90 ) +
-    scale_color_manual( values = c( "#f0f3f4", "#000000" ), guide = F ) +
-    theme_solid( fill = "#405060" ) +
-    theme(
-        axis.text.x = element_blank( ),
-        axis.title.x = element_blank( ),
-        axis.text.y = element_blank( ),
-        axis.title.y = element_blank( ) ) +
-    ylim( -1, 0 )
+piano( key.of.note( "C1" ), key.of.note( "C3" ) )
+ggplot( piano( ) ) +
+  geom_histogram( aes( note, -c( 1, .63 )[ match( color, c( "ivory", "ebony" ) ) ], fill = color ), stat = "identity" ) +
+  geom_histogram( aes( note, .001 * frequency, alpha = note ), fill = "orange", stat = "identity" ) +
+  scale_fill_manual( values = c( "#000000", "#f0f3f4" ), guide = F ) +
+  geom_text( aes( note, label = note, col = color ), y = -.2, angle = 90 ) +
+  annotate( geom = "text", x = 24.98, y = 3.02, xmin = 30, xmax = 60, ymin = 1, ymax = 5, label = "THE PIANO", col = "white", size = 20 )+
+  annotate( geom = "text", x = 25,    y = 3,    xmin = 30, xmax = 60, ymin = 1, ymax = 5, label = "THE PIANO", col = "black", size = 20 )+
+  scale_color_manual( values = c( "#f0f3f4", "#000000" ), guide = F ) +
+  scale_alpha_discrete( range = c(.7,.1),guide = F ) +
+  theme_solid( fill = "#405060" ) +
+  theme(
+    axis.text.x = element_blank( ),
+    axis.title.x = element_blank( ),
+    axis.text.y = element_blank( ),
+    axis.title.y = element_blank( ),
+    legend.key = element_blank( ) )
 }
