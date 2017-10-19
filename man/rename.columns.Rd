@@ -4,7 +4,7 @@
 \alias{rename.columns}
 \title{RENAME COLUMNS}
 \usage{
-rename.columns(data, old.column.names, new.column.names)
+\method{rename}{columns}(data, old.column.names, new.column.names)
 }
 \arguments{
 \item{data}{dataframe with new column names}

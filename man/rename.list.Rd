@@ -4,7 +4,7 @@
 \alias{rename.list}
 \title{RENAME LIST}
 \usage{
-rename.list(list, old.names, new.names)
+\method{rename}{list}(list, old.names, new.names)
 }
 \arguments{
 \item{list}{named list}

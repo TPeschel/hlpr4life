@@ -15,10 +15,10 @@ adjust.linearly(formula, data)
 A dataframe containing a new column with the adjusted values.
 }
 \description{
-Adjust a dependent variable y linearly to several dependent variables x1, x2 ...
+Adjust a dependent variable y linearly to several independent variables x1, x2 ...
 }
 \examples{
-hlpr4life::load.pkgs( c( "hlpr4life", "ggplot2" ) )
+load.pkgs( c( "ggplot2" ) )
 set.seed( 1 )
 num <- 100
 sexes <- c( "female", "male" )

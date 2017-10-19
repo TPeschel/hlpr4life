@@ -1,10 +1,40 @@
 HELPER FOR LIFE
 
 This is a small collection of some R-stuff for every day use.
+It is recommended to install this package first time via 
+devtools::install_github( "TPeschel/hlpr4life" )
+```R
+devtools::install_github( "TPeschel/hlpr4life" )
+```
+
+Of course for that it is neccessary to have devtools installed.
+So I recommend the following lines for an easy use of hlpr4life
+## first installation
+```R
+if( !"devtools" %in% rownames( installed.packages( ) ) {
+	install.packages( "devtools" ) )
+	library( "devtools" )
+}
+devtools::install_github( "TPeschel/hlpr4life" )
+
+```
+## daily use
+From now on hlpr4life is kept in the latest version
+available on github. The dots are for some further packages
+that should be loaded and installed before if they are not.
+```R
+hlpr4life::load.pkgs( c( "hlpr4life", ... ) )
+```
+
+## simple example
+```R
+hlpr4life::load.pkgs( c( "hlpr4life", ... ) )
+```
+
 
 # ADJUSTMENTS
 ## ADJUST LINEARLY 
-Adjust a dependent variable y linearly to several dependent variables x1, x2 ...
+Adjust a dependent variable y linearly to several independent variables x1, x2 ...
 ```R
 hlpr4life::load.pkgs( c( "hlpr4life", "ggplot2" ) )
 
@@ -40,7 +70,7 @@ ggsubplot(
 ```
 
 ## ADJUST LINEARLY AND STANDARDIZE 
-Adjust and standardize afterwards a dependent variable y linearly to several dependent variables x1, x2 ...
+Adjust and standardize afterwards a dependent variable y linearly to several independent variables x1, x2 ...
 ```R
 hlpr4life::load.pkgs( c( "hlpr4life", "ggplot2" ) )
 

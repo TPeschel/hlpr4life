@@ -1,43 +1,8 @@
-#' LOAD PACKAGES
-#' @name load.pkgs
-#'
-#' @description load.pkgs tries to load a package into the environment.
-#' If this fails, it tries to install the package from CRAN-mirror and loads it afterwards.
-#' @param pkgs
-#'
-#' @export
-#'
-#' @examples
-#' hlpr4life::load.pkgs(c("hlpr4life","dplyr","ggplot2","ggthemes","reshape2"))
-load.pkgs <-
-	function( pkgs =c( "dplyr", "ggplot2", "ggthemes", "reshape2" )) {
-
-		if( "hlpr4life" %in% pkgs ) {
-
-			if( !"hlpr4life" %in% rownames( installed.packages( ) ) ) {
-
-				if( !"devtools" %in% rownames( installed.packages( ) ) ) {
-
-					install.packages( "devtools" )
-				}
-
-				devtools::install_github( "TPeschel/hlpr4life" ) }
-
-			library( "hlpr4life" )
-		}
-
-		exist <-
-			pkgs %in% rownames( installed.packages( ) )
-
-		if( any( !exist ) )
-			install.packages( pkgs[ !exist ] )
-
-		sapply( pkgs, library, character.only = TRUE )
-	}
-
 #' ADJUST LINEARLY
 #'
-#' @description Adjust a dependent variable y linearly to several dependent variables x1, x2 ...
+#' @name adjust.linearly
+#'
+#' @description Adjust a dependent variable y linearly to several independent variables x1, x2 ...
 #' @param formula A formula that gives the relationship of the adjustment.
 #' @param data A dataframe which contains the dependent and the independent variables.
 #'
@@ -45,7 +10,7 @@ load.pkgs <-
 #' @export
 #'
 #' @examples
-#' hlpr4life::load.pkgs( c( "hlpr4life", "ggplot2" ) )
+#' load.pkgs( c( "ggplot2" ) )
 #' set.seed( 1 )
 #' num <- 100
 #' sexes <- c( "female", "male" )
@@ -80,16 +45,20 @@ adjust.linearly <-
 		for( a in a.v[ -1 ] )
 
 			nm <-
-			paste0( nm, ".", a )
+				paste0( nm, ".", a )
 
 		data[ , nm ] <-
 			( lm( formula, data ) )$residuals + mean( unlist( data[ , a.v[ 1 ] ] ), na.rm = T )
 
-		data }
+		data
+	}
+
 ########################################################################
 #' ADJUST LINEARLY and STANDARIZE
 #'
-#' @description Adjust a dependent variable y linearly to several dependent variables x1, x2 ...
+#' @name adjust.linearly.std
+#'
+#' @description Adjust a dependent variable y linearly to several independent variables x1, x2 ...
 #' and standardize afterwards the adjusted values.
 #' Requirements to the data: Homoscedasticity and Linearity of y ~ x...
 #' @param formula A formula that gives the relationship of the adjustment.
@@ -134,7 +103,7 @@ adjust.linearly.std <-
 		for( a in a.v[ -1 ] )
 
 			nm <-
-			paste0( nm, ".", a )
+				paste0( nm, ".", a )
 
 		data[ , nm ] <-
 			( lm( formula, data ) )$residuals
@@ -142,7 +111,8 @@ adjust.linearly.std <-
 		data[ , nm ] <-
 			data[ , nm ] / sd( unlist( data[ , nm ] ), na.rm = T )
 
-		data }
+		data
+	}
 
 #' CALENDAR
 #'
@@ -171,200 +141,7 @@ calendar <-
 		d$date <-
 			as.character( d$date )
 
-		d }
-
-#' TODAY
-#'
-#' @description Gives the current date.
-#'
-#' @return the current date
-#' @export
-#'
-#' @examples
-#' today()
-today <-
-	function( ) {
-		lubridate::date( Sys.time( ) )
-	}
-
-#' NOW
-#'
-#' @description Gives current time
-#'
-#' @return the current time
-#' @export
-#'
-#' @examples
-#' now()
-now <-
-	function( ) {
-		substr( Sys.time( ), 12, 21)
-	}
-
-
-#' SOME SICS
-#'
-#' @description some.sics creates a vector of coherently sics of same width.
-#' @param n.size count of sics that shall be created
-#' @param n.first first sic to be created
-#' @param n.last last sic to be created
-#' @param prefix a string written in front of the sic
-#' @param postfix a string written behind the sic
-#'
-#' @return character vector of sics
-#' @export
-#'
-#' @examples
-#' some.sics( n.first = 0, n.last = 110 )
-#' some.sics( n.size = 9 )
-#' some.sics( 10, prefix = "LIFE" )
-#'
-some.sics <-
-	function( n.size = 100, n.first = 1, n.last = n.first + n.size - 1, digits = 1 + floor( log10( n.last ) ), prefix = "LI", postfix = "" ) {
-
-		paste0( prefix, stringr::str_pad( c( n.first : n.last ), digits, pad = "0" ), postfix ) }
-
-#' IF NOT
-#'
-#' @description short for if( !... ) do something else do something different
-#' @param cond condition that hast to be false
-#' @param optTrue option running if condition is not TRUE
-#' @param optFalse option running if condition is not FALSE
-#'
-#' @return execution of code either for optTrue or optFalse
-#' @export
-#'
-#' @examples
-#' ifnot( 1 == 2, cat( "one is not equal to two" ), cat( "one is not not equal to two" ) )
-ifnot <-
-	function( cond, optTrue, optFalse = { } ) {
-
-		if( !cond ) {
-
-			optTrue
-
-		} else {
-
-			optFalse } }
-
-#' LIST APPEND
-#'
-#' @description list.append gives the opportunity to append elements to a list and name it.
-#' @param lst list that should extended by the element x
-#' @param x element that should be append to list lst
-#' @param name optinal a name for list element
-#'
-#' @return by x extended list
-#' @export
-#'
-#' @examples
-#' ( lst <- list( x = 9 ) )
-#' ( lst <- list.append( lst, x = Sys.time( ), name = "TIME" ) )
-#' ( lst <- list.append( lst, "y", "Ypsilon" ) )
-#' ( lst <- list.append( lst, "unnamed" ) )
-list.append <-
-	function( list, x, name = NA ) {
-
-		list[[ length( list ) + 1 ]] <-
-				x
-
-			if( !is.na( name ) )
-
-				names( list )[ length( list ) ] <-
-					name
-
-		list }
-
-#' TABLE DATAFRAME
-#' @name table.df
-#'
-#' @description table.df returns data about missings, availables of every column in a given
-#' dataframe. If  summary is TRUE, min, max, median and mean are shown additionally.
-#'
-#' @param data A dataframe which columns should be summarised.
-#' @param horizontal logical: The result is shown in horizontal or vertical style. Default is TRUE.
-#' @param summary logical: If summary is TRUE additionally min, median, mean and max are tabled.
-#' Default is FALSE.
-#' @param na.rm logical: If na.rm is TRUE missings are ignored. Default is FALSE.
-#'
-#' @return A dataframe containing sum of missing and available data and if summary is TRUE mins
-#' and maxs, means and medians of every column of a given datframe.
-#' @export
-#'
-#' @examples
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")))
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F,F)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T,F)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F,F)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,F)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F,T)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T,T)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F,T)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,T)
-table.df <-
-	function( data, horizontal = T, summary = F, na.rm = F ) {
-
-		options( warn = -1 )
-
-		MISSING <-
-			sum.na( data )
-
-		AVAILABLE <-
-			sum.av( data )
-
-		if( summary )
-			MIN <-
-				sapply( data, function( d ) ifelse( is.factor( d ), min( as.character( d ), na.rm = T ), min( d, na.rm = na.rm ) ) )
-
-		if( summary )
-			MAX <-
-				sapply( data, function( d ) ifelse( is.factor( d ), max( as.character( d ), na.rm = T ), max( d, na.rm = na.rm ) ) )
-
-		if( summary )
-			MEAN <-
-				sapply( data, function( d ) ifelse( !is.numeric( d ), NA, mean( d, na.rm = na.rm ) ) )
-
-		if( summary )
-			MEDIAN <-
-				sapply( data, function( d ) ifelse( is.factor( d ), NA, median( d, na.rm = na.rm ) ) )
-
-		d <-
-			rbind(
-				AVAILABLE,
-				MISSING )
-
-		if( summary ) {
-			d <-
-				rbind(
-					d,
-					MIN,
-					MEDIAN,
-					MEAN,
-					MAX ) }
-
-		options( warn = 0 )
-
-		if( horizontal ) {
-
-			return( as.data.frame( d ) ) }
-
-		return( as.data.frame( t( d ) ) )
-	}
-
-#' REMOVE COLUMNS
-#'
-#' @description removes columns out of a dataframe
-#' @param data A dataframe that contains columns which should be removed.
-#' @param column.names Names of columns that should be removed.
-#'
-#' @return A dataframe without removed columns.
-#' @export
-#'
-#' @examples
-#' remove.columns(data.frame(x="X",y="Y",z="Z",w="W"),c("x","z"))
-remove.columns <-
-	function( data, column.names ) {
-		data[ , !names( data ) %in% column.names ]
+		d
 	}
 
 #' GET COLUMNS
@@ -382,8 +159,9 @@ remove.columns <-
 #' get.columns(d)
 get.columns <-
 	function( data, pattern = "DAT|SIC|GROUP", perl = T ) {
-		names( data )[ grep( tolower( pattern ), tolower( names( data ) ), perl = T ) ] }
 
+		names( data )[ grep( tolower( pattern ), tolower( names( data ) ), perl = T ) ]
+	}
 
 #' GET DATE COLUMNS
 #' @name get.date.columns
@@ -404,80 +182,8 @@ get.columns <-
 #' get.date.columns(d,"dat|muta")
 get.date.columns <-
 	function( data, pattern = "edat|date|datum", perl = T ) {
-		get.columns( data, pattern, perl ) }
 
-#' GET SIC COLUMNS
-#' @name get.sic.columns
-#'
-#' @description searches for some sic like column names. one has the opportunity to give a
-#' search string for a certain pattern.
-#'
-#' @param data dataframe which has some sic columns
-#' @param pattern search pattern for finding column names via grep
-#' @param perl logical: Use perl regex. Default is T.
-#'
-#' @return names of sic columns
-#' @export
-#'
-#' @examples
-#' (d<-data.frame(SIC="LI12345678",sic="LI12345679",PSEUDO="LI1234567X",PSEUDONYM="LI12345670"))
-#' get.sic.columns(d)
-get.sic.columns <-
-	function( data, pattern = "sic|pseudo", perl = T ) {
-		get.columns( data, pattern, perl ) }
-
-#' GET SCI-GROUP COLUMNS
-#' @name get.scigroup.columns
-#'
-#' @description get.scigroup searches for some sci-group like column names. One has the opportunity to give a search string for a certain pattern.
-#'
-#' @param data dataframe which has some sci-group columns
-#' @param pattern search pattern for finding column names via grep
-#' @param perl logical: Use perl regex. Default is T.
-#'
-#' @return names of sci-group columns
-#' @export
-#'
-#' @examples
-#' (d<-data.frame(SGROUP="A2_02",SCI_GROUP="B1_10",Gruppe="A1-SK_10",GRP="A3_09"))
-#' get.scigroup.columns(d)
-get.scigroup.columns <-
-	function( data, pattern = "sci_group|sci-group|scigroup|sgroup|group|grp|gruppe", perl = T ) {
-		get.columns( data, pattern, perl ) }
-
-
-#' PRINT MERGING INFOS
-#' @name print.merging.infos
-#'
-#' @description print merging infos print some usefull information of a set of tables.
-#' Could be usefull before a merging process.
-#'
-#' @param table.names vector of table names
-#'
-#' @return prints a data frame with merging informations for all given tables
-#' @export
-#' @examples
-#' (a<-data.frame(SGROUP="A2_02",DATE="2002-10-05",Sic="LI12345678"))
-#' (b<-data.frame(GRUPPE="A3_02",DATUM="2002-10-05",PSEUDONYM="LI12345678"))
-#' (c<-data.frame(GRP=c("A2_02","A2_03"),DATE=c("2002-10-05","2001-10-05"),EDAT=c("2001-10-04","2001-10-02"),PSEUDO=c("LI12345679","LI1234567X"),edat.new=c("2017.10-03","2017.10-01")))
-#' print.merging.infos(c("a","b","c"))
-print.merging.infos <-
-	function( table.names = ls( ) ) {
-
-		for( n in table.names ) {
-
-			tbl <-
-				as.data.frame( mget( n, .GlobalEnv )[[ 1 ]] )
-
-			cat( c( "NAME:      ", n, "\n" ) )
-			cat( c( "SIC:       ", get.sic.columns( tbl ), "\n" ) )
-			cat( c( "SCI_GROUP: ", get.scigroup.columns( tbl ), "\n" ) )
-			cat( c( "DATE:      ", get.date.columns( tbl ), "\n" ) )
-			cat( c( "VISITS:    ", nrow( tbl ), "\n" ) )
-			cat( c( "VISITORS:  ", length( unique( tbl[ , get.sic.columns( tbl ) ] ) ), "\n" ) )
-			cat( c( "COMPLETE:  ", sum( complete.cases( tbl ) ), "\n" ) )
-			cat( "_______________________________\n" )
-		}
+		get.columns( data, pattern, perl )
 	}
 
 #' GET MERGING INFOS
@@ -524,23 +230,256 @@ get.merging.infos <-
 		Reduce( dplyr::bind_rows, l )
 	}
 
-#' SUM MISSINGS
-#' @name sum.na
+#' GET SCI-GROUP COLUMNS
+#' @name get.scigroup.columns
 #'
-#' @description gives the number of the missing values of every column of a dataframe
+#' @description get.scigroup searches for some sci-group like column names. One has the opportunity to give a search string for a certain pattern.
 #'
-#' @param data dataframe for which missings in columns should be summed up
+#' @param data dataframe which has some sci-group columns
+#' @param pattern search pattern for finding column names via grep
+#' @param perl logical: Use perl regex. Default is T.
 #'
-#' @return dataframe with the number of missing data for each column
+#' @return names of sci-group columns
 #' @export
 #'
 #' @examples
-#' (d<-data.frame(x=c(NA,"Hello",NA,"World",NA),y=c(1:5),z=rep(NA,5)))
-#' sum.na(d)
-sum.na <-
-	function( data ) {
+#' (d<-data.frame(SGROUP="A2_02",SCI_GROUP="B1_10",Gruppe="A1-SK_10",GRP="A3_09"))
+#' get.scigroup.columns(d)
+get.scigroup.columns <-
+	function( data, pattern = "sci_group|sci-group|scigroup|sgroup|group|grp|gruppe", perl = T ) {
 
-		sapply( data, function( col ) sum( is.na( col ) ) )
+		get.columns( data, pattern, perl )
+	}
+
+#' GET SIC COLUMNS
+#' @name get.sic.columns
+#'
+#' @description searches for some sic like column names. one has the opportunity to give a
+#' search string for a certain pattern.
+#'
+#' @param data dataframe which has some sic columns
+#' @param pattern search pattern for finding column names via grep
+#' @param perl logical: Use perl regex. Default is T.
+#'
+#' @return names of sic columns
+#' @export
+#'
+#' @examples
+#' (d<-data.frame(SIC="LI12345678",sic="LI12345679",PSEUDO="LI1234567X",PSEUDONYM="LI12345670"))
+#' get.sic.columns(d)
+get.sic.columns <-
+	function( data, pattern = "sic|pseudo", perl = T ) {
+
+		get.columns( data, pattern, perl )
+	}
+
+#' IF NOT
+#'
+#' @description short for if( !... ) do something else do something different
+#' @param cond condition that hast to be false
+#' @param optTrue option running if condition is not TRUE
+#' @param optFalse option running if condition is not FALSE
+#'
+#' @return execution of code either for optTrue or optFalse
+#' @export
+#'
+#' @examples
+#' ifnot( 1 == 2, cat( "one is not equal to two" ), cat( "one is not not equal to two" ) )
+ifnot <-
+	function( cond, optTrue, optFalse = { } ) {
+
+		if( !cond ) {
+
+			optTrue
+
+		} else {
+
+			optFalse
+		}
+	}
+
+#' KEY
+#' @name key
+#'
+#' @description key creates a key out of several columns.
+#' @param data a dataframe from which entries of choosen column a combined to create a key.
+#' @param column.names column names that should be used for creating a unique key
+#' @param sep a separator for binding column contents
+#'
+#' @return a key combined out of given columns
+#' @export
+#'
+#' @examples
+#' key(data.frame(x=letters[ runif(10,1,10)],y=LETTERS[runif(10,1,10)],z=rnorm(10)),c("x","y"),"~")
+key <-
+	function( data, column.names, sep = "~" ) {
+
+		cl <-
+			data[[ column.names[ 1 ] ]]
+
+		for( i in 2 : length( column.names ) ) {
+
+			cl <-
+				paste0( cl, sep, data[[ column.names[ i ] ]] )
+		}
+
+		cl
+	}
+
+#' LOAD PACKAGES
+#' @name load.pkgs
+#'
+#' @description load.pkgs tries to load a package into the environment.
+#' If this fails, it tries to install the package from CRAN-mirror and loads it afterwards.
+#' @param pkgs
+#'
+#' @export
+#'
+#' @examples
+#' hlpr4life::load.pkgs(c("hlpr4life","dplyr","ggplot2","ggthemes","reshape2"))
+load.pkgs <-
+	function( pkgs =c( "dplyr", "ggplot2", "ggthemes", "reshape2" )) {
+
+		if( "hlpr4life" %in% pkgs ) {
+
+			if( !"hlpr4life" %in% rownames( installed.packages( ) ) ) {
+
+				if( !"devtools" %in% rownames( installed.packages( ) ) ) {
+
+					install.packages( "devtools" )
+				}
+
+				devtools::install_github( "TPeschel/hlpr4life" ) }
+
+			library( "hlpr4life" )
+		}
+
+		exist <-
+			pkgs %in% rownames( installed.packages( ) )
+
+		if( any( !exist ) )
+
+			install.packages( pkgs[ !exist ] )
+
+		sapply( pkgs, library, character.only = TRUE )
+	}
+
+#' LIST APPEND
+#'
+#' @description list.append gives the opportunity to append elements to a list and name it.
+#' @param lst list that should extended by the element x
+#' @param x element that should be append to list lst
+#' @param name optinal a name for list element
+#'
+#' @return by x extended list
+#' @export
+#'
+#' @examples
+#' ( lst <- list( x = 9 ) )
+#' ( lst <- list.append( lst, x = Sys.time( ), name = "TIME" ) )
+#' ( lst <- list.append( lst, "y", "Ypsilon" ) )
+#' ( lst <- list.append( lst, "unnamed" ) )
+list.append <-
+	function( list, x, name = NA ) {
+
+		list[[ length( list ) + 1 ]] <-
+			x
+
+		if( !is.na( name ) )
+
+			names( list )[ length( list ) ] <-
+				name
+
+		list
+	}
+
+#' NOW
+#'
+#' @description Gives current time
+#'
+#' @return the current time
+#' @export
+#'
+#' @examples
+#' now()
+now <-
+	function( ) {
+
+		substr( Sys.time( ), 12, 21)
+	}
+
+#' PRINT MERGING INFOS
+#' @name print.merging.infos
+#'
+#' @description print merging infos print some usefull information of a set of tables.
+#' Could be usefull before a merging process.
+#'
+#' @param table.names vector of table names
+#'
+#' @return prints a data frame with merging informations for all given tables
+#' @export
+#' @examples
+#' (a<-data.frame(SGROUP="A2_02",DATE="2002-10-05",Sic="LI12345678"))
+#' (b<-data.frame(GRUPPE="A3_02",DATUM="2002-10-05",PSEUDONYM="LI12345678"))
+#' (c<-data.frame(GRP=c("A2_02","A2_03"),DATE=c("2002-10-05","2001-10-05"),EDAT=c("2001-10-04","2001-10-02"),PSEUDO=c("LI12345679","LI1234567X"),edat.new=c("2017.10-03","2017.10-01")))
+#' print.merging.infos(c("a","b","c"))
+print.merging.infos <-
+	function( table.names = ls( ) ) {
+
+		for( n in table.names ) {
+
+			tbl <-
+				as.data.frame( mget( n, .GlobalEnv )[[ 1 ]] )
+
+			cat( c( "NAME:      ", n, "\n" ) )
+			cat( c( "SIC:       ", get.sic.columns( tbl ), "\n" ) )
+			cat( c( "SCI_GROUP: ", get.scigroup.columns( tbl ), "\n" ) )
+			cat( c( "DATE:      ", get.date.columns( tbl ), "\n" ) )
+			cat( c( "VISITS:    ", nrow( tbl ), "\n" ) )
+			cat( c( "VISITORS:  ", length( unique( tbl[ , get.sic.columns( tbl ) ] ) ), "\n" ) )
+			cat( c( "COMPLETE:  ", sum( complete.cases( tbl ) ), "\n" ) )
+			cat( "_______________________________\n" )
+		}
+	}
+
+#' REMOVE COLUMNS
+#'
+#' @description removes columns out of a dataframe
+#' @param data A dataframe that contains columns which should be removed.
+#' @param column.names Names of columns that should be removed.
+#'
+#' @return A dataframe without removed columns.
+#' @export
+#'
+#' @examples
+#' remove.columns(data.frame(x="X",y="Y",z="Z",w="W"),c("x","z"))
+remove.columns <-
+	function( data, column.names ) {
+
+		data[ , !names( data ) %in% column.names ]
+	}
+
+#' SOME SICS
+#'
+#' @description some.sics creates a vector of coherently sics of same width.
+#' @param n.size count of sics that shall be created
+#' @param n.first first sic to be created
+#' @param n.last last sic to be created
+#' @param prefix a string written in front of the sic
+#' @param postfix a string written behind the sic
+#'
+#' @return character vector of sics
+#' @export
+#'
+#' @examples
+#' some.sics( n.first = 0, n.last = 110 )
+#' some.sics( n.size = 9 )
+#' some.sics( 10, prefix = "LIFE" )
+#'
+some.sics <-
+	function( n.size = 100, n.first = 1, n.last = n.first + n.size - 1, digits = 1 + floor( log10( n.last ) ), prefix = "LI", postfix = "" ) {
+
+		paste0( prefix, stringr::str_pad( c( n.first : n.last ), digits, pad = "0" ), postfix )
 	}
 
 #' SUM AVAILABLES
@@ -560,6 +499,121 @@ sum.av <-
 	function( data ) {
 
 		sapply( data, function( col ) sum( !is.na( col ) ) )
+	}
+
+#' SUM MISSINGS
+#' @name sum.na
+#'
+#' @description gives the number of the missing values of every column of a dataframe
+#'
+#' @param data dataframe for which missings in columns should be summed up
+#'
+#' @return dataframe with the number of missing data for each column
+#' @export
+#'
+#' @examples
+#' (d<-data.frame(x=c(NA,"Hello",NA,"World",NA),y=c(1:5),z=rep(NA,5)))
+#' sum.na(d)
+sum.na <-
+	function( data ) {
+
+		sapply( data, function( col ) sum( is.na( col ) ) )
+	}
+
+#' TABLE DATAFRAME
+#' @name table.df
+#'
+#' @description table.df returns data about missings, availables of every column in a given
+#' dataframe. If  summary is TRUE, min, max, median and mean are shown additionally.
+#'
+#' @param data A dataframe which columns should be summarised.
+#' @param horizontal logical: The result is shown in horizontal or vertical style. Default is TRUE.
+#' @param summary logical: If summary is TRUE additionally min, median, mean and max are tabled.
+#' Default is FALSE.
+#' @param na.rm logical: If na.rm is TRUE missings are ignored. Default is FALSE.
+#'
+#' @return A dataframe containing sum of missing and available data and if summary is TRUE mins
+#' and maxs, means and medians of every column of a given datframe.
+#' @export
+#'
+#' @examples
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")))
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F,F)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T,F)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F,F)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,F)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F,T)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T,T)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F,T)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,T)
+table.df <-
+	function( data, horizontal = T, summary = F, na.rm = F ) {
+
+		options( warn = -1 )
+
+		MISSING <-
+			sum.na( data )
+
+		AVAILABLE <-
+			sum.av( data )
+
+		if( summary )
+			MIN <-
+				sapply(
+					data,
+					function( d ) ifelse( is.factor( d ), min( as.character( d ), na.rm = T ), min( d, na.rm = na.rm ) ) )
+
+		if( summary )
+			MAX <-
+				sapply( data, function( d ) ifelse( is.factor( d ), max( as.character( d ), na.rm = T ), max( d, na.rm = na.rm ) ) )
+
+		if( summary )
+			MEAN <-
+				sapply( data, function( d ) ifelse( !is.numeric( d ), NA, mean( d, na.rm = na.rm ) ) )
+
+		if( summary )
+			MEDIAN <-
+				sapply( data, function( d ) ifelse( is.factor( d ), NA, median( d, na.rm = na.rm ) ) )
+
+		d <-
+			rbind(
+				AVAILABLE,
+				MISSING )
+
+		if( summary ) {
+
+			d <-
+				rbind(
+					d,
+					MIN,
+					MEDIAN,
+					MEAN,
+					MAX )
+		}
+
+		options( warn = 0 )
+
+		if( horizontal ) {
+
+			return( as.data.frame( d ) )
+		}
+
+		return( as.data.frame( t( d ) ) )
+	}
+
+#' TODAY
+#'
+#' @description Gives the current date.
+#'
+#' @return the current date
+#' @export
+#'
+#' @examples
+#' today()
+today <-
+	function( ) {
+
+		lubridate::date( Sys.time( ) )
 	}
 
 #' RENAME COLUMNS
@@ -589,7 +643,8 @@ rename.columns <-
 		colnames( data )[ m ] <-
 			new.column.names[ match( n[ m ], old.column.names ) ]
 
-		data }
+		data
+	}
 
 #' RENAME LIST
 #' @name rename.list
@@ -617,29 +672,5 @@ rename.list <-
 		names( list )[ m ] <-
 			new.names[ match( n[ m ], old.names ) ]
 
-		list }
-
-#' KEY
-#' @name key
-#'
-#' @description key creates a key out of several columns.
-#' @param data a dataframe from which entries of choosen column a combined to create a key.
-#' @param column.names column names that should be used for creating a unique key
-#' @param sep a separator for binding column contents
-#'
-#' @return a key combined out of given columns
-#' @export
-#'
-#' @examples
-#' key(data.frame(x=letters[ runif(10,1,10)],y=LETTERS[runif(10,1,10)],z=rnorm(10)),c("x","y"),"~")
-key <-
-	function( data, column.names, sep = "~" ) {
-		cl <-
-			data[[ column.names[ 1 ] ]]
-
-		for( i in 2 : length( column.names ) ) {
-			cl <-
-				paste0( cl, sep, data[[ column.names[ i ] ]] ) }
-
-		cl
+		list
 	}
