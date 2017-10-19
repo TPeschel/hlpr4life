@@ -443,7 +443,7 @@ get.columns(d)
 get.columns(d,"S")
 ```
 
-## GET DATE COLUMNS
+### GET DATE COLUMNS
 get.date.columns is actually a wrapper for get.columns with a given date pattern "edat|date|datum".
 ```R
 (d<-data.frame(DATE="2017-10-05",EDAT="2017-10-04",dat="2017-10-03",DATA="2017-10-02"))
@@ -452,14 +452,14 @@ get.date.columns(d)
 get.date.columns(d,"dat|muta")
 ```
 
-## GET SIC COLUMNS
+### GET SIC COLUMNS
 get.sic.columns is actually a wrapper for get.columns with a given date pattern "sic|pseudo".
 ```R
 (d<-data.frame(SIC="LI12345678",sic="LI12345679",PSEUDO="LI1234567X",PSEUDONYM="LI12345670"))
 get.sic.columns(d)
 ```
 
-## GET SCI GROUP COLUMNS
+### GET SCI GROUP COLUMNS
 get.scigroup.columns is actually a wrapper for get.columns with a given date pattern "sci_group|sci-group|scigroup|sgroup|group|grp|gruppe".
 ```R
 (d<-data.frame(SGROUP="A2_02",SCI_GROUP="B1_10",Gruppe="A1-SK_10",GRP="A3_09"))
