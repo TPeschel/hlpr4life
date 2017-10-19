@@ -338,18 +338,16 @@ key <-
 #' @examples
 #' hlpr4life::load.pkgs(c("hlpr4life","dplyr","ggplot2","ggthemes","reshape2"))
 load.pkgs <-
-	function( pkgs =c( "dplyr", "ggplot2", "ggthemes", "reshape2" )) {
+	function( pkgs = c( "hlpr4life" ) ) {
 
 		if( "hlpr4life" %in% pkgs ) {
 
-			if( !"hlpr4life" %in% rownames( installed.packages( ) ) ) {
+			if( !"devtools" %in% rownames( installed.packages( ) ) ) {
 
-				if( !"devtools" %in% rownames( installed.packages( ) ) ) {
+				install.packages( "devtools" )
+			}
 
-					install.packages( "devtools" )
-				}
-
-				devtools::install_github( "TPeschel/hlpr4life" ) }
+			devtools::install_github( "TPeschel/hlpr4life" )
 
 			library( "hlpr4life" )
 		}

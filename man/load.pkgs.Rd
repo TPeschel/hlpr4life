@@ -4,7 +4,7 @@
 \alias{load.pkgs}
 \title{LOAD PACKAGES}
 \usage{
-load.pkgs(pkgs = c("dplyr", "ggplot2", "ggthemes", "reshape2"))
+load.pkgs(pkgs = c("hlpr4life"))
 }
 \arguments{
 \item{pkgs}{}
