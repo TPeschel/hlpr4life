@@ -4,7 +4,7 @@ Title: HELPER FOR LIFE
 Version: 0.3.0
 Author: thomas peschel <tpeschel@life.uni-leipzig.de>
 Maintainer: thomas peschel <tpeschel@life.uni-leipzig.de>
-Description: Makes Life easier!
+Description: Makes Life easier.
 License: GPL 3.0
 Encoding: UTF-8
 LazyData: true
