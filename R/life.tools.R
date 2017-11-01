@@ -223,7 +223,7 @@ get.merging.infos <-
 					SCI_GROUP = list( get.scigroup.columns( tbl ) ),
 					DATE      = list( get.date.columns( tbl ) ),
 					VISITS    = nrow( tbl ),
-					VISITORS  = length( unique( tbl[ , get.sic.columns( tbl ) ] ) ),
+					VISITORS  = length( unique( tbl[ , ( get.sic.columns( tbl ) )[ 1 ] ] ) ),
 					COMPLETE  = sum( complete.cases( tbl ) ) )
 		}
 
@@ -434,7 +434,7 @@ print.merging.infos <-
 			cat( c( "SCI_GROUP: ", get.scigroup.columns( tbl ), "\n" ) )
 			cat( c( "DATE:      ", get.date.columns( tbl ), "\n" ) )
 			cat( c( "VISITS:    ", nrow( tbl ), "\n" ) )
-			cat( c( "VISITORS:  ", length( unique( tbl[ , get.sic.columns( tbl ) ] ) ), "\n" ) )
+			cat( c( "VISITORS:  ", length( unique( tbl[ , ( get.sic.columns( tbl ) )[ 1 ] ] ) ), "\n" ) )
 			cat( c( "COMPLETE:  ", sum( complete.cases( tbl ) ), "\n" ) )
 			cat( "_______________________________\n" )
 		}
