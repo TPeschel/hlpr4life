@@ -11,10 +11,9 @@ Of course for that it is neccessary to have devtools installed.
 So I recommend the following lines for an easy use of hlpr4life
 ## first installation
 ```R
-if( !"devtools" %in% rownames( installed.packages( ) ) {
+if( !"devtools" %in% rownames( installed.packages( ) ) ) 
 	install.packages( "devtools" ) )
-	library( "devtools" )
-}
+
 devtools::install_github( "TPeschel/hlpr4life" )
 
 ```
@@ -112,7 +111,7 @@ ggsubplot(
 
 
 ## ADJUSTMENTS
-### ADJUST LINEARLY 
+### adjust.linearly( ) 
 Adjust a dependent variable y linearly to several independent variables x1, x2 ...
 ```R
 hlpr4life::load.pkgs( c( "hlpr4life", "ggplot2" ) )
