@@ -429,6 +429,7 @@ rename.columns <-
 		data }
 
 #' RENAME LIST
+#'
 #' @description rename.columns( data, c( "alter", "groesse" ), c( "age", "height" ) ) takes a data frame d containing the old column name "alter" and "groesse" and returns a new dataframe with the replaced names "age" and "size".
 #'
 #' @param list named list
@@ -454,9 +455,9 @@ rename.list <-
 
 		list }
 
-#' KEY
+#' KEY.DF
 #'
-#' @description key creates a key out of several columns
+#' @description key.df creates a key out of several columns of a dataframe
 #' @param data a dataframe
 #' @param column.names column names that should be used for creating a unique key
 #' @param sep a separator for binding column contents
@@ -465,8 +466,8 @@ rename.list <-
 #' @export
 #'
 #' @examples
-#' key(data.frame(x=letters[ runif(10,1,10)],y=LETTERS[runif(10,1,10)],z=rnorm(10)),c("x","y"),"~")
-key <-
+#' key.df(data.frame(x=letters[ runif(10,1,10)],y=LETTERS[runif(10,1,10)],z=rnorm(10)),c("x","y"),"~")
+key.df <-
 	function( data, column.names, sep = "~" ) {
 		cl <-
 			data[[ column.names[ 1 ] ]]
@@ -477,3 +478,20 @@ key <-
 
 		cl
 	}
+
+#' KEY.COLS
+#'
+#' @description key.cols creates a key out of several columns
+#' @param col.x lhs column name
+#' @param col.y rhs column name
+#' @param sep a separator for binding column contents
+#'
+#' @return a key combined out of given columns
+#' @export
+#'
+#' @examples
+#' key.col( letters[3:1], LETTERS[1:3],"~")
+key.col <-
+	function( col.x, col.y, sep = "~" ) {
+
+		paste0( col.x, sep, col.y ) }

@@ -270,10 +270,16 @@ some.sics( 10, prefix = "LIFE" )
 ```
 
 ## KEY 
-# KEY
-key creates a key out of several columns.
+# KEY.DF
+key.df creates a key out of several columns of a dataframe.
 ```R
 key(data.frame(x=letters[ runif(10,1,10)],y=LETTERS[runif(10,1,10)],z=rnorm(10)),c("x","y"),"~")
+```
+## KEY 
+# KEY.COL
+key.col creates a key out of 2 columns.
+```R
+key.col(letters[3:1],LETTERS[1:3]," SEPARATOR ")
 ```
 
 # INFOS
