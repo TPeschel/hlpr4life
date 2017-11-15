@@ -389,17 +389,13 @@ some.sics( 10, prefix = "LIFE" )
 ```
 
 ## KEY 
-<<<<<<< HEAD
+
 # KEY.DF
 key.df creates a key out of several columns of a dataframe.
-=======
-### KEY
-key creates a key out of several columns.
->>>>>>> ddb3e688da32526c37bc56c8a4ce734a5ddfac99
 ```R
-key(data.frame(x=letters[ runif(10,1,10)],y=LETTERS[runif(10,1,10)],z=rnorm(10)),c("x","y"),"~")
+key.df(data.frame(x=letters[ runif(10,1,10)],y=LETTERS[runif(10,1,10)],z=rnorm(10)),c("x","y"),"~")
 ```
-## KEY 
+
 # KEY.COL
 key.col creates a key out of 2 columns.
 ```R
