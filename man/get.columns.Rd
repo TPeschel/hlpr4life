@@ -15,7 +15,7 @@ get.columns(data, pattern = "DAT|SIC|GROUP", perl = T)
 names of searched columns
 }
 \description{
-searches for column names that matches a given the pattern.
+get.columns searches for column names that matches a given the pattern.
 }
 \examples{
 (d<-data.frame(SIC="LI01234",Y=1000.,x=10,SCI_GROUP="A2_12",DATE="2017-10-05",EDAT="2017-10-04"))

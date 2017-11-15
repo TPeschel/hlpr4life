@@ -11,14 +11,15 @@ get.scigroup.columns(data,
 \arguments{
 \item{data}{dataframe which has some sci-group columns}
 
-\item{perl}{logical: use perl regex}
+\item{pattern}{search pattern for finding column names via grep}
+
+\item{perl}{logical: Use perl regex. Default is T.}
 }
 \value{
 names of sci-group columns
 }
 \description{
-searches for some sci-group like column names. one has the opportunity to give a
-search string for a certain pattern.
+get.scigroup searches for some sci-group like column names. One has the opportunity to give a search string for a certain pattern.
 }
 \examples{
 (d<-data.frame(SGROUP="A2_02",SCI_GROUP="B1_10",Gruppe="A1-SK_10",GRP="A3_09"))

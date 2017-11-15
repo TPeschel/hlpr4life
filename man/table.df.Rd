@@ -4,22 +4,34 @@
 \alias{table.df}
 \title{TABLE DATAFRAME}
 \usage{
-table.df(data, summary = F, as.dataframe = !summary)
+table.df(data, horizontal = T, summary = F, na.rm = F)
 }
 \arguments{
-\item{data}{dataframe which columns should be summarised}
+\item{data}{A dataframe which columns should be summarised.}
 
-\item{summary}{logical: if is true additionally min, median, mean and max will be tabled}
+\item{horizontal}{logical: The result is shown in horizontal or vertical style. Default is TRUE.}
 
-\item{as.data.frame}{logical: result is shown as data frame}
+\item{summary}{logical: If summary is TRUE additionally min, median, mean and max are tabled.
+Default is FALSE.}
+
+\item{na.rm}{logical: If na.rm is TRUE missings are ignored. Default is FALSE.}
 }
 \value{
-table of data containing sum of missing and available data their mins and maxs.
+A dataframe containing sum of missing and available data and if summary is TRUE mins
+and maxs, means and medians of every column of a given datframe.
 }
 \description{
 table.df returns data about missings, availables of every column in a given
 dataframe. If  summary is TRUE, min, max, median and mean are shown additionally.
 }
 \examples{
-table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA)))
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")))
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F,F)
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T,F)
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F,F)
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,F)
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F,T)
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T,T)
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F,T)
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,T)
 }

@@ -1,5 +1,7 @@
 #' KEY OF FREQUENCY
 #'
+#' @name key.of.freq
+#'
 #' @description key.of.freq returns the piano key that plays a tone of the frequency frq when its first (most left) key plays tone "A0"
 #' @param frq frequency of the key
 #'
@@ -13,6 +15,8 @@ key.of.freq <-
         log2( frq / 440 ) * 12 + 49 }
 
 #' FREQUENCY OF KEY
+#'
+#' @name freq.of.key
 #'
 #' @description freq.of.key returns the frequency that a piano key plays which first (most left) key plays tone "A0"
 #' @param key
@@ -30,6 +34,8 @@ freq.of.key <-
         440 * 2 ** ( ( key - 49 ) / 12 ) }
 
 #' NOTE OF KEY
+#'
+#' @name note.of.key
 #'
 #' @description note.of.key gives the note for a certain piano key which first (most left) key plays tone "A0"
 #' @param key
@@ -54,6 +60,8 @@ note.of.key <-
             ( key - 1 ) %/% 12 ) }
 
 #' KEY OF NOTE
+#'
+#' @name key.of.note
 #'
 #' @description key.of.note gives the note for a certain piano key which first (most left) key plays tone "A0"
 #' @param note
@@ -84,6 +92,8 @@ key.of.note <-
 
 #' NOTE OF FREQUENCY
 #'
+#' @name note.of.freq
+#'
 #' @description note.of.freq gives the note for a certain frequency
 #' @param frq
 #' frequency for what the note is asked for
@@ -98,6 +108,8 @@ note.of.freq <-
         note.of.key( key.of.freq( frq ) ) }
 
 #' FREQUENCY OF NOTE
+#'
+#' @name freq.of.note
 #'
 #' @description freq.of.note gives the frequency for a certain note
 #' @param note
@@ -114,6 +126,8 @@ freq.of.note <-
 
 #' PIANO
 #'
+#' @name piano
+#'
 #' @description piano gives a data.frame of a piano which first (most left) key plays tone "A0".
 #' One can expand or shrink the keyboard by giving the piano's left.key, right.key.
 #' The returned dataframe then contains all keys between left.key and right.key, their colors, notes and played frequencies.
@@ -126,21 +140,25 @@ freq.of.note <-
 #'
 #' @examples
 #' load.pkgs( c( "ggplot2", "ggthemes" ) )
-#' piano( 4, 4 + 2 * 12 )
-#' ggplot( piano( 4, 4 + 2 * 12 ) ) +
-#'     geom_histogram( aes( note, -c( 1, .63 )[ match( color, c( "ivory", "ebony" ) ) ], fill = color ), stat = "identity" ) +
-#'     scale_fill_manual( values = c( "#000000", "#f0f3f4" ), guide = F ) +
-#'     geom_text( aes( note, label = note, col = color ), y = -.2, angle = 90 ) +
-#'     scale_color_manual( values = c( "#f0f3f4", "#000000" ), guide = F ) +
-#'     theme_solid( fill = "#405060" ) +
-#'     theme(
-#'         axis.text.x = element_blank( ),
-#'         axis.title.x = element_blank( ),
-#'         axis.text.y = element_blank( ),
-#'         axis.title.y = element_blank( ) ) +
-#'     ylim( -1, 0 )
+#' piano( key.of.note( "C1" ), key.of.note( "C3" ) )
+#' ggplot( piano( ) ) +
+#'   geom_histogram( aes( note, -c( 1, .63 )[ match( color, c( "ivory", "ebony" ) ) ], fill = color ), stat = "identity" ) +
+#'   geom_histogram( aes( note, .001 * frequency, alpha = note ), fill = "orange", stat = "identity" ) +
+#'   scale_fill_manual( values = c( "#000000", "#f0f3f4" ), guide = F ) +
+#'   geom_text( aes( note, label = note, col = color ), y = -.2, angle = 90 ) +
+#'   annotate( geom = "text", x = 24.98, y = 3.02, xmin = 30, xmax = 60, ymin = 1, ymax = 5, label = "THE PIANO", col = "white", size = 20 )+
+#'   annotate( geom = "text", x = 25,    y = 3,    xmin = 30, xmax = 60, ymin = 1, ymax = 5, label = "THE PIANO", col = "black", size = 20 )+
+#'   scale_color_manual( values = c( "#f0f3f4", "#000000" ), guide = F ) +
+#'   scale_alpha_discrete( range = c(.7,.1),guide = F ) +
+#'   theme_solid( fill = "#405060" ) +
+#'   theme(
+#'     axis.text.x = element_blank( ),
+#'     axis.title.x = element_blank( ),
+#'     axis.text.y = element_blank( ),
+#'     axis.title.y = element_blank( ),
+#'     legend.key = element_blank( ) )
 piano <-
-    function( left.key = 4, right.key = 88 ) {
+    function( left.key = 1, right.key = 97 ) {
         k <-
             c( left.key : right.key )
         data.frame(
@@ -152,7 +170,3 @@ piano <-
                 labels = note.of.key( k ) ),
             frequency  = freq.of.key( k ) ) }
 
-##
-# example:
-# all keys with their colors, notes, frequencies of a common piano
-##

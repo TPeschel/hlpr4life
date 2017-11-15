@@ -11,14 +11,9 @@ key.df(data, column.names, sep = "~")
 
 \item{column.names}{column names that should be used for creating a unique key}
 
-\item{sep}{a separator for binding column contents}
-}
-\value{
-a key combined out of given columns
+\item{sep}{a separator for binding column contents
+key.df(data.frame(x=letters[ runif(10,1,10)],y=LETTERS[runif(10,1,10)],z=rnorm(10)),c("x","y"),"~")}
 }
 \description{
 key.df creates a key out of several columns of a dataframe
-}
-\examples{
-key.df(data.frame(x=letters[ runif(10,1,10)],y=LETTERS[runif(10,1,10)],z=rnorm(10)),c("x","y"),"~")
 }
