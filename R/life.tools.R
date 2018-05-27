@@ -596,7 +596,7 @@ sum.na <-
 #' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F,T)
 #' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,T)
 table.df <-
-	function( data, horizontal = T, summary = F, na.rm = F ) {
+	function( data, horizontal = T, summary = F, na.rm = T ) {
 
 		options( warn = -1 )
 
@@ -618,11 +618,11 @@ table.df <-
 
 		if( summary )
 			MEAN <-
-				sapply( data, function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), NA, mean( d, na.rm = na.rm ) ) )
+				sapply( data, function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), "not metric", mean( d, na.rm = na.rm ) ) )
 
 		if( summary )
 			MEDIAN <-
-				sapply( data, function( d ) ifelse( !is.numerical( d ) && !is.logical( d ), NA, median( d, na.rm = na.rm ) ) )
+				sapply( data, function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), "not ordered", median( d, na.rm = na.rm ) ) )
 
 		d <-
 			rbind(
