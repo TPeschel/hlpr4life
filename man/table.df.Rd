@@ -4,7 +4,7 @@
 \alias{table.df}
 \title{TABLE DATAFRAME}
 \usage{
-table.df(data, horizontal = T, summary = F, na.rm = F)
+table.df(data, horizontal = T, summary = F, na.rm = T)
 }
 \arguments{
 \item{data}{A dataframe which columns should be summarised.}

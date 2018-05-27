@@ -610,19 +610,19 @@ table.df <-
 			MIN <-
 				sapply(
 					data,
-					function( d ) ifelse( is.factor( d ), min( as.character( d ), na.rm = T ), min( d, na.rm = na.rm ) ) )
+					function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), min( as.character( d ), na.rm = T ), min( d, na.rm = na.rm ) ) )
 
 		if( summary )
 			MAX <-
-				sapply( data, function( d ) ifelse( is.factor( d ), max( as.character( d ), na.rm = T ), max( d, na.rm = na.rm ) ) )
+				sapply( data, function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), max( as.character( d ), na.rm = T ), max( d, na.rm = na.rm ) ) )
 
 		if( summary )
 			MEAN <-
-				sapply( data, function( d ) ifelse( !is.numeric( d ), NA, mean( d, na.rm = na.rm ) ) )
+				sapply( data, function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), NA, mean( d, na.rm = na.rm ) ) )
 
 		if( summary )
 			MEDIAN <-
-				sapply( data, function( d ) ifelse( is.factor( d ), NA, median( d, na.rm = na.rm ) ) )
+				sapply( data, function( d ) ifelse( !is.numerical( d ) && !is.logical( d ), NA, median( d, na.rm = na.rm ) ) )
 
 		d <-
 			rbind(
