@@ -4,7 +4,7 @@
 \alias{table.df}
 \title{TABLE DATAFRAME}
 \usage{
-table.df(data, horizontal = T, summary = F, na.rm = T)
+table.df(data, horizontal = T, summary = F, na.rm = T, sort.by = "NO")
 }
 \arguments{
 \item{data}{A dataframe which columns should be summarised.}
@@ -15,6 +15,9 @@ table.df(data, horizontal = T, summary = F, na.rm = T)
 Default is FALSE.}
 
 \item{na.rm}{logical: If na.rm is TRUE missings are ignored. Default is FALSE.}
+
+\item{sort.by}{character: If sort.by is NAMES, then it is sorted by column names of the table.
+One can also sort by the rownames as MISSING or MEAN if summary is TRUE. Default is "NO"}
 }
 \value{
 A dataframe containing sum of missing and available data and if summary is TRUE mins
@@ -26,12 +29,12 @@ dataframe. If  summary is TRUE, min, max, median and mean are shown additionally
 }
 \examples{
 table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")))
-table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F,F)
-table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T,F)
-table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F,F)
-table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,F)
-table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F,T)
-table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T,T)
-table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F,T)
-table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,T)
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F,F,"NO")
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T,F,"MISSING")
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F,F,"AVAILABLE")
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,F,"NAMES")
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F,T,"MIN")
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,T,"MAX")
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,T,"MEAN")
+table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T,T,"MEDIAN")
 }

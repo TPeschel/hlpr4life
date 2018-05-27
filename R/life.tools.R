@@ -580,6 +580,8 @@ sum.na <-
 #' @param summary logical: If summary is TRUE additionally min, median, mean and max are tabled.
 #' Default is FALSE.
 #' @param na.rm logical: If na.rm is TRUE missings are ignored. Default is FALSE.
+#' @param sort.by character: If sort.by is NAMES, then it is sorted by column names of the table.
+#' One can also sort by the rownames as MISSING or MEAN if summary is TRUE. Default is "NO"
 #'
 #' @return A dataframe containing sum of missing and available data and if summary is TRUE mins
 #' and maxs, means and medians of every column of a given datframe.
@@ -587,16 +589,16 @@ sum.na <-
 #'
 #' @examples
 #' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")))
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F,F)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T,F)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F,F)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,F)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F,T)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T,T)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F,T)
-#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,T)
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F,F,"NO")
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T,F,"MISSING")
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,F,F,"AVAILABLE")
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,F,"NAMES")
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,F,T,"MIN")
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,T,"MAX")
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),T,T,T,"MEAN")
+#' table.df(data.frame(x=c(1:3),y=c(NA,1,NA),z=c(NA,NA,NA),n=c("blonde","brown","black")),F,T,T,"MEDIAN")
 table.df <-
-	function( data, horizontal = T, summary = F, na.rm = T ) {
+	function( data, horizontal = T, summary = F, na.rm = T, sort.by = "NO" ) {
 
 		options( warn = -1 )
 
@@ -607,10 +609,16 @@ table.df <-
 			sum.av( data )
 
 		if( summary )
-			MIN <-
+			TYPE <-
 				sapply(
 					data,
-					function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), min( as.character( d ), na.rm = T ), min( d, na.rm = na.rm ) ) )
+					typeof )
+
+		if( summary )
+			MIN <-
+			sapply(
+				data,
+				function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), min( as.character( d ), na.rm = T ), min( d, na.rm = na.rm ) ) )
 
 		if( summary )
 			MAX <-
@@ -634,6 +642,7 @@ table.df <-
 			d <-
 				rbind(
 					d,
+					TYPE,
 					MIN,
 					MEDIAN,
 					MEAN,
@@ -642,9 +651,27 @@ table.df <-
 
 		options( warn = 0 )
 
+		d <-
+			as.data.frame( d )
+
+		if( any( sort.by == rownames( d ) ) ) {
+
+			d <-
+				d[ , order( d[ rownames( d ) == sort.by, ] ) ]
+		}
+
+		if( any( sort.by == "NAMES" ) ) {
+
+			d <-
+				d[ , order( colnames( d ) ) ]
+		}
+
+		d <-
+			as.data.frame( d )
+
 		if( horizontal ) {
 
-			return( as.data.frame( d ) )
+			return( d )
 		}
 
 		return( as.data.frame( t( d ) ) )
