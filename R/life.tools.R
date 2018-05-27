@@ -610,10 +610,11 @@ table.df <-
 
 		if( summary ) {
 
-			CLASS =
-				sapply(
-					data,
-					class )
+			CLASS <-
+				paste0(
+					sapply(
+						data,
+						class ) )
 
 			TYPE <-
 				sapply(
@@ -621,18 +622,40 @@ table.df <-
 					typeof )
 
 			MIN <-
-			sapply(
-				data,
-				function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), min( as.character( d ), na.rm = T ), min( d, na.rm = na.rm ) ) )
+				sapply(
+					data,
+					function( d )
+						ifelse(
+							!is.numeric( d ) && !is.logical( d ),
+							min( as.character( d ), na.rm = T ),
+							min( d, na.rm = na.rm ) ) )
 
 			MAX <-
-				sapply( data, function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), max( as.character( d ), na.rm = T ), max( d, na.rm = na.rm ) ) )
+				sapply(
+					data,
+					function( d )
+						ifelse(
+							!is.numeric( d ) && !is.logical( d ),
+							max( as.character( d ), na.rm = T ),
+							max( d, na.rm = na.rm ) ) )
 
 			MEAN <-
-				sapply( data, function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), "not numeric", mean( d, na.rm = na.rm ) ) )
+				sapply(
+					data,
+					function( d )
+						ifelse(
+							!is.numeric( d ) && !is.logical( d ),
+							"not numeric",
+							mean( d, na.rm = na.rm ) ) )
 
 			MEDIAN <-
-				sapply( data, function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), "not numeric", median( d, na.rm = na.rm ) ) )
+				sapply(
+					data,
+					function( d )
+						ifelse(
+							!is.numeric( d ) && !is.logical( d ),
+							"not numeric",
+							median( d, na.rm = na.rm ) ) )
 		}
 
 		d <-
