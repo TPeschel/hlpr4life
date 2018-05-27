@@ -609,6 +609,12 @@ table.df <-
 			sum.av( data )
 
 		if( summary )
+			CLASS <-
+				sapply(
+					data,
+					class )
+
+		if( summary )
 			TYPE <-
 				sapply(
 					data,
