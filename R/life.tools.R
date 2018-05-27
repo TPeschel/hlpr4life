@@ -608,35 +608,32 @@ table.df <-
 		AVAILABLE <-
 			sum.av( data )
 
-		if( summary )
-			CLASS <-
+		if( summary ) {
+
+			CLASS =
 				sapply(
 					data,
 					class )
 
-		if( summary )
 			TYPE <-
 				sapply(
 					data,
 					typeof )
 
-		if( summary )
 			MIN <-
 			sapply(
 				data,
 				function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), min( as.character( d ), na.rm = T ), min( d, na.rm = na.rm ) ) )
 
-		if( summary )
 			MAX <-
 				sapply( data, function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), max( as.character( d ), na.rm = T ), max( d, na.rm = na.rm ) ) )
 
-		if( summary )
 			MEAN <-
 				sapply( data, function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), "not numeric", mean( d, na.rm = na.rm ) ) )
 
-		if( summary )
 			MEDIAN <-
 				sapply( data, function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), "not numeric", median( d, na.rm = na.rm ) ) )
+		}
 
 		d <-
 			rbind(
@@ -648,6 +645,7 @@ table.df <-
 			d <-
 				rbind(
 					d,
+					CLASS,
 					TYPE,
 					MIN,
 					MEDIAN,
