@@ -618,11 +618,11 @@ table.df <-
 
 		if( summary )
 			MEAN <-
-				sapply( data, function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), "not metric", mean( d, na.rm = na.rm ) ) )
+				sapply( data, function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), "not numeric", mean( d, na.rm = na.rm ) ) )
 
 		if( summary )
 			MEDIAN <-
-				sapply( data, function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), "not ordered", median( d, na.rm = na.rm ) ) )
+				sapply( data, function( d ) ifelse( !is.numeric( d ) && !is.logical( d ), "not numeric", median( d, na.rm = na.rm ) ) )
 
 		d <-
 			rbind(
